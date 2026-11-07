@@ -1,0 +1,151 @@
+shortage_id,generic_name,presentation,ndc,shortage_status,initial_posting_date,revision_date,reason_category,related_application
+DS-2023-0142,Amoxicillin,Oral Suspension 250mg/5mL,65162-0175-00,Current,2023-08-01,2024-01-10,Manufacturing Delay,ANDA065355
+DS-2023-0142,Amoxicillin,Oral Suspension 250mg/5mL,65162-0175-00,Resolved,2023-08-01,2023-11-15,Manufacturing Delay,ANDA065355
+DS-2022-0089,Amoxicillin,Oral Suspension 400mg/5mL,65162-0188-00,Discontinued,2022-11-01,2023-01-20,Discontinuation of Manufacture,ANDA065491
+DS-2023-0200,Piperacillin-Tazobactam,Injection 3.375g/vial,00409-3375-01,Current,2023-02-27,2024-01-13,Quality: cGMP Issue,ANDA065921
+DS-2023-0201,Vancomycin HCl,Injection 500mg/vial,63323-0500-10,Current,2023-05-21,2024-05-05,Quality: cGMP Issue,ANDA065610
+DS-2023-0202,Cefepime HCl,Injection 1g/vial,55390-0100-01,Current,2023-04-25,2024-03-12,Quality: cGMP Issue,ANDA065780
+DS-2023-0203,Meropenem,Injection 500mg/vial,67457-0500-20,Current,2023-02-22,2024-12-12,Quality: cGMP Issue,ANDA078550
+DS-2023-0204,Ampicillin-Sulbactam,Injection 1.5g/vial,00703-1500-01,Current,2023-02-14,2024-10-29,Quality: cGMP Issue,ANDA065840
+DS-2023-0205,Methotrexate Sodium,Injection 25mg/mL,43598-0025-10,Current,2023-08-05,2024-01-17,Quality: cGMP Issue,ANDA065680
+DS-2023-0201B,Vancomycin HCl,Injection 500mg/vial,55390-0500-11,Current,2023-06-12,2024-02-28,Manufacturing Delay,ANDA088901
+DS-2023-0200B,Piperacillin-Tazobactam,Injection 3.375g/vial,00409-3375-02,Current,2023-07-05,2024-03-15,Manufacturing Delay,ANDA091122
+DS-2023-0204B,Ampicillin-Sulbactam,Injection 1.5g/vial,00703-1500-02,Current,2023-09-01,2024-04-10,Manufacturing Delay,ANDA095566
+DS-2023-0202B,Cefepime HCl,Injection 1g/vial,63323-0002-10,Current,2023-08-15,2024-05-01,Manufacturing Delay,ANDA086712
+DS-2024-0310,Ceftriaxone Sodium,Injection 1g/vial,63323-0835-10,Current,2024-03-15,2024-09-22,Manufacturing Delay,ANDA093344
+DS-2021-0400,Azithromycin,Oral Suspension 200mg/5mL,43598-9295-26,Current,2021-02-17,2021-09-28,Manufacturing Delay,ANDA075892
+DS-2024-0401,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,00703-2715-90,Resolved,2024-04-22,2024-12-07,Manufacturing Delay,ANDA078201
+DS-2024-0402,Cephalexin,Oral Suspension 250mg/5mL,51224-1774-12,Current,2024-06-23,2024-11-12,Discontinuation of Manufacture,ANDA065889
+DS-2024-0403,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,27808-0811-94,Discontinued,2024-02-19,2024-08-20,Discontinuation of Manufacture,ANDA065321
+DS-2024-0404,Clindamycin,Oral Solution 75mg/5mL,16714-1391-71,Discontinued,2024-10-01,2024-12-03,API Shortage,ANDA065750
+DS-2023-0405,Penicillin V Potassium,Oral Solution 125mg/5mL,62175-0850-85,Resolved,2023-11-18,2024-11-22,Manufacturing Delay,ANDA065290
+DS-2022-0406,Ceftriaxone Sodium,Injection 1g/vial,00409-6327-36,Discontinued,2022-05-29,2022-08-18,Manufacturing Delay,ANDA065835
+DS-2024-0407,Aztreonam,Injection 1g/vial,00338-5920-27,Current,2024-11-21,2025-06-22,Discontinuation of Manufacture,ANDA065702
+DS-2023-0408,Albuterol Sulfate,Inhalation Solution 0.083%,49884-8851-94,Resolved,2023-12-26,2024-03-08,Demand Increase,ANDA065440
+DS-2022-0409,Morphine Sulfate,Injection 4mg/mL,55390-5413-99,Current,2022-03-25,2023-07-11,Demand Increase,ANDA065530
+DS-2021-0410,Cisplatin,Injection 1mg/mL,00074-4486-09,Discontinued,2021-04-28,2021-05-30,API Shortage,ANDA065745
+DS-2022-0411,Carboplatin,Injection 10mg/mL,67457-6582-83,Current,2022-10-18,2023-09-05,API Shortage,ANDA065760
+DS-2024-0412,Doxorubicin HCl,Injection 2mg/mL,63323-9677-55,Current,2024-03-14,2024-07-27,Discontinuation of Manufacture,ANDA065820
+DS-2024-0413,Vincristine Sulfate,Injection 1mg/mL,61553-8448-64,Discontinued,2024-07-04,2024-10-24,Demand Increase,ANDA065870
+DS-2021-0414,Fluorouracil,Injection 50mg/mL,65162-7016-77,Current,2021-01-25,2021-05-17,Demand Increase,ANDA065901
+DS-2021-0415,Leucovorin Calcium,Injection 10mg/mL,43598-8769-33,Resolved,2021-07-17,2022-08-11,API Shortage,ANDA065915
+DS-2021-0416,Atropine Sulfate,Injection 0.4mg/mL,00703-5673-15,Resolved,2021-12-15,2022-04-11,Discontinuation of Manufacture,ANDA065630
+DS-2023-0417,Epinephrine,Injection 1mg/mL,51224-8301-98,Resolved,2023-08-11,2024-01-19,Discontinuation of Manufacture,ANDA065501
+DS-2022-0418,Furosemide,Injection 10mg/mL,27808-8417-78,Discontinued,2022-09-17,2023-01-03,Discontinuation of Manufacture,ANDA065480
+DS-2022-0419,Heparin Sodium,Injection 1000 units/mL,16714-9913-42,Discontinued,2022-03-20,2023-04-06,Manufacturing Delay,ANDA065410
+DS-2024-0420,Potassium Chloride,Injection 2mEq/mL,62175-4023-08,Discontinued,2024-01-10,2024-05-03,Discontinuation of Manufacture,ANDA065395
+DS-2022-0421,Sodium Bicarbonate,Injection 8.4%,00409-1233-98,Current,2022-10-18,2023-01-06,API Shortage,ANDA065370
+DS-2022-0422,Azithromycin,Oral Suspension 200mg/5mL,00338-4442-68,Resolved,2022-03-07,2024-01-11,Demand Increase,ANDA075892
+DS-2024-0423,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,49884-5207-52,Discontinued,2024-04-18,2025-01-19,Demand Increase,ANDA078201
+DS-2023-0424,Cephalexin,Oral Suspension 250mg/5mL,55390-3781-09,Resolved,2023-08-13,2025-01-23,Demand Increase,ANDA065889
+DS-2023-0425,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,00074-0217-10,Resolved,2023-01-11,2024-09-04,Demand Increase,ANDA065321
+DS-2021-0426,Clindamycin,Oral Solution 75mg/5mL,67457-1260-66,Discontinued,2021-04-28,2021-07-06,Discontinuation of Manufacture,ANDA065750
+DS-2022-0427,Penicillin V Potassium,Oral Solution 125mg/5mL,63323-9455-74,Resolved,2022-05-23,2024-04-07,Demand Increase,ANDA065290
+DS-2024-0428,Ceftriaxone Sodium,Injection 1g/vial,61553-3219-13,Resolved,2024-05-04,2025-06-09,API Shortage,ANDA065835
+DS-2021-0429,Aztreonam,Injection 1g/vial,65162-7751-94,Current,2021-12-04,2023-02-18,API Shortage,ANDA065702
+DS-2021-0430,Albuterol Sulfate,Inhalation Solution 0.083%,43598-1093-52,Discontinued,2021-12-11,2023-10-11,Manufacturing Delay,ANDA065440
+DS-2023-0431,Morphine Sulfate,Injection 4mg/mL,00703-2396-55,Current,2023-02-25,2023-11-06,API Shortage,ANDA065530
+DS-2022-0432,Cisplatin,Injection 1mg/mL,51224-7360-71,Current,2022-05-23,2023-09-08,Manufacturing Delay,ANDA065745
+DS-2021-0433,Carboplatin,Injection 10mg/mL,27808-1628-97,Discontinued,2021-01-26,2022-11-24,Manufacturing Delay,ANDA065760
+DS-2022-0434,Doxorubicin HCl,Injection 2mg/mL,16714-6670-08,Resolved,2022-03-27,2023-05-17,Demand Increase,ANDA065820
+DS-2022-0435,Vincristine Sulfate,Injection 1mg/mL,62175-7554-37,Discontinued,2022-07-14,2022-07-16,Discontinuation of Manufacture,ANDA065870
+DS-2024-0436,Fluorouracil,Injection 50mg/mL,00409-2636-25,Discontinued,2024-12-22,2025-06-27,API Shortage,ANDA065901
+DS-2023-0437,Leucovorin Calcium,Injection 10mg/mL,00338-5238-08,Resolved,2023-04-22,2023-06-20,Manufacturing Delay,ANDA065915
+DS-2021-0438,Atropine Sulfate,Injection 0.4mg/mL,49884-1031-66,Resolved,2021-10-27,2023-02-27,Demand Increase,ANDA065630
+DS-2021-0439,Epinephrine,Injection 1mg/mL,55390-6715-16,Resolved,2021-04-06,2021-06-15,Demand Increase,ANDA065501
+DS-2022-0440,Furosemide,Injection 10mg/mL,00074-6968-85,Current,2022-10-24,2024-06-23,Manufacturing Delay,ANDA065480
+DS-2023-0441,Heparin Sodium,Injection 1000 units/mL,67457-4010-34,Resolved,2023-05-14,2023-12-09,Discontinuation of Manufacture,ANDA065410
+DS-2024-0442,Potassium Chloride,Injection 2mEq/mL,63323-5280-97,Resolved,2024-03-08,2025-02-14,API Shortage,ANDA065395
+DS-2021-0443,Sodium Bicarbonate,Injection 8.4%,61553-1300-69,Resolved,2021-01-05,2022-04-19,Manufacturing Delay,ANDA065370
+DS-2022-0444,Azithromycin,Oral Suspension 200mg/5mL,65162-1227-32,Current,2022-09-17,2023-06-15,Discontinuation of Manufacture,ANDA075892
+DS-2023-0445,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,43598-8766-02,Resolved,2023-05-26,2023-11-03,Discontinuation of Manufacture,ANDA078201
+DS-2023-0446,Cephalexin,Oral Suspension 250mg/5mL,00703-4433-15,Discontinued,2023-12-06,2024-03-21,Demand Increase,ANDA065889
+DS-2021-0447,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,51224-5717-27,Current,2021-10-11,2022-03-19,Demand Increase,ANDA065321
+DS-2023-0448,Clindamycin,Oral Solution 75mg/5mL,27808-1612-82,Current,2023-09-16,2025-01-28,Manufacturing Delay,ANDA065750
+DS-2024-0449,Penicillin V Potassium,Oral Solution 125mg/5mL,16714-4391-21,Current,2024-05-21,2024-06-12,Demand Increase,ANDA065290
+DS-2024-0450,Ceftriaxone Sodium,Injection 1g/vial,62175-1332-89,Resolved,2024-10-09,2025-05-15,Manufacturing Delay,ANDA065835
+DS-2022-0451,Aztreonam,Injection 1g/vial,00409-7141-17,Discontinued,2022-10-07,2022-11-12,Demand Increase,ANDA065702
+DS-2021-0452,Albuterol Sulfate,Inhalation Solution 0.083%,00338-5962-27,Discontinued,2021-06-07,2022-06-15,Manufacturing Delay,ANDA065440
+DS-2022-0453,Morphine Sulfate,Injection 4mg/mL,49884-2632-31,Current,2022-12-08,2023-03-23,API Shortage,ANDA065530
+DS-2022-0454,Cisplatin,Injection 1mg/mL,55390-6845-86,Current,2022-04-01,2023-05-28,Discontinuation of Manufacture,ANDA065745
+DS-2022-0455,Carboplatin,Injection 10mg/mL,00074-6367-05,Discontinued,2022-05-17,2022-10-27,Manufacturing Delay,ANDA065760
+DS-2024-0456,Doxorubicin HCl,Injection 2mg/mL,67457-5828-40,Discontinued,2024-04-23,2024-08-03,API Shortage,ANDA065820
+DS-2022-0457,Vincristine Sulfate,Injection 1mg/mL,63323-5478-36,Resolved,2022-04-25,2022-05-19,API Shortage,ANDA065870
+DS-2021-0458,Fluorouracil,Injection 50mg/mL,61553-8885-43,Resolved,2021-05-23,2022-05-17,API Shortage,ANDA065901
+DS-2021-0459,Leucovorin Calcium,Injection 10mg/mL,65162-0726-14,Current,2021-03-01,2021-11-23,Discontinuation of Manufacture,ANDA065915
+DS-2024-0460,Atropine Sulfate,Injection 0.4mg/mL,43598-6411-74,Resolved,2024-06-25,2024-12-02,Manufacturing Delay,ANDA065630
+DS-2022-0461,Epinephrine,Injection 1mg/mL,00703-8618-69,Resolved,2022-05-11,2022-06-25,Manufacturing Delay,ANDA065501
+DS-2022-0462,Furosemide,Injection 10mg/mL,51224-5243-85,Current,2022-07-06,2023-09-20,Discontinuation of Manufacture,ANDA065480
+DS-2021-0463,Heparin Sodium,Injection 1000 units/mL,27808-5444-52,Current,2021-06-03,2022-11-04,API Shortage,ANDA065410
+DS-2023-0464,Potassium Chloride,Injection 2mEq/mL,16714-2951-79,Current,2023-10-11,2024-02-18,API Shortage,ANDA065395
+DS-2023-0465,Sodium Bicarbonate,Injection 8.4%,62175-4800-27,Discontinued,2023-07-27,2025-02-07,Discontinuation of Manufacture,ANDA065370
+DS-2024-0466,Azithromycin,Oral Suspension 200mg/5mL,00409-7338-57,Resolved,2024-10-23,2025-03-27,API Shortage,ANDA075892
+DS-2022-0467,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,00338-1489-37,Discontinued,2022-09-19,2024-01-16,Demand Increase,ANDA078201
+DS-2023-0468,Cephalexin,Oral Suspension 250mg/5mL,49884-3362-19,Resolved,2023-02-17,2023-10-15,Demand Increase,ANDA065889
+DS-2021-0469,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,55390-7561-54,Discontinued,2021-01-24,2021-10-01,Manufacturing Delay,ANDA065321
+DS-2022-0470,Clindamycin,Oral Solution 75mg/5mL,00074-2517-84,Resolved,2022-12-23,2024-01-20,Demand Increase,ANDA065750
+DS-2021-0471,Penicillin V Potassium,Oral Solution 125mg/5mL,67457-0922-72,Current,2021-02-24,2022-05-05,API Shortage,ANDA065290
+DS-2022-0472,Ceftriaxone Sodium,Injection 1g/vial,63323-8802-72,Current,2022-03-04,2023-06-14,API Shortage,ANDA065835
+DS-2023-0473,Aztreonam,Injection 1g/vial,61553-9076-58,Discontinued,2023-08-15,2025-05-03,API Shortage,ANDA065702
+DS-2022-0474,Albuterol Sulfate,Inhalation Solution 0.083%,65162-4643-99,Current,2022-09-01,2023-12-05,Demand Increase,ANDA065440
+DS-2024-0475,Morphine Sulfate,Injection 4mg/mL,43598-4781-31,Current,2024-11-16,2025-01-16,Manufacturing Delay,ANDA065530
+DS-2023-0476,Cisplatin,Injection 1mg/mL,00703-2367-20,Discontinued,2023-06-21,2024-05-13,Manufacturing Delay,ANDA065745
+DS-2022-0477,Carboplatin,Injection 10mg/mL,51224-1152-54,Current,2022-07-16,2024-06-25,Demand Increase,ANDA065760
+DS-2024-0478,Doxorubicin HCl,Injection 2mg/mL,27808-3488-54,Resolved,2024-06-18,2025-03-22,Manufacturing Delay,ANDA065820
+DS-2024-0479,Vincristine Sulfate,Injection 1mg/mL,16714-7914-01,Resolved,2024-10-26,2025-06-25,API Shortage,ANDA065870
+DS-2023-0480,Fluorouracil,Injection 50mg/mL,62175-8918-96,Discontinued,2023-06-02,2024-07-05,API Shortage,ANDA065901
+DS-2022-0481,Leucovorin Calcium,Injection 10mg/mL,00409-0575-50,Current,2022-09-07,2023-04-19,API Shortage,ANDA065915
+DS-2023-0482,Atropine Sulfate,Injection 0.4mg/mL,00338-2191-80,Resolved,2023-12-09,2025-01-26,API Shortage,ANDA065630
+DS-2021-0483,Epinephrine,Injection 1mg/mL,49884-1475-83,Resolved,2021-07-21,2023-03-19,Manufacturing Delay,ANDA065501
+DS-2024-0484,Furosemide,Injection 10mg/mL,55390-4362-49,Resolved,2024-03-10,2025-05-27,Manufacturing Delay,ANDA065480
+DS-2023-0485,Heparin Sodium,Injection 1000 units/mL,00074-4658-97,Current,2023-04-19,2024-07-27,API Shortage,ANDA065410
+DS-2024-0486,Potassium Chloride,Injection 2mEq/mL,67457-5833-29,Resolved,2024-05-09,2024-06-19,Manufacturing Delay,ANDA065395
+DS-2021-0487,Sodium Bicarbonate,Injection 8.4%,63323-3366-03,Discontinued,2021-11-30,2022-01-10,Demand Increase,ANDA065370
+DS-2022-0488,Azithromycin,Oral Suspension 200mg/5mL,61553-9340-28,Resolved,2022-05-03,2022-09-09,Manufacturing Delay,ANDA075892
+DS-2024-0489,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,65162-1976-21,Discontinued,2024-12-24,2025-02-27,Demand Increase,ANDA078201
+DS-2023-0490,Cephalexin,Oral Suspension 250mg/5mL,43598-9533-87,Current,2023-02-25,2024-10-09,Discontinuation of Manufacture,ANDA065889
+DS-2024-0491,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,00703-1769-90,Current,2024-07-22,2024-10-31,Demand Increase,ANDA065321
+DS-2023-0492,Clindamycin,Oral Solution 75mg/5mL,51224-5788-69,Discontinued,2023-12-17,2024-04-18,Manufacturing Delay,ANDA065750
+DS-2024-0493,Penicillin V Potassium,Oral Solution 125mg/5mL,27808-0307-54,Current,2024-12-04,2025-03-08,Discontinuation of Manufacture,ANDA065290
+DS-2024-0494,Ceftriaxone Sodium,Injection 1g/vial,16714-2606-56,Discontinued,2024-02-24,2024-10-02,API Shortage,ANDA065835
+DS-2022-0495,Aztreonam,Injection 1g/vial,62175-7716-56,Current,2022-09-25,2024-07-22,API Shortage,ANDA065702
+DS-2023-0496,Albuterol Sulfate,Inhalation Solution 0.083%,00409-4669-58,Discontinued,2023-06-15,2024-02-21,Manufacturing Delay,ANDA065440
+DS-2022-0497,Morphine Sulfate,Injection 4mg/mL,00338-5611-04,Resolved,2022-08-26,2024-03-31,API Shortage,ANDA065530
+DS-2024-0498,Cisplatin,Injection 1mg/mL,49884-4332-44,Resolved,2024-06-15,2024-09-16,Discontinuation of Manufacture,ANDA065745
+DS-2023-0499,Carboplatin,Injection 10mg/mL,55390-1502-31,Resolved,2023-11-02,2024-08-10,Demand Increase,ANDA065760
+DS-2024-0500,Doxorubicin HCl,Injection 2mg/mL,00074-8141-58,Discontinued,2024-09-07,2025-06-18,API Shortage,ANDA065820
+DS-2021-0501,Vincristine Sulfate,Injection 1mg/mL,67457-5116-85,Current,2021-02-17,2021-12-15,Demand Increase,ANDA065870
+DS-2023-0502,Fluorouracil,Injection 50mg/mL,63323-9117-43,Resolved,2023-08-31,2025-03-19,API Shortage,ANDA065901
+DS-2023-0503,Leucovorin Calcium,Injection 10mg/mL,61553-3877-16,Current,2023-12-26,2025-04-03,Discontinuation of Manufacture,ANDA065915
+DS-2022-0504,Atropine Sulfate,Injection 0.4mg/mL,65162-3238-28,Resolved,2022-06-11,2022-10-11,Demand Increase,ANDA065630
+DS-2024-0505,Epinephrine,Injection 1mg/mL,43598-1747-25,Resolved,2024-05-21,2025-05-26,Discontinuation of Manufacture,ANDA065501
+DS-2023-0506,Furosemide,Injection 10mg/mL,00703-8851-17,Current,2023-04-27,2024-04-30,Manufacturing Delay,ANDA065480
+DS-2023-0507,Heparin Sodium,Injection 1000 units/mL,51224-8142-14,Resolved,2023-01-24,2023-03-20,Demand Increase,ANDA065410
+DS-2021-0508,Potassium Chloride,Injection 2mEq/mL,27808-5682-24,Resolved,2021-10-21,2022-08-08,API Shortage,ANDA065395
+DS-2021-0509,Sodium Bicarbonate,Injection 8.4%,16714-6665-63,Current,2021-05-10,2022-09-11,Manufacturing Delay,ANDA065370
+DS-2021-0510,Azithromycin,Oral Suspension 200mg/5mL,62175-2544-73,Resolved,2021-10-23,2023-07-29,Demand Increase,ANDA075892
+DS-2023-0511,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,00409-9866-80,Current,2023-02-13,2023-10-25,API Shortage,ANDA078201
+DS-2022-0512,Cephalexin,Oral Suspension 250mg/5mL,00338-4971-76,Resolved,2022-09-25,2023-10-19,API Shortage,ANDA065889
+DS-2024-0513,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,49884-3504-81,Resolved,2024-06-05,2025-03-23,Manufacturing Delay,ANDA065321
+DS-2022-0514,Clindamycin,Oral Solution 75mg/5mL,55390-2947-71,Current,2022-05-16,2024-03-22,Demand Increase,ANDA065750
+DS-2021-0515,Penicillin V Potassium,Oral Solution 125mg/5mL,00074-4871-05,Resolved,2021-03-22,2021-03-24,API Shortage,ANDA065290
+DS-2022-0516,Ceftriaxone Sodium,Injection 1g/vial,67457-1266-88,Current,2022-05-28,2024-05-20,API Shortage,ANDA065835
+DS-2022-0517,Aztreonam,Injection 1g/vial,63323-7065-15,Resolved,2022-05-16,2024-02-15,Demand Increase,ANDA065702
+DS-2022-0518,Albuterol Sulfate,Inhalation Solution 0.083%,61553-1269-08,Discontinued,2022-11-28,2023-04-29,Demand Increase,ANDA065440
+DS-2022-0519,Morphine Sulfate,Injection 4mg/mL,65162-7295-16,Resolved,2022-06-07,2024-02-06,Discontinuation of Manufacture,ANDA065530
+DS-2024-0520,Cisplatin,Injection 1mg/mL,43598-8299-70,Resolved,2024-12-18,2025-03-05,Discontinuation of Manufacture,ANDA065745
+DS-2024-0521,Carboplatin,Injection 10mg/mL,00703-5380-78,Resolved,2024-08-12,2024-09-22,API Shortage,ANDA065760
+DS-2023-0522,Doxorubicin HCl,Injection 2mg/mL,51224-4515-74,Current,2023-01-14,2023-04-17,Manufacturing Delay,ANDA065820
+DS-2021-0523,Vincristine Sulfate,Injection 1mg/mL,27808-4657-24,Resolved,2021-03-31,2022-07-25,API Shortage,ANDA065870
+DS-2024-0524,Fluorouracil,Injection 50mg/mL,16714-7800-45,Resolved,2024-11-21,2025-06-17,Manufacturing Delay,ANDA065901
+DS-2024-0525,Leucovorin Calcium,Injection 10mg/mL,62175-5503-53,Resolved,2024-06-19,2024-11-30,Demand Increase,ANDA065915
+DS-2024-0526,Atropine Sulfate,Injection 0.4mg/mL,00409-7551-12,Discontinued,2024-05-27,2025-05-01,Manufacturing Delay,ANDA065630
+DS-2023-0527,Epinephrine,Injection 1mg/mL,00338-8531-01,Current,2023-05-10,2024-04-05,API Shortage,ANDA065501
+DS-2024-0528,Furosemide,Injection 10mg/mL,49884-8267-81,Current,2024-07-30,2024-08-26,Discontinuation of Manufacture,ANDA065480
+DS-2024-0529,Heparin Sodium,Injection 1000 units/mL,55390-4819-57,Current,2024-01-27,2024-08-22,Demand Increase,ANDA065410
+DS-2024-0530,Potassium Chloride,Injection 2mEq/mL,00074-2694-40,Discontinued,2024-03-03,2024-03-17,Demand Increase,ANDA065395
+DS-2021-0531,Sodium Bicarbonate,Injection 8.4%,67457-7660-16,Current,2021-10-10,2022-12-01,Manufacturing Delay,ANDA065370
+DS-2022-0532,Azithromycin,Oral Suspension 200mg/5mL,63323-6907-62,Resolved,2022-09-13,2023-07-08,Discontinuation of Manufacture,ANDA075892
+DS-2024-0533,Amoxicillin-Clavulanate,Oral Suspension 400-57mg/5mL,61553-3222-77,Resolved,2024-05-04,2024-12-23,API Shortage,ANDA078201
+DS-2022-0534,Cephalexin,Oral Suspension 250mg/5mL,65162-5668-65,Discontinued,2022-02-05,2022-11-14,API Shortage,ANDA065889
+DS-2023-0535,Trimethoprim-Sulfamethoxazole,Oral Suspension 40-200mg/5mL,43598-2534-58,Resolved,2023-01-02,2023-10-18,API Shortage,ANDA065321

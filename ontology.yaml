@@ -1,0 +1,287 @@
+# ontology.yaml — the semantic contract between the data and the agent.
+#
+# The planner reads THIS, never raw column names. Every business term the agent is allowed to
+# use is defined here with its SQL meaning, its ambiguity (if any), and the default reading.
+# Change a definition here → every answer, eval, and certified query inherits it.
+# Human rationale for each default lives in DECISIONS.md (cross-referenced as D1..D14).
+
+version: 0.1.0
+domain: FDA CDER drug shortages, applications, and establishment inspections
+data_snapshot_note: >
+  Synthetic but structurally realistic snapshot. No real patient or manufacturer data.
+  Latest record date in the snapshot is 2025-10-23; the assignment brief describes it as
+  "early 2025". See D1.
+
+defaults:
+  as_of: data_max            # D1. Resolves to max(revision_date, inspection_end_date, classification_date)
+  fiscal_year_basis: inspection_end_date   # D2. alternate: classification_date
+  fy_window_mode: completed  # D3. alternate: include_current
+  quality_scope: strict      # D5. alternate: broad
+  drug_count_level: generic_name           # D6. alternates: shortage_id, presentation
+  approved_scope: full       # D9. alternate: include_tentative
+  stale_current_months: 18   # D4
+  dedupe_rule: latest_revision_per_shortage_id   # D4
+
+# ------------------------------------------------------------------------------------------
+entities:
+  Shortage:
+    table: drug_shortages
+    grain: one row per (shortage_id, revision). A shortage_id may appear more than once.
+    primary_key: [shortage_id, revision_date]
+    description: Drug shortage records modeled on FDA's Drug Shortage Database.
+    columns:
+      shortage_id:         {type: string, desc: "Record ID. '…B' suffix = second-source record for the same drug/presentation under a different application."}
+      generic_name:        {type: string, desc: "Active ingredient / generic name as posted."}
+      presentation:        {type: string, desc: "Dosage form + strength, e.g. 'Oral Suspension 250mg/5mL'. Only place dosage form exists in the dataset."}
+      ndc:                 {type: string, desc: "National Drug Code of the affected product."}
+      shortage_status:     {type: enum, values: [Current, Resolved, Discontinued], desc: "See status_semantics. Never collapse Resolved and Discontinued."}
+      initial_posting_date:{type: date}
+      revision_date:       {type: date, desc: "Date this row was last revised. Used to pick the authoritative row per shortage_id."}
+      reason_category:     {type: enum, values: ["Manufacturing Delay", "API Shortage", "Demand Increase", "Discontinuation of Manufacture", "Quality: cGMP Issue"]}
+      related_application: {type: string, desc: "Application number (ANDA/NDA/BLA). FK → Application.application_number. Only 21/150 rows resolve."}
+
+  Application:
+    table: applications
+    grain: one row per application_number
+    primary_key: [application_number]
+    description: Drug application records modeled on Drugs@FDA.
+    columns:
+      application_number: {type: string, desc: "ANDA/NDA/BLA + digits."}
+      app_type:           {type: enum, values: [ANDA, NDA, BLA]}
+      sponsor_name:       {type: string, desc: "Application holder. NOT necessarily the facility operator (see Facility)."}
+      active_ingredient:  {type: string}
+      approval_date:      {type: date}
+      marketing_status:   {type: enum, values: [Prescription, "Tentative Approval", Discontinued], desc: "Prescription = approved & marketed. Tentative Approval = meets requirements but cannot be marketed (patent/exclusivity). Discontinued = approved, no longer marketed."}
+      manufacturing_fei:  {type: string, desc: "FEI of the manufacturing facility. FK → Facility.fei_number. 7 of 128 have no inspection record."}
+    missing_fields:
+      - dosage_form   # D9: cannot distinguish oral suspension from tablets/capsules at application level
+
+  Facility:
+    table: inspections   # derived: DISTINCT fei_number, firm_name, city, country
+    grain: one row per fei_number (derived from inspections)
+    primary_key: [fei_number]
+    description: Manufacturing establishment identified by FDA Establishment Identifier.
+    columns:
+      fei_number: {type: string, desc: "FDA Establishment Identifier. Valid format: 7 or 10 digits. Prefix '4' rows are a format anomaly in this dataset — verify before citing."}
+      firm_name:  {type: string, desc: "Facility operator as recorded at inspection. Differs from Application.sponsor_name in 110/121 joinable rows (contract manufacturing)."}
+      city:       {type: string}
+      country:    {type: string, desc: "Only source of country in the dataset. If an FEI has no inspection, country is UNKNOWN."}
+
+  Inspection:
+    table: inspections
+    grain: one row per inspection event (an FEI may have many)
+    primary_key: [fei_number, inspection_end_date, project_area]
+    description: Inspection outcomes modeled on FDA Establishment Inspection Report data.
+    columns:
+      fei_number:          {type: string, fk: Facility.fei_number}
+      inspection_end_date: {type: date, desc: "Default basis for fiscal-year assignment (matches FDA Data Dashboard)."}
+      classification_date: {type: date, desc: "Date final classification issued. May fall in a later FY than inspection_end_date."}
+      classification:      {type: enum, values: [NAI, VAI, OAI], desc: "NAI = acceptable compliance. VAI = objectionable conditions, voluntary correction. OAI = unacceptable state of compliance; regulatory action may follow."}
+      project_area:        {type: enum, values: ["Pre-Approval", "Drug Quality Assurance"], desc: "Classification is PER project area; a site can be OAI in one and NAI in another on the same visit."}
+      product_type:        {type: enum, values: [API, "Finished Dosage"]}
+
+# ------------------------------------------------------------------------------------------
+relationships:
+  - name: shortage_to_application
+    from: Shortage.related_application
+    to: Application.application_number
+    cardinality: many-to-one
+    coverage: "21 of 150 shortage rows (13 of 57 Current) resolve. Always disclose coverage."
+    known_defects:
+      - "All 7 Amoxicillin-Clavulanate shortage rows point to ANDA078201 whose active_ingredient is 'Amoxicillin' (ingredient mismatch)."
+  - name: application_to_facility
+    from: Application.manufacturing_fei
+    to: Facility.fei_number
+    cardinality: many-to-one
+    coverage: "121 of 128 applications have at least one inspection for their FEI."
+  - name: facility_to_inspections
+    from: Facility.fei_number
+    to: Inspection.fei_number
+    cardinality: one-to-many
+
+# ------------------------------------------------------------------------------------------
+status_semantics:   # D4 — real FDA definitions; the dataset's labels map as noted
+  Current:
+    fda_label: "Currently in Shortage"
+    meaning: "Total supply of all clinically interchangeable versions is inadequate to meet current or projected demand."
+  Resolved:
+    fda_label: "Resolved"
+    meaning: "Drug Shortage Staff determined the market is covered, based on information from all manufacturers. Supply recovered."
+    note: "Remains listed ~6 months after resolution."
+  Discontinued:
+    fda_label: "To Be Discontinued / Discontinuation"
+    meaning: "Manufacturer has stopped or will stop producing the product. Supply will NOT recover from this source."
+    note: "Remains listed ~1 year. Opposite of Resolved for planning purposes despite both being 'not Current'."
+
+# ------------------------------------------------------------------------------------------
+definitions:        # named, reusable business concepts the certified tools implement
+  current_shortage:
+    decision: D4
+    sql_intent: "latest revision per shortage_id where shortage_status='Current' and revision_date <= as_of"
+    warnings_emitted: [status_conflict, stale_current]
+  fiscal_year:
+    decision: D2
+    rule: "FY N = Oct 1 (N-1) .. Sep 30 (N)"
+    basis_default: inspection_end_date
+  last_two_fiscal_years:
+    decision: D3
+    default: "two most recently completed FYs as of as_of"
+    alternate: "current partial FY + prior FY"
+  quality_problem:
+    decision: D5
+    strict: ["Quality: cGMP Issue"]
+    broad:  ["Quality: cGMP Issue", "Manufacturing Delay"]
+  oai_in_window:
+    decision: D8
+    rule: "classification='OAI' AND fiscal_year(basis) IN window; any project_area; disclose project_area"
+  approved_application:
+    decision: D9
+    full: ["Prescription", "Discontinued"]
+    include_tentative: ["Prescription", "Discontinued", "Tentative Approval"]
+  actively_marketed:
+    decision: D9
+    rule: "marketing_status = 'Prescription'"
+  foreign_establishment:
+    decision: D10
+    rule: "Facility.country != 'United States'; UNKNOWN if no inspection record"
+  not_inspected_since:
+    decision: D11
+    rule: "max(inspection_end_date) FY <= target FY, OR never inspected (reported separately)"
+  manufacturing_site:
+    decision: D7
+    rule: "FEI via Shortage → Application → Facility; report sponsor AND facility operator; disclose coverage; validate FEI format"
+
+# ------------------------------------------------------------------------------------------
+ambiguous_terms:    # planner must enumerate these before answering; divergent results shown side by side
+  "quality problems":        {definition: quality_problem,      interpretations: [strict, broad]}
+  "currently":               {definition: current_shortage,     interpretations: [as_of_default, as_of_user]}
+  "last two fiscal years":   {definition: last_two_fiscal_years, interpretations: [completed, include_current]}
+  "fiscal year":             {definition: fiscal_year,          interpretations: [inspection_end_date, classification_date]}
+  "how many drugs":          {definition: current_shortage,     interpretations: [generic_name, shortage_id, presentation]}
+  "approved":                {definition: approved_application, interpretations: [full, include_tentative]}
+  "manufacturer":            {definition: manufacturing_site,   interpretations: [sponsor, facility_operator]}
+  "manufacturing site":      {definition: manufacturing_site,   interpretations: [facility_operator]}
+  "foreign":                 {definition: foreign_establishment, interpretations: [country_from_inspections, unknown_if_uninspected]}
+  "not inspected since":     {definition: not_inspected_since,  interpretations: [no_inspection_after, no_inspection_in_or_after]}
+  "in shortage":             {definition: current_shortage,     interpretations: [current_only, current_or_discontinued]}
+  "resolved":                {definition: current_shortage,     note: "NEVER equate with Discontinued. See status_semantics."}
+
+# ------------------------------------------------------------------------------------------
+synonyms:           # literal resolution — maps user phrasing to canonical values
+  generic_name:
+    "pip-tazo": "Piperacillin-Tazobactam"
+    "pip tazo": "Piperacillin-Tazobactam"
+    "zosyn": "Piperacillin-Tazobactam"
+    "amox": "Amoxicillin"
+    "amoxicillin": "Amoxicillin"
+    "augmentin": "Amoxicillin-Clavulanate"
+    "amox-clav": "Amoxicillin-Clavulanate"
+    "amoxicillin clavulanate": "Amoxicillin-Clavulanate"
+    "bactrim": "Trimethoprim-Sulfamethoxazole"
+    "tmp-smx": "Trimethoprim-Sulfamethoxazole"
+    "septra": "Trimethoprim-Sulfamethoxazole"
+    "unasyn": "Ampicillin-Sulbactam"
+    "vanc": "Vancomycin HCl"
+    "vancomycin": "Vancomycin HCl"
+    "cefepime": "Cefepime HCl"
+    "rocephin": "Ceftriaxone Sodium"
+    "ceftriaxone": "Ceftriaxone Sodium"
+    "zithromax": "Azithromycin"
+    "z-pak": "Azithromycin"
+    "keflex": "Cephalexin"
+    "pen vk": "Penicillin V Potassium"
+    "penicillin": "Penicillin V Potassium"
+    "epi": "Epinephrine"
+    "lasix": "Furosemide"
+    "5-fu": "Fluorouracil"
+    "mtx": "Methotrexate Sodium"
+    "heparin": "Heparin Sodium"
+    "bicarb": "Sodium Bicarbonate"
+    "kcl": "Potassium Chloride"
+    "albuterol": "Albuterol Sulfate"
+    "morphine": "Morphine Sulfate"
+  presentation_family:
+    "oral suspension": "Oral Suspension%"
+    "suspension": "Oral Suspension%"
+    "injection": "Injection%"
+    "injectable": "Injection%"
+    "iv": "Injection%"
+    "oral solution": "Oral Solution%"
+    "inhalation": "Inhalation Solution%"
+  classification:
+    "official action indicated": "OAI"
+    "oai": "OAI"
+    "voluntary action indicated": "VAI"
+    "vai": "VAI"
+    "no action indicated": "NAI"
+    "nai": "NAI"
+    "failed inspection": "OAI"   # colloquial; planner should note OAI ≠ "failed" formally
+  country:
+    "us": "United States"
+    "usa": "United States"
+    "u.s.": "United States"
+    "domestic": "United States"
+    "foreign": "!= United States"
+    "overseas": "!= United States"
+
+# ------------------------------------------------------------------------------------------
+pediatric_antibiotics:   # the hearing topic; used for scoping questions like "pediatric antibiotic shortages"
+  note: "Dataset has no pediatric flag. Oral suspensions/solutions are the pediatric-relevant presentations; this is a reasonable proxy, labeled as such."
+  antibiotic_generic_names:
+    - Amoxicillin
+    - Amoxicillin-Clavulanate
+    - Azithromycin
+    - Cephalexin
+    - Penicillin V Potassium
+    - Clindamycin
+    - Trimethoprim-Sulfamethoxazole
+    - Ceftriaxone Sodium
+    - Cefepime HCl
+    - Vancomycin HCl
+    - Piperacillin-Tazobactam
+    - Ampicillin-Sulbactam
+    - Meropenem
+    - Aztreonam
+  pediatric_presentation_proxy: ["Oral Suspension%", "Oral Solution%"]
+
+# ------------------------------------------------------------------------------------------
+data_quality_rules:   # run on load; warnings attach to any answer whose evidence touches flagged rows
+  - id: DQ01_status_conflict
+    severity: high
+    desc: "shortage_id has rows with different shortage_status"
+  - id: DQ02_orphan_application
+    severity: medium
+    desc: "shortage.related_application not found in applications"
+  - id: DQ03_ingredient_mismatch
+    severity: high
+    desc: "shortage.generic_name != linked application.active_ingredient"
+  - id: DQ04_fei_invalid_format
+    severity: high
+    desc: "FEI not 7 or 10 digits"
+  - id: DQ05_fei_prefix_anomaly
+    severity: medium
+    desc: "FEI prefix differs from dataset majority pattern (3xxxxxxxxx)"
+  - id: DQ06_fei_no_inspection
+    severity: medium
+    desc: "application.manufacturing_fei has no inspection record (country unknown)"
+  - id: DQ07_fy_boundary_straddle
+    severity: low
+    desc: "inspection_end_date and classification_date fall in different fiscal years"
+  - id: DQ08_stale_current
+    severity: medium
+    desc: "Current status last revised > stale_current_months before as_of"
+  - id: DQ09_sponsor_operator_mismatch
+    severity: info
+    desc: "application.sponsor_name != inspections.firm_name for the FEI (contract manufacturing)"
+  - id: DQ10_second_source_record
+    severity: info
+    desc: "shortage_id ends in 'B' — second-source record for same drug/presentation"
+  - id: DQ11_shared_fei_multiple_sponsors
+    severity: info
+    desc: "one FEI appears under multiple sponsors"
+  - id: DQ12_missing_dosage_form
+    severity: medium
+    desc: "applications has no dosage-form column; presentation-level application counts impossible"
+  - id: DQ13_status_label_differs_from_fda
+    severity: info
+    desc: "dataset uses 'Discontinued'; FDA uses 'To Be Discontinued'/'Discontinuation'"

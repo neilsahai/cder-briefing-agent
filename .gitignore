@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.duckdb
+*.sqlite
+node_modules/
+frontend/dist/
+.pytest_cache/
+.ruff_cache/
+evals/results/*.json
+!evals/results/.gitkeep
+.DS_Store

@@ -1,0 +1,81 @@
+fei_number,firm_name,city,country,inspection_end_date,classification_date,classification,project_area,product_type
+3007445123,ICU Medical Inc,Lake Forest,United States,2024-07-02,2024-08-31,OAI,Drug Quality Assurance,Finished Dosage
+3002891456,Pfizer Manufacturing LLC,McPherson,United States,2024-03-25,2024-05-15,OAI,Drug Quality Assurance,Finished Dosage
+3009123789,Fresenius Kabi USA LLC,Wilson,United States,2025-07-10,2025-09-26,OAI,Drug Quality Assurance,Finished Dosage
+3001234567,Baxter Healthcare Corporation,Deerfield,United States,2025-07-06,2025-08-29,OAI,Drug Quality Assurance,Finished Dosage
+3005678901,Hospira Inc,Rocky Mount,United States,2024-05-21,2024-08-18,VAI,Drug Quality Assurance,Finished Dosage
+3004567890,Hikma Pharmaceuticals LLC,Columbus,United States,2023-10-22,2023-12-05,OAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-04-21,2024-06-14,NAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2025-09-21,2025-10-23,VAI,Drug Quality Assurance,API
+3003456789,APP Pharmaceuticals LLC,Schaumburg,United States,2022-09-16,2022-12-10,VAI,Pre-Approval,Finished Dosage
+3000987654,West-Ward Pharmaceuticals Corp,Eatontown,United States,2024-06-20,2024-09-04,NAI,Pre-Approval,Finished Dosage
+3001122334,Lannett Company Inc,Philadelphia,United States,2022-10-23,2022-12-22,NAI,Drug Quality Assurance,Finished Dosage
+3002233445,Akorn Inc,Lake Forest,United States,2023-06-27,2023-09-19,NAI,Pre-Approval,Finished Dosage
+3003344556,Teva Pharmaceuticals USA Inc,North Wales,United States,2023-11-04,2024-01-13,OAI,Pre-Approval,API
+3004455667,Sandoz Inc,Princeton,United States,2024-09-26,2024-11-10,OAI,Drug Quality Assurance,Finished Dosage
+3005566778,Sun Pharmaceutical Industries Inc,Cranbury,United States,2025-07-16,2025-10-01,VAI,Pre-Approval,Finished Dosage
+3025111222,Aurobindo Pharma Unit IV,Visakhapatnam,India,2018-04-03,2018-06-16,VAI,Drug Quality Assurance,Finished Dosage
+3026333444,Zhejiang Tianyu Pharmaceutical,Taizhou,China,2020-03-20,2020-04-20,NAI,Drug Quality Assurance,Finished Dosage
+3027555666,Macleods Pharmaceuticals Ltd,Mumbai,India,2017-04-11,2017-06-30,NAI,Drug Quality Assurance,Finished Dosage
+4005777888,Shanxi Zhendong Taisheng Pharma,Changzhi,China,2019-07-22,2019-09-12,NAI,Drug Quality Assurance,Finished Dosage
+3010234567,Aurobindo Pharma Limited,Hyderabad,India,2023-11-07,2024-01-12,VAI,Drug Quality Assurance,API
+3011345678,Dr. Reddy's Laboratories Ltd,Hyderabad,India,2025-07-28,2025-09-01,VAI,Drug Quality Assurance,Finished Dosage
+3012456789,Cipla Limited,Mumbai,India,2025-03-02,2025-05-29,OAI,Drug Quality Assurance,API
+3013567890,Sun Pharma Advanced Research Co,Vadodara,India,2025-01-07,2025-03-07,NAI,Pre-Approval,API
+3014678901,Lupin Limited,Mumbai,India,2023-03-07,2023-05-19,VAI,Pre-Approval,API
+3015789012,Zhejiang Huahai Pharmaceutical,Linhai,China,2024-10-24,2024-12-30,NAI,Pre-Approval,API
+3016890123,Hainan Poly Pharm Co Ltd,Haikou,China,2023-06-05,2023-08-03,VAI,Pre-Approval,API
+3017901234,Nanjing King-Friend Biochemical,Nanjing,China,2023-06-11,2023-07-17,NAI,Pre-Approval,API
+3018012345,Shanghai Pharmaceuticals Holding,Shanghai,China,2023-01-29,2023-04-13,NAI,Pre-Approval,API
+3019123456,Lek Pharmaceuticals dd,Ljubljana,Slovenia,2023-05-28,2023-06-27,NAI,Pre-Approval,API
+3020234567,Fresenius Kabi Austria GmbH,Graz,Austria,2024-12-03,2025-02-24,OAI,Drug Quality Assurance,API
+3021345678,Clonmel Healthcare Ltd,Clonmel,Ireland,2023-05-10,2023-06-23,VAI,Drug Quality Assurance,API
+3022456789,Pfizer Manufacturing Belgium NV,Puurs-Sint-Amands,Belgium,2025-04-26,2025-07-05,NAI,Pre-Approval,Finished Dosage
+3023567890,Sterimax Inc,Oakville,Canada,2022-04-17,2022-07-06,OAI,Drug Quality Assurance,API
+4002678901,Sandoz GmbH,Kundl,Austria,2024-03-21,2024-04-25,NAI,Pre-Approval,Finished Dosage
+4003789012,B. Braun Melsungen AG,Melsungen,Germany,2023-05-28,2023-07-09,NAI,Pre-Approval,Finished Dosage
+4004890123,Hikma Farmaceutica SA,Terrugem,Portugal,2022-06-28,2022-09-19,VAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-06-11,2022-08-27,OAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2025-07-06,2025-09-22,NAI,Drug Quality Assurance,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-10-17,2024-11-21,VAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2021-01-29,2021-03-23,NAI,Drug Quality Assurance,API
+3008901234,Mylan Institutional LLC,Galena,United States,2024-04-12,2024-06-24,NAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2023-08-24,2023-11-03,NAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-07-25,2024-08-31,OAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-04-03,2021-05-10,OAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-04-26,2022-06-24,OAI,Drug Quality Assurance,API
+3008901234,Mylan Institutional LLC,Galena,United States,2024-10-05,2024-12-30,OAI,Pre-Approval,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2024-09-03,2024-12-02,NAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2021-03-09,2021-05-06,VAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2023-01-13,2023-02-15,NAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2022-07-20,2022-08-24,NAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-08-07,2024-10-26,VAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2022-05-14,2022-08-05,OAI,Drug Quality Assurance,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-04-15,2024-07-03,NAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2025-06-04,2025-08-27,OAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-09-24,2021-12-05,VAI,Drug Quality Assurance,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-09-27,2021-10-28,NAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-06-28,2022-09-13,NAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2023-09-03,2023-10-31,NAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-06-13,2024-08-23,NAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-05-05,2021-07-17,OAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2023-10-02,2023-12-28,VAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-10-22,2022-12-08,VAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2023-02-20,2023-04-23,OAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2021-07-23,2021-09-18,VAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2022-04-13,2022-06-08,NAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-10-03,2022-11-11,NAI,Pre-Approval,API
+3008901234,Mylan Institutional LLC,Galena,United States,2021-05-18,2021-07-14,NAI,Drug Quality Assurance,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2025-03-05,2025-05-11,VAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2024-10-04,2024-12-28,NAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2022-08-13,2022-10-18,VAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-11-13,2022-01-04,VAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2021-08-24,2021-11-16,VAI,Drug Quality Assurance,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2024-06-01,2024-07-12,OAI,Pre-Approval,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2024-12-10,2025-01-09,VAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-10-21,2021-11-29,VAI,Pre-Approval,Finished Dosage
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-07-07,2021-09-01,VAI,Drug Quality Assurance,API
+3008901234,Mylan Institutional LLC,Galena,United States,2022-11-30,2023-02-17,NAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2021-04-18,2021-06-04,NAI,Drug Quality Assurance,Finished Dosage
+3008901234,Mylan Institutional LLC,Galena,United States,2024-09-17,2024-11-03,NAI,Pre-Approval,API
+3006781234,Sagent Pharmaceuticals Inc,Schaumburg,United States,2025-03-27,2025-05-03,VAI,Pre-Approval,API

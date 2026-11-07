@@ -1,0 +1,129 @@
+application_number,app_type,sponsor_name,active_ingredient,approval_date,marketing_status,manufacturing_fei
+ANDA065355,ANDA,Sandoz Inc,Amoxicillin,2001-03-15,Prescription,3001234567
+ANDA065491,ANDA,Teva Pharmaceuticals USA Inc,Amoxicillin,2003-07-22,Discontinued,3002891456
+ANDA078201,ANDA,Aurobindo Pharma Limited,Amoxicillin,2008-11-10,Prescription,3010234567
+ANDA082345,ANDA,Hikma Pharmaceuticals LLC,Amoxicillin,2011-05-18,Tentative Approval,3014678901
+ANDA091234,ANDA,Lupin Limited,Amoxicillin,2014-02-28,Prescription,3013567890
+ANDA095678,ANDA,Cipla USA Inc,Amoxicillin,2016-09-01,Tentative Approval,3012456789
+BLA103990,BLA,Genentech Inc,Rituximab,1997-11-26,Prescription,3003344556
+BLA761054,BLA,AbbVie Inc,Adalimumab,2002-12-31,Prescription,3004455667
+ANDA078550,ANDA,Zhejiang Huahai Pharmaceutical,Meropenem,2010-06-14,Prescription,3007891234
+ANDA086712,ANDA,Hainan Poly Pharm Co Ltd,Cefepime HCl,2013-03-22,Prescription,4001567890
+ANDA065921,ANDA,ICU Medical Inc,Piperacillin-Tazobactam,2007-09-12,Prescription,3007445123
+ANDA065610,ANDA,Pfizer Manufacturing LLC,Vancomycin HCl,2004-06-30,Prescription,3002891456
+ANDA065780,ANDA,Fresenius Kabi USA LLC,Cefepime HCl,2006-03-14,Prescription,3009123789
+ANDA065840,ANDA,Baxter Healthcare Corporation,Ampicillin-Sulbactam,2005-11-01,Prescription,3001234567
+ANDA065680,ANDA,Hospira Inc,Methotrexate Sodium,2003-04-28,Prescription,3005678901
+ANDA088901,ANDA,Aurobindo Pharma Unit IV,Vancomycin HCl,2012-04-10,Prescription,3025111222
+ANDA091122,ANDA,Zhejiang Tianyu Pharmaceutical,Piperacillin-Tazobactam,2014-08-22,Prescription,3026333444
+ANDA093344,ANDA,Macleods Pharmaceuticals Ltd,Ceftriaxone Sodium,2015-11-05,Prescription,3027555666
+ANDA095566,ANDA,Shanxi Zhendong Taisheng Pharma,Ampicillin-Sulbactam,2016-02-17,Prescription,4005777888
+ANDA100794,ANDA,Sandoz Inc,Ceftriaxone Sodium,2019-10-16,Prescription,3019123456
+ANDA101298,ANDA,Fresenius Kabi USA LLC,Vancomycin HCl,2017-01-01,Prescription,3013567890
+ANDA102180,ANDA,Apotex Inc,Clindamycin Palmitate HCl,2006-05-11,Prescription,3027555666
+ANDA102459,ANDA,Lupin Limited,Methotrexate Sodium,2002-07-18,Discontinued,4005777888
+ANDA103243,ANDA,Mylan Pharmaceuticals Inc,Ampicillin-Sulbactam,2009-02-13,Tentative Approval,3005678901
+ANDA103813,ANDA,Apotex Inc,Azithromycin,2000-06-19,Prescription,4003789012
+ANDA104340,ANDA,Aurobindo Pharma Limited,Atropine Sulfate,2007-02-13,Prescription,3020234567
+ANDA105072,ANDA,Hikma Pharmaceuticals LLC,Sodium Bicarbonate,2012-12-12,Prescription,3006781234
+ANDA105775,ANDA,Apotex Inc,Methotrexate Sodium,2010-09-03,Prescription,3019123456
+ANDA106101,ANDA,Lupin Limited,Aztreonam,2008-03-03,Prescription,3008901234
+ANDA106399,ANDA,Hikma Pharmaceuticals LLC,Doxorubicin HCl,2022-06-12,Discontinued,3000987654
+ANDA106648,ANDA,Aurobindo Pharma Limited,Trimethoprim-Sulfamethoxazole,2006-04-06,Discontinued,3007445123
+ANDA107391,ANDA,Cipla USA Inc,Potassium Chloride,2013-08-25,Discontinued,4001567890
+ANDA108069,ANDA,Aurobindo Pharma Limited,Tobramycin Sulfate,2018-11-20,Prescription,3020234567
+ANDA108238,ANDA,Amneal Pharmaceuticals LLC,Cisplatin,2013-08-21,Prescription,3017901234
+ANDA108698,ANDA,Sandoz Inc,Amoxicillin-Clavulanate,2014-02-10,Prescription,3005678901
+ANDA109649,ANDA,Amneal Pharmaceuticals LLC,Albuterol Sulfate,2007-02-21,Tentative Approval,3004567890
+ANDA110268,ANDA,Dr. Reddy's Laboratories Ltd,Leucovorin Calcium,2010-08-19,Discontinued,3005678901
+ANDA111197,ANDA,Lupin Limited,Tobramycin Sulfate,2016-11-07,Prescription,3026333444
+ANDA111360,ANDA,Apotex Inc,Clindamycin Palmitate HCl,2012-02-26,Tentative Approval,3021345678
+ANDA111976,ANDA,Dr. Reddy's Laboratories Ltd,Cephalexin,2018-03-02,Prescription,4001567890
+ANDA112611,ANDA,Mylan Pharmaceuticals Inc,Doxorubicin HCl,2017-03-12,Prescription,3018012345
+ANDA113504,ANDA,Teva Pharmaceuticals USA Inc,Methotrexate Sodium,2008-11-20,Prescription,3021345678
+ANDA113700,ANDA,Sun Pharmaceutical Industries Inc,Aztreonam,2015-11-13,Prescription,3000987654
+ANDA114396,ANDA,Aurobindo Pharma Limited,Cephalexin,2019-03-12,Prescription,4003789012
+ANDA115221,ANDA,Baxter Healthcare Corporation,Leucovorin Calcium,2000-05-18,Prescription,3021345678
+ANDA116007,ANDA,Cipla USA Inc,Clindamycin Palmitate HCl,2020-12-22,Tentative Approval,3004567890
+ANDA116540,ANDA,Hikma Pharmaceuticals LLC,Epinephrine,2014-06-01,Prescription,3011345678
+ANDA117424,ANDA,Teva Pharmaceuticals USA Inc,Aztreonam,2013-04-08,Tentative Approval,3000987654
+ANDA118388,ANDA,Cipla USA Inc,Ceftriaxone Sodium,2001-09-25,Prescription,3005678901
+ANDA119385,ANDA,Aurobindo Pharma Limited,Aztreonam,2022-10-05,Discontinued,3000987654
+ANDA120336,ANDA,Sandoz Inc,Penicillin V Potassium,2020-10-26,Tentative Approval,4001567890
+ANDA120809,ANDA,Fresenius Kabi USA LLC,Methotrexate Sodium,2019-12-08,Tentative Approval,3018012345
+ANDA121711,ANDA,Hospira Inc,Heparin Sodium,2012-04-18,Prescription,3026333444
+ANDA122009,ANDA,Fresenius Kabi USA LLC,Ampicillin-Sulbactam,2009-11-19,Tentative Approval,3025111222
+ANDA122905,ANDA,Baxter Healthcare Corporation,Ceftriaxone Sodium,2010-09-17,Prescription,3010234567
+ANDA123825,ANDA,Baxter Healthcare Corporation,Piperacillin-Tazobactam,2017-03-28,Prescription,3026333444
+ANDA124492,ANDA,Pfizer Inc,Albuterol Sulfate,2001-12-28,Prescription,3008901234
+ANDA125373,ANDA,Baxter Healthcare Corporation,Cephalexin,2003-05-15,Tentative Approval,3000987654
+ANDA125566,ANDA,Sandoz Inc,Methotrexate Sodium,2005-08-12,Tentative Approval,4004890123
+ANDA126180,ANDA,Hikma Pharmaceuticals LLC,Morphine Sulfate,2009-04-13,Tentative Approval,3023567890
+ANDA126606,ANDA,Aurobindo Pharma Limited,Azithromycin,2001-12-21,Prescription,3000987654
+ANDA126999,ANDA,Dr. Reddy's Laboratories Ltd,Amoxicillin-Clavulanate,2013-12-27,Prescription,3026333444
+ANDA127104,ANDA,Lupin Limited,Leucovorin Calcium,2000-01-09,Prescription,3000987654
+ANDA127827,ANDA,Pfizer Inc,Heparin Sodium,2014-07-04,Discontinued,3015789012
+ANDA127975,ANDA,Teva Pharmaceuticals USA Inc,Trimethoprim-Sulfamethoxazole,2005-07-21,Discontinued,3025111222
+ANDA128931,ANDA,Amneal Pharmaceuticals LLC,Trimethoprim-Sulfamethoxazole,2013-10-18,Prescription,4005777888
+ANDA129766,ANDA,Hikma Pharmaceuticals LLC,Vancomycin HCl,2002-05-14,Prescription,3022456789
+ANDA130292,ANDA,Teva Pharmaceuticals USA Inc,Fluorouracil,2003-11-22,Prescription,3023567890
+ANDA130949,ANDA,Sandoz Inc,Doxorubicin HCl,2014-09-18,Prescription,3026333444
+ANDA131445,ANDA,Sun Pharmaceutical Industries Inc,Atropine Sulfate,2009-05-24,Prescription,3007445123
+ANDA132295,ANDA,Aurobindo Pharma Limited,Vancomycin HCl,2019-11-04,Discontinued,3021345678
+ANDA132755,ANDA,Apotex Inc,Amoxicillin-Clavulanate,2015-06-27,Discontinued,3025111222
+ANDA133501,ANDA,Sandoz Inc,Carboplatin,2003-03-03,Discontinued,3025111222
+ANDA133807,ANDA,Lupin Limited,Ceftriaxone Sodium,1999-04-02,Prescription,3019123456
+ANDA134741,ANDA,Pfizer Inc,Morphine Sulfate,2015-08-09,Prescription,3012456789
+ANDA135723,ANDA,Teva Pharmaceuticals USA Inc,Albuterol Sulfate,2022-01-28,Discontinued,3017901234
+ANDA136199,ANDA,Sun Pharmaceutical Industries Inc,Sodium Bicarbonate,2011-07-24,Prescription,4002678901
+ANDA136807,ANDA,Fresenius Kabi USA LLC,Penicillin V Potassium,2020-08-12,Tentative Approval,3017901234
+ANDA137651,ANDA,Lupin Limited,Cephalexin,2011-02-14,Discontinued,3011345678
+ANDA138079,ANDA,Dr. Reddy's Laboratories Ltd,Ceftriaxone Sodium,2001-02-11,Discontinued,3019123456
+ANDA138913,ANDA,Sandoz Inc,Leucovorin Calcium,2011-03-23,Prescription,4001567890
+ANDA139903,ANDA,Teva Pharmaceuticals USA Inc,Heparin Sodium,2009-10-14,Prescription,3009123789
+ANDA140655,ANDA,Sandoz Inc,Epinephrine,2010-06-17,Tentative Approval,3010234567
+ANDA141624,ANDA,Teva Pharmaceuticals USA Inc,Clindamycin Palmitate HCl,2017-11-26,Prescription,3003456789
+ANDA142521,ANDA,Amneal Pharmaceuticals LLC,Vancomycin HCl,2018-06-12,Prescription,3005678901
+ANDA143316,ANDA,Amneal Pharmaceuticals LLC,Clindamycin Palmitate HCl,2012-06-12,Prescription,3007445123
+ANDA143958,ANDA,Teva Pharmaceuticals USA Inc,Clindamycin Palmitate HCl,2009-07-11,Discontinued,3015789012
+ANDA144811,ANDA,Pfizer Inc,Azithromycin,2003-08-17,Prescription,3008901234
+ANDA145177,ANDA,Apotex Inc,Potassium Chloride,2020-08-07,Tentative Approval,3018012345
+ANDA145779,ANDA,Aurobindo Pharma Limited,Tobramycin Sulfate,2004-02-05,Tentative Approval,4001567890
+ANDA146609,ANDA,Cipla USA Inc,Gentamicin Sulfate,2012-02-26,Discontinued,3020234567
+ANDA147435,ANDA,Baxter Healthcare Corporation,Albuterol Sulfate,2000-09-18,Prescription,3019123456
+ANDA148263,ANDA,Lupin Limited,Penicillin V Potassium,2020-12-21,Prescription,3023567890
+ANDA148487,ANDA,Sun Pharmaceutical Industries Inc,Vancomycin HCl,2004-03-08,Discontinued,3002891456
+ANDA149173,ANDA,Amneal Pharmaceuticals LLC,Vincristine Sulfate,2009-08-26,Tentative Approval,3003456789
+ANDA149361,ANDA,Lupin Limited,Gentamicin Sulfate,2000-05-13,Tentative Approval,3026333444
+ANDA150248,ANDA,Cipla USA Inc,Methotrexate Sodium,2011-10-03,Prescription,3020234567
+ANDA150808,ANDA,Fresenius Kabi USA LLC,Cephalexin,2012-11-17,Prescription,3011345678
+ANDA151351,ANDA,Pfizer Inc,Clindamycin Palmitate HCl,2014-01-27,Prescription,3000987654
+ANDA151616,ANDA,Baxter Healthcare Corporation,Penicillin V Potassium,2008-12-08,Prescription,3018012345
+ANDA151972,ANDA,Amneal Pharmaceuticals LLC,Cephalexin,2004-11-18,Prescription,3019123456
+ANDA152167,ANDA,Aurobindo Pharma Limited,Vincristine Sulfate,2014-11-06,Discontinued,3000987654
+ANDA152906,ANDA,Baxter Healthcare Corporation,Epinephrine,2021-10-11,Tentative Approval,3005678901
+ANDA153035,ANDA,Cipla USA Inc,Cefazolin Sodium,2000-01-21,Discontinued,3016890123
+ANDA153920,ANDA,Hospira Inc,Piperacillin-Tazobactam,2016-07-20,Discontinued,3027555666
+ANDA154578,ANDA,Pfizer Inc,Atropine Sulfate,2007-11-10,Prescription,4003789012
+ANDA154752,ANDA,Dr. Reddy's Laboratories Ltd,Cisplatin,2020-01-06,Prescription,3026333444
+ANDA155200,ANDA,Apotex Inc,Piperacillin-Tazobactam,2017-03-11,Tentative Approval,3020234567
+ANDA155653,ANDA,Sun Pharmaceutical Industries Inc,Cefazolin Sodium,2010-03-25,Prescription,3006781234
+ANDA156230,ANDA,Sandoz Inc,Vancomycin HCl,2001-05-15,Prescription,3006781234
+ANDA156723,ANDA,Baxter Healthcare Corporation,Ceftriaxone Sodium,2017-07-08,Tentative Approval,3010234567
+ANDA157414,ANDA,Lupin Limited,Aztreonam,2021-06-07,Discontinued,3027555666
+ANDA158024,ANDA,Lupin Limited,Cisplatin,2007-08-01,Prescription,4003789012
+ANDA158370,ANDA,Dr. Reddy's Laboratories Ltd,Cisplatin,2004-10-12,Prescription,3018012345
+ANDA159333,ANDA,Baxter Healthcare Corporation,Leucovorin Calcium,2018-11-16,Prescription,3001234567
+ANDA159874,ANDA,Sun Pharmaceutical Industries Inc,Trimethoprim-Sulfamethoxazole,2002-05-24,Prescription,4003789012
+ANDA160384,ANDA,Teva Pharmaceuticals USA Inc,Amoxicillin-Clavulanate,1999-10-18,Prescription,3018012345
+ANDA161000,ANDA,Aurobindo Pharma Limited,Morphine Sulfate,2012-09-09,Tentative Approval,3008901234
+ANDA161503,ANDA,Hikma Pharmaceuticals LLC,Trimethoprim-Sulfamethoxazole,2009-06-18,Tentative Approval,3000987654
+ANDA162124,ANDA,Apotex Inc,Leucovorin Calcium,2010-09-02,Prescription,3003456789
+ANDA163047,ANDA,Aurobindo Pharma Limited,Aztreonam,2013-09-15,Prescription,4005777888
+ANDA163774,ANDA,Amneal Pharmaceuticals LLC,Aztreonam,2008-03-13,Tentative Approval,3019123456
+ANDA164393,ANDA,Dr. Reddy's Laboratories Ltd,Aztreonam,2014-09-16,Discontinued,3019123456
+ANDA164510,ANDA,Amneal Pharmaceuticals LLC,Ampicillin-Sulbactam,2009-06-22,Prescription,4004890123
+ANDA165425,ANDA,Pfizer Inc,Ceftriaxone Sodium,2021-12-21,Prescription,3026333444
+ANDA166326,ANDA,Amneal Pharmaceuticals LLC,Atropine Sulfate,2022-10-19,Prescription,3009123789
+ANDA166600,ANDA,Aurobindo Pharma Limited,Carboplatin,2014-11-24,Discontinued,4002678901
+ANDA167397,ANDA,Hikma Pharmaceuticals LLC,Ampicillin-Sulbactam,2005-01-19,Tentative Approval,3008901234
