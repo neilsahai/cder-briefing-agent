@@ -20,14 +20,16 @@ inspection data — and labels every answer with how much weight it can bear in 
 | Avg latency · LLM calls · rows cited per answer | 72 s · 6.4 · 25 | 67 s · 6.8 · 16 | 62 s · 7.1 · 14 |
 | Cost per question (Anthropic list prices, Nov 2026) | $0.26 | $0.22 | $0.24 |
 
-**On the capability range.** Every failure in every run has been a *model-judge* dimension (faithfulness,
-ambiguity_surfaced), never a code check: the hallucinated-number rate and citation checks have held at 0.0% /
-100% on all 300+ runs. Across runs the misses split into (a) judge variance or judge error — the same answer
-passes on the next run, or the judge returns no verdict; (b) one real narrator framing error the Opus verifier
-did not catch (a headline that read "7 under either basis" when the default basis gives 6 — the "correct
-number, wrong frame" failure described in `docs/TRUST_AND_HALLUCINATION.md`). That is why the harness supports
-`--trials 3` and reports pass^k; a 3-trial run of the final build was started and aborted at 23/72 trials
-(0 real failures, 3 judge flags) when the API credit ran out, and will be re-run.
+**On the capability range.** The hallucinated-number check and citation checks have held at 0.0% / 100% on
+every run (300+ answers). The misses are of three kinds: (a) the Opus verifier still flags a claim after the
+revision pass, which demotes the answer to Tier 3 — the intended, cautious failure direction, and it counts as a
+fail here; (b) a model-judge dimension disagrees (faithfulness, ambiguity_surfaced) — sometimes a real framing
+error the verifier missed (a headline that read "7 under either basis" when the default basis gives 6),
+sometimes judge variance (the same answer passes on the next run) or a judge that returns no verdict;
+(c) earlier in the build, two grader/renderer bugs that the harness itself exposed (see `BUILD_LOG.md`).
+That variance is why the harness supports `--trials 3` and reports pass^k. A 3-trial run of the final build was
+started and stopped at 23/72 trials when the API credit ran out: 4 failures, three of type (a) and one of
+type (b). It will be re-run in full.
 
 The red-team report (`docs/RED_TEAM_REPORT.md`) lists the 15 traps planted in the data — including the exact
 amoxicillin status conflict from the brief's backstory — with the naive result and this system's result for each.
