@@ -52,6 +52,7 @@ class Interpretation(BaseModel):
     note: str | None = None
     alternate_result: Any | None = Field(default=None, description="Headline value under the alternate reading, when computed.")
     differs: bool | None = Field(default=None, description="True if the alternate reading changes the headline answer.")
+    demotes: bool = Field(default=True, description="False when the default is a definition (not a judgment call) per DECISIONS.md: the alternate is disclosed for transparency but does not demote the trust tier.")
 
 
 class ToolResult(BaseModel):

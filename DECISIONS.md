@@ -92,6 +92,12 @@ all of them and shows them side by side with the interpretation labeled.
 | 3 Qualified | Material ambiguity or stated assumption; interpretations shown side by side | Only with the qualifier read aloud |
 | 4 Not answerable | Data lacks the field or the question is out of scope | No — says what *can* be answered |
 
+Disclosed-but-not-demoting alternates: some alternates are computed and shown for transparency but do not demote
+the tier, because the default is a *definition* in this file rather than a judgment call — D4 (Discontinued is a
+separate status, so "in shortage" = Current) and D6 (record- and presentation-level counts are "also reported").
+Tools mark these `demotes: false`. A reading that is a genuine judgment call (D5 quality scope, D3 fiscal-year
+window, D9 approved scope) always demotes until pinned.
+
 Cap rule: if the gate finds the question's *primary* ask is not in the data (e.g. "when will the shortage end?") but related facts are, the answer is at most **Tier 3** even when every fact it does give is certified. The certified facts are context, not the answer to the question as asked. (Added after rehearsal: a forecast question had earned a Certified label on the strength of its status facts.)
 
 ## D14. Things this system does not do

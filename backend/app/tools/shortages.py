@@ -105,7 +105,7 @@ def current_shortages(p: CurrentShortagesIn) -> ToolResult:
     n_pres = int(df[["generic_name", "presentation"]].drop_duplicates().shape[0]) if len(df) else 0
     interps.append(Interpretation(term="how many drugs", chosen="distinct generic_name", alternatives=["shortage_id (records)", "generic_name+presentation"], decision_ref="D6",
                                   alternate_result={"shortage_id (records)": int(len(df)), "generic_name+presentation": n_pres},
-                                  differs=(int(len(df)) != n_drugs) or (n_pres != n_drugs)))
+                                  differs=(int(len(df)) != n_drugs) or (n_pres != n_drugs), demotes=False))
 
     # "In shortage": default Current only; the alternate (Current or Discontinued) is computed deterministically
     # so the narrator can show both rather than say "not computed".
@@ -116,8 +116,9 @@ def current_shortages(p: CurrentShortagesIn) -> ToolResult:
         alt_result = {"distinct_drugs": int(alt_df["generic_name"].nunique()) if len(alt_df) else 0, "records": int(len(alt_df))}
         differs = alt_result["distinct_drugs"] != (int(df["generic_name"].nunique()) if len(df) else 0)
         interps.append(Interpretation(term="in shortage", chosen="current_only", alternatives=["current_or_discontinued"], decision_ref="D4",
-                                      alternate_result=alt_result, differs=differs,
-                                      note=f"Current or Discontinued gives {alt_result['distinct_drugs']} drugs / {alt_result['records']} records"))
+                                      alternate_result=alt_result, differs=differs, demotes=False,
+                                      note=f"Current or Discontinued gives {alt_result['distinct_drugs']} drugs / {alt_result['records']} records. "
+                                           "Disclosed for transparency; by D4 Discontinued is a separate status by definition, so this does not demote the tier."))
 
     value = {
         "as_of": as_of.isoformat(),

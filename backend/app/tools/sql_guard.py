@@ -122,5 +122,6 @@ def sql_query(p: SQLIn) -> ToolResult:
     warnings += audit.warnings_for(rows, min_severity=Severity.medium)
     records = df.astype(str).to_dict("records")
     interps = [Interpretation(term=n, chosen="encoded in SQL", alternatives=[], decision_ref="D13") for n in p.interpretation_notes]
-    return ToolResult(tool="sql_query", value={"sql": p.sql, "purpose": p.purpose, "row_count": len(df), "columns": list(df.columns), "records": records},
-                      rows=rows, source_tables=base_tables, interpretations=interps, warnings=warnings)
+    as_of = store.data_max_date
+    return ToolResult(tool="sql_query", value={"sql": p.sql, "purpose": p.purpose, "as_of": as_of.isoformat(), "row_count": len(df), "columns": list(df.columns), "records": records},
+                      rows=rows, source_tables=base_tables, interpretations=interps, warnings=warnings, as_of=as_of)

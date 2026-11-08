@@ -367,7 +367,7 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     # deterministic: tool-reported divergence (certified queries compute their alternates)
     seen_terms = {d.get("term", "").lower() for d in divergent_all}
     for i in interps:
-        if i.differs and i.term.lower() not in seen_terms:
+        if i.differs and i.demotes and i.term.lower() not in seen_terms:
             divergent_all.append({"term": i.term, "differs_materially": True, "how": i.note or "", "source": "tool"})
             seen_terms.add(i.term.lower())
     divergent = [d for d in divergent_all if not _pinned(d.get("term", ""))]
