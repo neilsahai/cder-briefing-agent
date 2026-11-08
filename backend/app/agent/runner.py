@@ -171,8 +171,9 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     sys_ctx["gate"] = gate
     if gate["category"] in ("out_of_scope", "unsafe_or_policy"):
         md = (f"**Not answerable from this data.** {gate['reason']} [SYS]\n\n"
-              + (f"What this tool can answer: {gate.get('answerable_part')}" if gate.get("answerable_part") else
-                 "This tool answers questions about drug shortage records, drug applications, and establishment inspections in the provided FDA snapshot."))
+              + (f"What this tool can answer: {gate.get('answerable_part')}\n\n" if gate.get("answerable_part") else
+                 "This tool answers questions about drug shortage records, drug applications, and establishment inspections in the provided FDA snapshot.\n\n")
+              + (f"**Ask instead:** {gate['suggested_question']}" if gate.get("suggested_question") else ""))
         tracer.step("tier", "Tier 4", output={"tier": 4})
         a4 = Answer(run_id=tracer.trace.run_id, question=question, tier=4, tier_label=TIER_LABELS[4],
                     tier_reasons=[gate["reason"]], headline="Not answerable from this data.", markdown=md, markdown_template=md,

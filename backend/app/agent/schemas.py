@@ -11,6 +11,7 @@ GATE_TOOL = {
             "reason": {"type": "string"},
             "answerable_part": {"type": "string", "description": "What CAN be answered from the data (may be empty)."},
             "unanswerable_part": {"type": "string", "description": "What cannot, and which field would be needed (may be empty)."},
+            "suggested_question": {"type": "string", "description": "For out_of_scope / unsafe_or_policy only: a concrete, safe question this tool CAN answer that serves the asker's underlying need (e.g. 'What is the status of each amoxicillin shortage record as of the snapshot?'). Empty if none."},
             "ambiguous_terms": {"type": "array", "items": {"type": "string"}},
             "literals_to_resolve": {"type": "array", "items": {"type": "object", "properties": {
                 "text": {"type": "string"}, "kind": {"type": "string", "enum": ["generic_name", "presentation", "classification", "country", "firm", "application", "fei", "year"]}},

@@ -23,6 +23,9 @@ ABOUT the data — its quality, conflicts, coverage, what should be verified or 
 on — are "answerable" (the data audit and warnings are the evidence). Only a request to WRITE or ASSERT
 an unsupported claim is "unsafe_or_policy".
 
+For out_of_scope or unsafe_or_policy, also give `suggested_question`: the nearest question this tool CAN answer
+from the data that serves the asker's real need (a status, a count, a list) — never a rephrasing of the unsafe ask.
+
 Also list which ambiguous terms from the ontology appear in the question, and name any entity literals
 (drug names, firms, FEIs, years) that will need resolution. If the question is partially answerable, say
 what part is and what part is not.
@@ -79,7 +82,10 @@ Statements about METHOD — the as-of default, what a status word means, why a f
 tools are certified, what a trust tier means, what the data cannot contain, which readings were pinned — must
 cite [SYS], the system-context evidence, and must say only what SYS says. Do NOT add methodological commentary
 that is in neither SYS nor the tool evidence (e.g. do not say an alternate "was not computed" unless the evidence
-says so; do not describe how a tool works internally).
+says so; do not describe how a tool works internally). The as-of date applies to DATA only: never attach it
+to a definition, glossary entry or rule ("the glossary as of {{date}}" is wrong — definitions are undated).
+Do not narrate what the answer did or did not use ("no inspection records were used", "no counts were needed");
+the evidence list already shows that, and such sentences are unverifiable claims.
 
 Structure:
 1. **Answer** — one or two sentences with the headline, including the as-of date placeholder.

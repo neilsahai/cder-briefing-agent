@@ -122,6 +122,11 @@ export default function AskPage() {
                 .map(([k, label, n]) => <button key={k} role="tab" aria-selected={tab === k} className={tab === k ? 'active' : ''} onClick={() => setTab(k)}>{label}{n != null && <span className="n">{n}</span>}</button>)}
             </div>
 
+            {tab === 'answer' && answer.tier === 4 && typeof answer.gate.suggested_question === 'string' && answer.gate.suggested_question && (
+              <div className="warn low" style={{ marginBottom: 10 }}>
+                <strong>Ask instead:</strong> {answer.gate.suggested_question as string}{' '}
+                <button className="btn small" onClick={() => { const sq = answer.gate.suggested_question as string; setQ(sq); submit(sq, {}) }}>Ask this</button>
+              </div>)}
             {tab === 'answer' && <Prose md={answer.markdown} active={focus} onCite={(id) => { setFocus(id); setTab('evidence'); setTimeout(() => document.getElementById(`ev-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50) }} />}
             {tab === 'evidence' && <EvidencePanel evidence={answer.evidence} focus={focus} />}
             {tab === 'claims' && (

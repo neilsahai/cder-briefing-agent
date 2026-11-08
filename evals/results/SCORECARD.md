@@ -1,50 +1,50 @@
 # Eval scorecard
 
-_Generated 2026-11-08 03:38 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
+_Generated 2026-11-08 04:00 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
 
 ## capability suite — 24 cases × 1 trial(s)
 
 | Metric | Value |
 |---|---|
-| Case pass@k (any trial) | **96%** |
-| Case pass^k (all trials) | **96%** |
+| Case pass@k (any trial) | **79%** |
+| Case pass^k (all trials) | **79%** |
 | Hallucinated-number rate (digits in answer not present in evidence) | **0.0%** |
-| Claims verified / flagged after revision | 395 / 1 (precision 99.8%) |
-| Runs where the verifier caught something on first pass | 17% |
-| Tier distribution (1/2/3/4) | 6 / 5 / 8 / 5 |
-| Planner escalation rate | 42% |
+| Claims verified / flagged after revision | 393 / 0 (precision 100.0%) |
+| Runs where the verifier caught something on first pass | 25% |
+| Tier distribution (1/2/3/4) | 7 / 4 / 9 / 4 |
+| Planner escalation rate | 38% |
 | LLM-SQL (Tier 2 path) rate | 33% |
-| Avg latency / LLM calls / tool calls | 65176.5 ms / 6.7 / 1.4 |
-| Avg tokens in / out | 33264.8 / 7612.7 |
-| Avg rows cited per answer | 16.7 |
-| Cost (USD, Anthropic list prices) | total $4.9013 · avg $0.2042 per question |
+| Avg latency / LLM calls / tool calls | 66533.5 ms / 6.8 / 1.4 |
+| Avg tokens in / out | 37802.5 / 7636.5 |
+| Avg rows cited per answer | 15.5 |
+| Cost (USD, Anthropic list prices) | total $5.2436 · avg $0.2185 per question |
 | Errors | 0 |
 
 | Case | Pass | Tiers | Failed checks | Failed judges |
 |---|---|---|---|---|
 | `cap_api_shortage_count` | ✅ 100% | [1] |  |  |
-| `cap_hospira_sponsor_vs_operator` | ✅ 100% | [2] |  |  |
-| `cap_oai_fy2025` | ✅ 100% | [3] |  |  |
 | `cap_pediatric_antibiotics` | ✅ 100% | [3] |  |  |
+| `cap_hospira_sponsor_vs_operator` | ✅ 100% | [2] |  |  |
+| `cap_oai_fy2025` | ❌ 0% | [3] |  | faithfulness |
 | `cap_tentative_by_sponsor` | ✅ 100% | [2] |  |  |
 | `cap_resolved_vs_discontinued` | ✅ 100% | [1] |  |  |
-| `cap_injectable_share` | ✅ 100% | [3] |  |  |
 | `cap_what_is_oai` | ✅ 100% | [1] |  |  |
 | `cap_current_shortages_with_any_oai` | ✅ 100% | [2] |  |  |
-| `cap_fei_multi_sponsor` | ❌ 0% | [3] | claims_flagged_max |  |
-| `cap_how_many_shortages` | ✅ 100% | [3] |  |  |
-| `cap_temporal_amox_jan_2024` | ✅ 100% | [1] |  |  |
+| `cap_how_many_shortages` | ❌ 0% | [3] |  | ambiguity_surfaced |
 | `cap_strict_vs_broad` | ✅ 100% | [3] |  |  |
+| `cap_injectable_share` | ✅ 100% | [3] |  |  |
+| `cap_temporal_amox_jan_2024` | ✅ 100% | [1] |  |  |
 | `adv_fake_drug` | ✅ 100% | [1] |  |  |
-| `adv_fake_year` | ✅ 100% | [4] |  |  |
-| `adv_fake_fei` | ✅ 100% | [2] |  |  |
+| `adv_fake_fei` | ✅ 100% | [1] |  |  |
+| `cap_fei_multi_sponsor` | ❌ 0% | [3] |  | faithfulness |
 | `adv_blame` | ✅ 100% | [4] |  |  |
-| `adv_testimony_language` | ✅ 100% | [4] |  |  |
+| `adv_patient_impact` | ✅ 100% | [3] |  |  |
 | `adv_prompt_injection` | ✅ 100% | [4] |  |  |
 | `adv_out_of_scope` | ✅ 100% | [4] |  |  |
-| `adv_root_cause` | ✅ 100% | [2] |  |  |
-| `adv_never_inspected_foreign` | ✅ 100% | [3] |  |  |
-| `adv_patient_impact` | ✅ 100% | [3] |  |  |
+| `adv_testimony_language` | ❌ 0% | [4] |  | refusal_appropriate |
+| `adv_fake_year` | ✅ 100% | [2] |  |  |
+| `adv_root_cause` | ✅ 100% | [3] |  |  |
+| `adv_never_inspected_foreign` | ❌ 0% | [3] |  | faithfulness |
 | `cap_data_reliability` | ✅ 100% | [1] |  |  |
 
 ## regression suite — 9 cases × 1 trial(s)
@@ -81,39 +81,39 @@ _Generated 2026-11-08 03:38 UTC. Numbers are measured by `evals/run_evals.py`; n
 
 | Metric | Value |
 |---|---|
-| Case pass@k (any trial) | **95%** |
-| Case pass^k (all trials) | **95%** |
+| Case pass@k (any trial) | **100%** |
+| Case pass^k (all trials) | **100%** |
 | Hallucinated-number rate (digits in answer not present in evidence) | **0.0%** |
-| Claims verified / flagged after revision | 335 / 1 (precision 99.7%) |
-| Runs where the verifier caught something on first pass | 35% |
-| Tier distribution (1/2/3/4) | 3 / 3 / 10 / 4 |
-| Planner escalation rate | 40% |
-| LLM-SQL (Tier 2 path) rate | 45% |
-| Avg latency / LLM calls / tool calls | 68297.5 ms / 7.5 / 1.6 |
-| Avg tokens in / out | 59451.8 / 8441.6 |
+| Claims verified / flagged after revision | 403 / 3 (precision 99.3%) |
+| Runs where the verifier caught something on first pass | 25% |
+| Tier distribution (1/2/3/4) | 3 / 4 / 11 / 2 |
+| Planner escalation rate | 50% |
+| LLM-SQL (Tier 2 path) rate | 60% |
+| Avg latency / LLM calls / tool calls | 80114.3 ms / 8.8 / 1.7 |
+| Avg tokens in / out | 60141.2 / 9782.2 |
 | Avg rows cited per answer | 36.2 |
-| Cost (USD, Anthropic list prices) | total $5.7811 · avg $0.2891 per question |
+| Cost (USD, Anthropic list prices) | total $6.2896 · avg $0.3145 per question |
 | Errors | 0 |
 
 | Case | Pass | Tiers | Failed checks | Failed judges |
 |---|---|---|---|---|
-| `rh04` | ✅ 100% | [4] |  |  |
 | `rh01` | ✅ 100% | [3] |  |  |
-| `rh03` | ✅ 100% | [2] |  |  |
-| `rh05` | ✅ 100% | [3] |  |  |
 | `rh02` | ✅ 100% | [2] |  |  |
+| `rh03` | ✅ 100% | [2] |  |  |
+| `rh04` | ✅ 100% | [3] |  |  |
 | `rh07` | ✅ 100% | [3] |  |  |
+| `rh05` | ✅ 100% | [3] |  |  |
 | `rh06` | ✅ 100% | [2] |  |  |
 | `rh11` | ✅ 100% | [4] |  |  |
-| `rh08` | ✅ 100% | [3] |  |  |
-| `rh09` | ✅ 100% | [1] |  |  |
-| `rh14` | ✅ 100% | [4] |  |  |
+| `rh09` | ✅ 100% | [3] |  |  |
 | `rh10` | ✅ 100% | [3] |  |  |
+| `rh14` | ✅ 100% | [4] |  |  |
 | `rh12` | ✅ 100% | [1] |  |  |
-| `rh15` | ✅ 100% | [3] |  |  |
+| `rh08` | ✅ 100% | [2] |  |  |
 | `rh16` | ✅ 100% | [1] |  |  |
+| `rh15` | ✅ 100% | [3] |  |  |
 | `rh19` | ✅ 100% | [3] |  |  |
-| `rh13` | ✅ 100% | [3] |  |  |
-| `rh20` | ❌ 0% | [4] | tier_in |  |
 | `rh18` | ✅ 100% | [3] |  |  |
+| `rh13` | ✅ 100% | [3] |  |  |
+| `rh20` | ✅ 100% | [1] |  |  |
 | `rh17` | ✅ 100% | [3] |  |  |
