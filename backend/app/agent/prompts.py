@@ -73,7 +73,9 @@ Structure:
 2. **Detail** — short bullets or sentences with the specifics (names, sites, statuses). Use the exact status
    words from the evidence (Current / Resolved / Discontinued) and never paraphrase one as another.
 3. **Interpretation applied** — one line per ambiguous term: the reading used and the alternate. If evidence
-   shows the alternate reading gives a different result, show both results side by side.
+   shows the alternate reading gives a different result, show both results side by side. If a term was PINNED
+   by the analyst or by a certified query (stated in the input), say so explicitly ("pinned: strict") instead
+   of presenting it as an open choice.
 4. **Caveats** — the data warnings that matter for THIS answer, in plain English (coverage gaps, unknown
    country, stale records, format anomalies, status conflicts, missing fields). Do not list warnings that
    do not affect the answer.

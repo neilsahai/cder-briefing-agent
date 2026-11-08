@@ -1,0 +1,96 @@
+# Regression suite — must stay ~100%. The three required queries under default and alternate readings,
+# plus the trap detectors. Graders are code-based (deterministic) unless `judge:` is listed.
+# Assertion vocabulary: see evals/graders.py
+
+suite: regression
+cases:
+  - id: reg_q1_default
+    question: "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?"
+    expect:
+      tier_in: [1, 3]            # 3 if the planner computes the FY alternate and it diverges (it does); 1 when pinned
+      gate_category_in: [answerable]
+      evidence_contains:
+        - {tool: cq_quality_shortages_oai_sites, path: drugs_in_shortage_for_quality.count_distinct_drugs, equals: 6}
+        - {tool: cq_quality_shortages_oai_sites, path: n_sites_with_oai, equals: 4}
+      markdown_contains_all: ["Baxter Healthcare Corporation", "Pfizer Manufacturing LLC", "ICU Medical Inc", "Fresenius Kabi USA LLC", "3007891234"]
+      markdown_not_contains: ["never been inspected", "never inspected"]
+      interpretations_declared_include: ["quality", "fiscal"]
+      claims_flagged_max: 0
+    judge: [faithfulness, ambiguity_surfaced]
+
+  - id: reg_q1_pinned_certified
+    question: "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?"
+    pins: {"quality problems": strict, "last two fiscal years": completed, "fiscal year": inspection_end_date}
+    expect:
+      tier_in: [1]
+      evidence_contains:
+        - {tool: cq_quality_shortages_oai_sites, path: n_sites_with_oai, equals: 4}
+      claims_flagged_max: 0
+
+  - id: reg_q1_as_of_early_2025
+    question: "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?"
+    as_of: "2025-03-01"
+    pins: {"last two fiscal years": completed, "fiscal year": inspection_end_date}
+    expect:
+      evidence_contains:
+        - {tool: cq_quality_shortages_oai_sites, path: fiscal_years, equals: [2023, 2024]}
+        - {tool: cq_quality_shortages_oai_sites, path: n_sites_with_oai, equals: 2}
+      markdown_contains_all: ["Pfizer Manufacturing LLC", "ICU Medical Inc"]
+      markdown_not_contains: ["Baxter Healthcare Corporation received", "Fresenius Kabi USA LLC received"]
+
+  - id: reg_q2_default
+    question: "For amoxicillin oral suspension, what is the real supply picture — how many approved applications, how many are actively marketed, and what is currently in shortage?"
+    expect:
+      tier_in: [1, 3]
+      evidence_contains:
+        - {tool: cq_supply_picture, path: applications.approved_full, equals: 4}
+        - {tool: cq_supply_picture, path: applications.actively_marketed, equals: 3}
+        - {tool: cq_supply_picture, path: currently_in_shortage_count, equals: 1}
+      markdown_contains_all: ["DS-2023-0142", "Current", "Resolved", "dosage"]
+      warnings_include: [DQ01_status_conflict, DQ12_missing_dosage_form]
+      claims_flagged_max: 0
+    judge: [faithfulness, status_semantics]
+
+  - id: reg_q2_pinned_certified
+    question: "For amoxicillin oral suspension, what is the real supply picture — how many approved applications, how many are actively marketed, and what is currently in shortage?"
+    pins: {approved: full}
+    expect:
+      tier_in: [1]
+      claims_flagged_max: 0
+
+  - id: reg_q2_as_of_dec_2023_resolved_then
+    question: "As of December 1, 2023, what was the shortage status of amoxicillin oral suspension?"
+    as_of: "2023-12-01"
+    expect:
+      markdown_contains_all: ["Resolved", "DS-2023-0142"]
+      warnings_include: [DQ01_status_conflict]
+      claims_flagged_max: 0
+    judge: [status_semantics]
+
+  - id: reg_q3_default
+    question: "Which foreign manufacturing establishments supplying drugs currently in shortage have not been inspected since FY2021?"
+    expect:
+      tier_in: [1]
+      evidence_contains:
+        - {tool: cq_foreign_sites_not_inspected, path: counts.foreign_stale, equals: 4}
+        - {tool: cq_foreign_sites_not_inspected, path: counts.never_inspected, equals: 2}
+        - {tool: cq_foreign_sites_not_inspected, path: site_coverage.linked, equals: 13}
+      markdown_contains_all: ["3025111222", "3026333444", "3027555666", "4005777888", "UNKNOWN", "13 of 57"]
+      warnings_include: [COVERAGE, COUNTRY_UNKNOWN]
+      claims_flagged_max: 0
+    judge: [faithfulness, no_inferred_country]
+
+  - id: reg_q3_since_fy2024
+    question: "Which foreign manufacturing establishments supplying drugs currently in shortage have not been inspected since FY2024?"
+    expect:
+      markdown_contains_all: ["3010234567"]
+      claims_flagged_max: 0
+
+  - id: reg_trap_amoxicillin_resolved
+    question: "Is the amoxicillin shortage resolved?"
+    expect:
+      gate_category_in: [answerable]
+      markdown_contains_all: ["Current", "Resolved", "DS-2023-0142"]
+      warnings_include: [DQ01_status_conflict]
+      claims_flagged_max: 0
+    judge: [status_semantics, faithfulness]

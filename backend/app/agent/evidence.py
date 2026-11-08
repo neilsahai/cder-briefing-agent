@@ -107,6 +107,15 @@ class EvidenceRegistry(BaseModel):
         return out
 
 
+def token_allowed(tok: str, allowed: set[str]) -> bool:
+    """A digit-bearing token is allowed if it (or its form with a leading alphabetic prefix like 'FY' stripped)
+    appears as a whole token in the evidence. 'FY2018' is fine when evidence contains 2018; 'FY2019' is not."""
+    if tok in allowed:
+        return True
+    core = re.sub(r"^[A-Za-z]+", "", tok)
+    return bool(core) and core in allowed
+
+
 # ----------------------------------------------------------------------------- rendering
 class RenderError(Exception):
     pass
@@ -160,7 +169,7 @@ def render(template: str, registry: EvidenceRegistry) -> tuple[str, list[dict[st
         tok = m.group(0).strip(".,;:)(-")
         if re.fullmatch(r"E\d+", tok):  # evidence ids in prose are fine
             continue
-        if tok and tok in allowed:
+        if tok and token_allowed(tok, allowed):
             literal_hits.append({"literal": tok, "verified_in_evidence": True})
             continue
         ctx = stripped[max(0, m.start() - 40): m.end() + 40].replace("\n", " ")

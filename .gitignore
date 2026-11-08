@@ -9,6 +9,7 @@ node_modules/
 frontend/dist/
 .pytest_cache/
 .ruff_cache/
-evals/results/*.json
+evals/results/*_[0-9]*Z.json
 !evals/results/.gitkeep
 .DS_Store
+backend/state/

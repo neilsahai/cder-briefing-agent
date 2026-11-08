@@ -57,7 +57,13 @@ def _tokens(q: str) -> set[str]:
     return {t for t in re.findall(r"[a-z0-9]+", q.lower()) if t not in STOP and len(t) > 1}
 
 
+def numeric_tokens(q: str) -> set[str]:
+    return set(re.findall(r"\d[\w\-\./]*", q))
+
+
 def similarity(a: str, b: str) -> float:
+    if numeric_tokens(a) != numeric_tokens(b):
+        return 0.0  # a different year/strength/number is a different question, however similar the words
     ta, tb = _tokens(a), _tokens(b)
     jacc = len(ta & tb) / len(ta | tb) if ta | tb else 0.0
     seq = SequenceMatcher(None, a.lower(), b.lower()).ratio()

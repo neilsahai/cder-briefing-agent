@@ -140,8 +140,9 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     user_msg = question if not as_of else f"{question}\n\n(as_of date to use: {as_of})"
     if cq_match:
         user_msg += (f"\n\nCERTIFIED PLAN AVAILABLE: tool `{cq_match['tool']}` with args {json.dumps(cq_match.get('args', {}))} was verified by "
-                     f"{cq_match['verified_by']} for an equivalent question. Call it with exactly these args as your primary evidence. "
-                     f"You may additionally compute alternates for disclosure.")
+                     f"{cq_match['verified_by']} for this question. Call it with exactly these args as your primary evidence. "
+                     f"If the question actually differs from the certified one (a different year, drug, or scope), adapt the args — "
+                     f"the answer will then not carry certified status, which is correct.")
     if pins:
         user_msg += ("\n\nINTERPRETATIONS PINNED BY THE ANALYST (treat as resolved; do not present alternates as open): "
                      + "; ".join(f"'{k}' = {v}" for k, v in pins.items()))
@@ -269,10 +270,14 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     if not last_err:
         verification, claims = _verify(rendered)
         flagged = [c for c in claims if c.verdict in ("unsupported", "misattributed")]
-        if flagged and revisions < MAX_REVISIONS:
+        checklist = [k for k in ("interpretations_disclosed", "high_warnings_surfaced", "status_semantics_respected", "no_country_asserted_for_unknown") if verification.get(k) is False]
+        if (flagged or verification.get("overall") == "fail") and revisions < MAX_REVISIONS:
             revisions += 1
-            fix_msg = (narr_user + "\n\nYOUR PREVIOUS DRAFT WAS CHECKED BY AN INDEPENDENT VERIFIER. These claims were flagged — reword or remove each one so it is exactly what the evidence supports (no overstatement, correct citation, correct source):\n"
-                       + "\n".join(f"- [{c.verdict}] \"{c.text}\" — {c.note or ''}" for c in flagged)
+            issues = [f"- [{c.verdict}] \"{c.text}\" — {c.note or ''}" for c in flagged]
+            issues += [f"- [checklist] {k} = false" for k in checklist]
+            issues.append(f"- [verifier summary] {verification.get('summary', '')}")
+            fix_msg = (narr_user + "\n\nYOUR PREVIOUS DRAFT WAS CHECKED BY AN INDEPENDENT VERIFIER. Fix every item below — reword or remove flagged claims so each is exactly what the evidence supports; add any missing interpretation disclosure or high-severity caveat:\n"
+                       + "\n".join(issues)
                        + "\n\nPREVIOUS DRAFT (template):\n" + template + "\n\nReturn the full corrected answer. No digits outside placeholders.")
             out, call, _ = structured(prov, "narrator", system=prompts.NARRATOR_SYSTEM, messages=[{"role": "user", "content": fix_msg}], tool=NARRATE_TOOL, max_tokens=4000)
             if "markdown" in out and "headline" in out:
@@ -280,7 +285,7 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
                     r2, s2 = render(out["markdown"], registry)
                     h2, hs2 = render(out["headline"], registry)
                     template, headline_t, rendered, headline, subs = out["markdown"], out["headline"], r2, h2, s2 + hs2
-                    tracer.step("narrate", f"Narration revised after verifier ({len(flagged)} claim(s))", llm=call, output={"fixed": [c.text for c in flagged]})
+                    tracer.step("narrate", f"Narration revised after verifier ({len(flagged)} claim(s), {len(checklist)} checklist item(s))", llm=call, output={"fixed": [c.text for c in flagged] + checklist})
                     verification, claims = _verify(rendered)
                 except RenderError as ex:
                     tracer.step("render", "Revision failed to render; keeping verified-with-notes draft", llm=call, output=str(ex), status="warn")
@@ -295,14 +300,28 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
         t = term.lower()
         return any(k.lower() in t or t in k.lower() for k in pins)
     divergent_all = [d for d in finish.get("divergent_interpretations", []) if d.get("differs_materially")]
+    # deterministic: tool-reported divergence (certified queries compute their alternates)
+    seen_terms = {d.get("term", "").lower() for d in divergent_all}
+    for i in interps:
+        if i.differs and i.term.lower() not in seen_terms:
+            divergent_all.append({"term": i.term, "differs_materially": True, "how": i.note or "", "source": "tool"})
+            seen_terms.add(i.term.lower())
     divergent = [d for d in divergent_all if not _pinned(d.get("term", ""))]
     pinned_resolved = [d for d in divergent_all if _pinned(d.get("term", ""))]
     if pinned_resolved:
         reasons.append(f"{len(pinned_resolved)} ambiguous term(s) resolved by analyst pins: " + ", ".join(d['term'] for d in pinned_resolved))
     tier = 1
-    if last_err or (verification and verification.get("overall") == "fail") or any(c.verdict in ("unsupported", "misattributed") for c in claims):
+    flagged_final = [c for c in claims if c.verdict in ("unsupported", "misattributed")]
+    checklist_fail = [k for k in ("interpretations_disclosed", "high_warnings_surfaced", "status_semantics_respected", "no_country_asserted_for_unknown") if verification and verification.get(k) is False]
+    if last_err:
         tier = 3
-        reasons.append("verifier flagged unsupported or misattributed claims" if not last_err else "narration could not be rendered safely")
+        reasons.append("narration could not be rendered safely")
+    elif flagged_final:
+        tier = 3
+        reasons.append(f"verifier flagged {len(flagged_final)} claim(s) after revision: " + "; ".join(c.text[:60] for c in flagged_final[:2]))
+    elif verification and verification.get("overall") == "fail":
+        tier = 3
+        reasons.append("verifier checklist failed: " + (", ".join(checklist_fail) if checklist_fail else verification.get("summary", "")[:120]))
     if used_sql or finish.get("used_sql"):
         tier = max(tier, 2)
         reasons.append("answer depends on LLM-authored SQL (validated, executed, not certified)")
@@ -318,8 +337,14 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
         reasons.append("some evidence came from a non-certified tool")
     if tier == 1:
         reasons.append("all evidence from certified tools; interpretations disclosed; verifier passed")
-    if cq_match and tier == 1:
-        reasons.append(f"matches certified query '{cq_match['tool']}' verified by {cq_match.get('verified_by')}")
+    cq_applied = bool(cq_match) and any(e.tool == cq_match["tool"] and all(e.args.get(k) == v for k, v in cq_match.get("args", {}).items()) for e in registry.items)
+    if cq_match and not cq_applied:
+        reasons.append(f"certified query '{cq_match['name']}' was suggested but its exact plan was not used; no certified credit")
+        cq_match = {**cq_match, "applied": False}
+    elif cq_match:
+        cq_match = {**cq_match, "applied": True}
+        if tier == 1:
+            reasons.append(f"matches certified query '{cq_match['name']}' verified by {cq_match.get('verified_by')}")
     tracer.step("tier", f"Tier {tier} — {TIER_LABELS[tier]}", output={"tier": tier, "reasons": reasons})
 
     # manual lookups replaced: one per cited row across distinct tables, a conservative proxy

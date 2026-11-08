@@ -87,3 +87,41 @@ def data_health(p: DataHealthIn) -> ToolResult:
                for f in audit.findings if f.severity in ("high", "medium")]
     return ToolResult(tool="data_health", value={"summary": s, "high_and_medium_findings": details},
                       source_tables=["drug_shortages", "applications", "inspections"])
+
+
+class GlossaryIn(BaseModel):
+    terms: list[str] | None = Field(None, description="Terms to define (e.g. 'Resolved', 'OAI', 'fiscal year', 'quality problems'). None = all.")
+
+
+@tool(
+    "glossary",
+    """Return the ontology's definitions: FDA status semantics (Current/Resolved/Discontinued), inspection
+    classifications (NAI/VAI/OAI), fiscal-year rule, and the default reading + alternates for every ambiguous
+    term with its DECISIONS.md reference. Use for definitional questions and whenever a status or
+    classification word needs to be explained. Certified: content comes from ontology.yaml, not the model.""",
+    decision_refs=("D2", "D4", "D5", "D8", "D9", "D10", "D11"),
+)
+def glossary(p: GlossaryIn) -> ToolResult:
+    o = ontology.load()
+    classifications = {
+        "NAI": "No Action Indicated — facility in an acceptable state of compliance.",
+        "VAI": "Voluntary Action Indicated — objectionable conditions found; voluntary correction; not a regulatory action.",
+        "OAI": "Official Action Indicated — facility in an unacceptable state of compliance; regulatory action may follow. Classification is per project area.",
+    }
+    full = {
+        "status_semantics": {k: {"fda_label": v["fda_label"], "meaning": v["meaning"], "note": v.get("note")} for k, v in o["status_semantics"].items()},
+        "inspection_classifications": classifications,
+        "fiscal_year": o["definitions"]["fiscal_year"],
+        "ambiguous_terms": {t: {"definition": m["definition"], "interpretations": m.get("interpretations", []), "note": m.get("note")} for t, m in o["ambiguous_terms"].items()},
+        "definitions": o["definitions"],
+        "defaults": o["defaults"],
+    }
+    if p.terms:
+        wanted = [t.lower() for t in p.terms]
+        def keep(d: dict) -> dict:
+            return {k: v for k, v in d.items() if any(w in k.lower() or k.lower() in w for w in wanted)}
+        full = {"status_semantics": keep(full["status_semantics"]), "inspection_classifications": keep(full["inspection_classifications"]),
+                "fiscal_year": full["fiscal_year"] if any("fiscal" in w or "fy" in w for w in wanted) else None,
+                "ambiguous_terms": keep(full["ambiguous_terms"]), "definitions": keep(full["definitions"]), "defaults": full["defaults"]}
+    return ToolResult(tool="glossary", value=full, source_tables=["ontology.yaml"],
+                      interpretations=[Interpretation(term="definitions", chosen="ontology.yaml v" + str(o["version"]), alternatives=[], decision_ref="D4")])

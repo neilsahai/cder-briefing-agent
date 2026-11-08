@@ -50,6 +50,8 @@ class Interpretation(BaseModel):
     alternatives: list[str] = Field(default_factory=list)
     decision_ref: str = Field(description="DECISIONS.md section, e.g. 'D5'.")
     note: str | None = None
+    alternate_result: Any | None = Field(default=None, description="Headline value under the alternate reading, when computed.")
+    differs: bool | None = Field(default=None, description="True if the alternate reading changes the headline answer.")
 
 
 class ToolResult(BaseModel):

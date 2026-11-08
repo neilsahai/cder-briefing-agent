@@ -81,9 +81,33 @@ def cq_quality_shortages_oai_sites(p: Q1In) -> ToolResult:
     no_oai = [{"fei": s["fei"], "facility_operator": s["facility_operator"], "country": s["country"], "generic_name": s["generic_name"],
                "last_inspection_end_date": s["last_inspection_end_date"], "note": "no OAI in window" if s["country_known"] else "no inspection record"}
               for s in sites.value["sites"] if s["fei"] not in oai_feis]
+    # ---- deterministic alternates (so the trust tier never depends on whether the planner chose to compute them)
+    alt_notes: list[Interpretation] = []
+    alt_scope = "broad" if p.quality_scope == "strict" else "strict"
+    cs_alt = current_shortages(CurrentShortagesIn(as_of=p.as_of, reason_scope=alt_scope))
+    alt_notes.append(Interpretation(term="quality problems", chosen=p.quality_scope, alternatives=[alt_scope], decision_ref="D5",
+                                    alternate_result={"distinct_drugs": cs_alt.value["counts"]["distinct_drugs"], "records": cs_alt.value["counts"]["records"]},
+                                    differs=cs_alt.value["counts"]["distinct_drugs"] != cs.value["counts"]["distinct_drugs"],
+                                    note=f"{p.quality_scope}: {cs.value['counts']['distinct_drugs']} drugs; {alt_scope}: {cs_alt.value['counts']['distinct_drugs']} drugs"))
+    alt_mode = "include_current" if p.fy_mode == "completed" else "completed"
+    fyw_alt = fiscal_year_window(FYWindowIn(n_years=2, as_of=p.as_of, mode=alt_mode))
+    insp_alt = inspections_for_sites(InspectionsIn(feis=feis, classification=["OAI"], fiscal_years=fyw_alt.value["fiscal_years"], fy_basis=p.fy_basis, project_area=p.project_area))
+    alt_sites = sorted({r["fei"] for r in insp_alt.value["rows"]})
+    alt_notes.append(Interpretation(term="last two fiscal years", chosen=f"{p.fy_mode} → FY{fyw.value['fiscal_years'][0]}–FY{fyw.value['fiscal_years'][-1]}",
+                                    alternatives=[f"{alt_mode} → FY{fyw_alt.value['fiscal_years'][0]}–FY{fyw_alt.value['fiscal_years'][-1]}"], decision_ref="D3",
+                                    alternate_result={"fiscal_years": fyw_alt.value["fiscal_years"], "sites_with_oai": alt_sites}, differs=alt_sites != oai_feis,
+                                    note=f"{len(oai_feis)} OAI sites under {p.fy_mode}; {len(alt_sites)} under {alt_mode}"))
+    alt_basis = "classification_date" if p.fy_basis == "inspection_end_date" else "inspection_end_date"
+    insp_alt2 = inspections_for_sites(InspectionsIn(feis=feis, classification=["OAI"], fiscal_years=fyw.value["fiscal_years"], fy_basis=alt_basis, project_area=p.project_area))
+    alt_sites2 = sorted({r["fei"] for r in insp_alt2.value["rows"]})
+    alt_notes.append(Interpretation(term="fiscal year", chosen=p.fy_basis, alternatives=[alt_basis], decision_ref="D2",
+                                    alternate_result={"sites_with_oai": alt_sites2}, differs=alt_sites2 != oai_feis,
+                                    note=f"same {len(oai_feis)} sites under both bases" if alt_sites2 == oai_feis else f"{len(alt_sites2)} sites under {alt_basis}"))
+
     value = {
         "question": "Q1",
         "as_of": cs.value["as_of"],
+        "alternate_readings": {i.term: {"chosen": i.chosen, "alternate": i.alternatives[0], "alternate_result": i.alternate_result, "differs": i.differs} for i in alt_notes},
         "quality_scope": p.quality_scope,
         "fiscal_years": fyw.value["fiscal_years"],
         "fy_basis": p.fy_basis,
@@ -96,7 +120,11 @@ def cq_quality_shortages_oai_sites(p: Q1In) -> ToolResult:
         "unlinked_shortages": sites.value["unlinked"],
         "n_sites_with_oai": len(oai_sites),
     }
-    return _merge(cs, sites, fyw, insp, tool="cq_quality_shortages_oai_sites", value=value)
+    out = _merge(cs, sites, fyw, insp, tool="cq_quality_shortages_oai_sites", value=value)
+    # replace the generic interpretations for these terms with the computed ones
+    keep = [i for i in out.interpretations if i.term not in {"quality problems", "last N fiscal years", "fiscal year", "last two fiscal years"}]
+    out.interpretations = keep + alt_notes
+    return out
 
 
 # --------------------------------------------------------------------------- Q2
@@ -123,9 +151,16 @@ def cq_supply_picture(p: Q2In) -> ToolResult:
     allst = current_shortages(CurrentShortagesIn(as_of=p.as_of, generic_name=[p.generic_name], presentation_like=p.presentation_like,
                                                  statuses=["Current", "Resolved", "Discontinued"]))
     hist = shortage_history(ShortageHistoryIn(generic_name=[p.generic_name], presentation_like=p.presentation_like))
+    alt_scope = "include_tentative" if p.approved_scope == "full" else "full"
+    apps_alt = applications_for_ingredient(ApplicationsIn(active_ingredient=[p.generic_name], approved_scope=alt_scope))
+    approved_interp = Interpretation(term="approved", chosen=p.approved_scope, alternatives=[alt_scope], decision_ref="D9",
+                                     alternate_result={"approved": apps_alt.value["counts"]["approved_per_chosen_scope"]},
+                                     differs=apps_alt.value["counts"]["approved_per_chosen_scope"] != apps.value["counts"]["approved_per_chosen_scope"],
+                                     note=f"{p.approved_scope}: {apps.value['counts']['approved_per_chosen_scope']}; {alt_scope}: {apps_alt.value['counts']['approved_per_chosen_scope']}")
     value = {
         "question": "Q2",
         "as_of": cur.value["as_of"],
+        "alternate_readings": {"approved": {"chosen": p.approved_scope, "alternate": alt_scope, "alternate_result": approved_interp.alternate_result, "differs": approved_interp.differs}},
         "drug": p.generic_name,
         "presentation_filter": p.presentation_like,
         "applications": apps.value["counts"],
@@ -137,7 +172,9 @@ def cq_supply_picture(p: Q2In) -> ToolResult:
         "status_timelines": hist.value["timelines"],
         "status_semantics": hist.value["status_semantics"],
     }
-    return _merge(apps, cur, allst, hist, tool="cq_supply_picture", value=value)
+    out = _merge(apps, cur, allst, hist, tool="cq_supply_picture", value=value)
+    out.interpretations = [i for i in out.interpretations if i.term != "approved applications"] + [approved_interp]
+    return out
 
 
 # --------------------------------------------------------------------------- Q3
@@ -174,9 +211,17 @@ def cq_foreign_sites_not_inspected(p: Q3In) -> ToolResult:
     for rec in ni.value["never_inspected"]:
         rec["sponsor_name_suggests_foreign"] = any(k in " ".join(rec["sponsors"]).lower() for k in ("zhejiang", "hainan", "shanxi", "nanjing", "pharma co ltd", "limited", "gmbh", "ag", "sa", "dd"))
         rec["note"] = "Country not in data; inference from sponsor name only."
+    ni_alt = sites_not_inspected_since(NotInspectedIn(feis=feis, since_fy=p.since_fy, inclusive=not p.inclusive, foreign_only=True, fy_basis=p.fy_basis))
+    alt_stale = sorted(r["fei"] for r in ni_alt.value["stale"])
+    cur_stale = sorted(r["fei"] for r in ni.value["stale"])
+    since_interp = Interpretation(term="not inspected since", chosen="last inspection FY <= target" if p.inclusive else "last inspection FY < target",
+                                  alternatives=["last inspection FY < target" if p.inclusive else "last inspection FY <= target"], decision_ref="D11",
+                                  alternate_result={"foreign_stale_feis": alt_stale}, differs=alt_stale != cur_stale,
+                                  note="same sites under both readings" if alt_stale == cur_stale else f"{len(cur_stale)} vs {len(alt_stale)} sites")
     value = {
         "question": "Q3",
         "as_of": cs.value["as_of"],
+        "alternate_readings": {"not inspected since": {"chosen": since_interp.chosen, "alternate": since_interp.alternatives[0], "alternate_result": since_interp.alternate_result, "differs": since_interp.differs}},
         "since_fy": p.since_fy,
         "current_shortage_records": cs.value["counts"]["records"],
         "current_shortage_drugs": cs.value["drugs"],
@@ -187,4 +232,6 @@ def cq_foreign_sites_not_inspected(p: Q3In) -> ToolResult:
         "counts": {"foreign_stale": len(ni.value["stale"]), "never_inspected": len(ni.value["never_inspected"]),
                    "foreign_recent": len(ni.value["recently_inspected"])},
     }
-    return _merge(cs, sites, ni, tool="cq_foreign_sites_not_inspected", value=value)
+    out = _merge(cs, sites, ni, tool="cq_foreign_sites_not_inspected", value=value)
+    out.interpretations = [i for i in out.interpretations if i.term != "not inspected since"] + [since_interp]
+    return out
