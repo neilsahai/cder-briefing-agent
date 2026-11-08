@@ -101,5 +101,44 @@ reviewed every phase; Claude wrote most of the code and all first drafts.
   failure direction (caution), and pass^k exists to make that variance visible rather than hide it.
 - Judge robustness: Sonnet occasionally emitted malformed tool JSON as a grader; added a retry.
 
+### Nov 8 — Phase 4 (product surface)
+- FastAPI with SSE streaming so the UI shows each pipeline step as it happens (gate → plan →
+  tool calls → narrate → verify) rather than a spinner; `/api/ask_sync` kept for scripts and tests.
+- React/Vite front end: Ask page with as-of date and interpretation pins, answer card with tabs
+  (Answer / Evidence / Verifier / Interpretations / Caveats), citation chips that open the exact
+  evidence item and row (`table#Lnn`), one-click "pin this reading → re-run", Add to briefing,
+  Certify. Pages for Briefing (sign-off + readiness + export), Certified queries (promote / revoke /
+  audit log), Data health (DQ01–13 with affected rows), Evals (latest scorecard), Runs.
+- Briefing builder: pin runs, staff sign-off, readiness check (Tier 1 + signed), export .md/.docx.
+- MCP server exposing the certified tools and `cder://ontology`, `cder://decisions` resources, so
+  the same tools can be called from Claude Desktop/Code without the UI.
+- Playwright screenshots against the built SPA confirmed the SSE flow and citation→row linking.
+- Small catches: duplicate pin chips when two interpretations shared a term (dedupe by term);
+  `mcp` 2.x dropped `mcp.server.fastmcp` (moved to `MCPServer` with pydantic params).
+
+### Nov 8 — Phase 5 (deliverables)
+- Docs under `docs/`: red-team report with computed naive-vs-system baselines, trust & hallucination
+  design, agentic design, product thinking (cost of being wrong, 30/60/90, reusability — no
+  invented ROI), week-one discovery questions, security & deployment, architecture, walkthrough
+  script with likely panel questions. README carries the measured scorecard table.
+- Exported briefing memo (`deliverables/briefing_memo.{md,docx}`): 4/4 items Senate-ready, demo sign-off.
+- 11-slide walkthrough deck built from a pptxgenjs script (`deliverables/deck/build_deck.js`), native
+  charts for the two ambiguity comparisons and the capability-pass-rate curve, speaker notes on every
+  slide, schema-validated and visually QA'd from a LibreOffice render.
+- Pricing in `backend/app/llm/pricing.json` taken from Anthropic's pricing page on 2026-11-07, not
+  from memory.
+
 ## Things Neil overruled or redirected
-- (to be filled as they happen)
+- **Stricter Tier 3 rule.** Original plan let a certified query with a differing alternate reading
+  stay Tier 1 if the default reading was documented. Neil chose the stricter rule: any reading that
+  changes the answer demotes to Qualified until a person pins it. The registry and pins exist so
+  that demotion is a one-click decision, not a dead end.
+- **Role-based model routing, not one model.** Haiku for gate/entity, Sonnet for planning and
+  narration, Opus for verification always and for planning only when a deterministic rule escalates.
+  Neil's framing: easy tasks on the cheaper model, hard tasks on Opus, and the escalation visible in
+  the trace.
+- **No Databricks.** Bedrock (AWS GovCloud) as the deployment path; the provider switch is one env var.
+- **No fabricated ROI.** Business-value material is a cost-of-being-wrong argument and a before/after
+  workflow comparison, not an invented dollar figure.
+- **Pricing from the source.** Cost-per-question uses Anthropic's published list prices, fetched, not recalled.
+- **Hosting last.** The hosted walkthrough is deliberately the final step, after rehearsal.
