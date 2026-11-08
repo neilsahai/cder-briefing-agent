@@ -33,12 +33,13 @@ class SQLGuardError(Exception):
 
 
 def validate_sql(sql: str, known_columns: dict[str, set[str]]) -> exp.Expression:
-    if ";" in sql.strip().rstrip(";"):
-        raise SQLGuardError("multiple statements are not allowed")
     try:
-        tree = sqlglot.parse_one(sql, read="duckdb")
+        stmts = [t for t in sqlglot.parse(sql, read="duckdb") if t is not None]
     except Exception as ex:  # noqa: BLE001
         raise SQLGuardError(f"could not parse SQL: {ex}") from ex
+    if len(stmts) != 1:
+        raise SQLGuardError("multiple statements are not allowed")
+    tree = stmts[0]
     if not isinstance(tree, (exp.Select, exp.Union, exp.Intersect, exp.Except)):
         raise SQLGuardError(f"only SELECT statements are allowed (got {type(tree).__name__})")
     for node in tree.walk():

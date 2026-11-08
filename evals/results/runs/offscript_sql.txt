@@ -1,0 +1,88 @@
+· 01 gate       Answerability: answerable  [claude-haiku-5-5 227+388tok 2188ms]
+· 02 plan       Interpretations declared  [claude-sonnet-5-5 100+357tok 2525ms]
+! 03 escalation Planner model: Opus (escalated)
+· 04 sql        SQL candidate (claude-sonnet-5-5) → 26 rows  [claude-sonnet-5-5 180+333tok 2834ms]
+! 05 sql        SQL candidate (claude-opus-5-5) → error  [claude-opus-5-5 180+464tok 4702ms]
+! 06 sql        SQL candidates: DISAGREE (2 valid)
+! 07 sql        sql_query → E1  [claude-opus-5-5 491+249tok 2300ms]
+· 08 sql        SQL candidate (claude-sonnet-5-5) → 11 rows  [claude-sonnet-5-5 183+279tok 2354ms]
+! 09 sql        SQL candidate (claude-opus-5-5) → error  [claude-opus-5-5 183+313tok 2770ms]
+! 10 sql        SQL candidates: DISAGREE (2 valid)
+! 11 sql        sql_query → E2  [claude-opus-5-5 2202+457tok 4444ms]
+· 12 plan       Planner finished  [claude-opus-5-5 5478+1034tok 11727ms]
+· 13 narrate    Narration draft 1  [claude-sonnet-5-5 9460+2898tok 16473ms]
+✗ 14 render     Render failed
+· 15 narrate    Narration draft 2  [claude-sonnet-5-5 9567+2587tok 16020ms]
+· 16 render     Rendered 30 placeholders; no literal digits
+✗ 17 verify     Verifier: fail — 23 claims, 3 flagged  [claude-opus-5-5 9325+2867tok 24103ms]
+· 18 narrate    Narration revised after verifier (3 claim(s))  [claude-sonnet-5-5 11374+2650tok 15808ms]
+! 19 verify     Verifier: pass_with_notes — 24 claims, 0 flagged  [claude-opus-5-5 9515+2712tok 21185ms]
+· 20 tier       Tier 2 — Derived
+· 21 final      Answer assembled
+
+====================================================================================================
+TIER 2 — Derived: answer depends on LLM-authored SQL (validated, executed, not certified); part of the question cannot be answered from this data (disclosed)
+====================================================================================================
+
+> Hikma Pharmaceuticals LLC holds the most tentative approvals with 4, and the result is derived and contested, not certified.
+
+**Answer**
+
+Across 11 sponsors with tentative approvals, Hikma Pharmaceuticals LLC holds the most, with 4 applications. [E2] The next sponsors each hold 3: Amneal Pharmaceuticals LLC, Apotex Inc, Baxter Healthcare Corporation, Fresenius Kabi USA LLC and Sandoz Inc. [E2] The evidence does not state an as-of date, so none can be given. [E1, E2]
+
+**Detail**
+
+Ranking by number of applications with marketing status Tentative Approval, with the ingredients for each sponsor:
+
+- Hikma Pharmaceuticals LLC (4): Amoxicillin, Ampicillin-Sulbactam, Morphine Sulfate, Trimethoprim-Sulfamethoxazole. [E2]
+- Amneal Pharmaceuticals LLC (3): Albuterol Sulfate, Aztreonam, Vincristine Sulfate. [E2]
+- Apotex Inc (3): Clindamycin Palmitate HCl, Piperacillin-Tazobactam, Potassium Chloride. [E2]
+- Baxter Healthcare Corporation (3): Ceftriaxone Sodium, Cephalexin, Epinephrine. [E2]
+- Fresenius Kabi USA LLC (3): Ampicillin-Sulbactam, Methotrexate Sodium, Penicillin V Potassium. [E2]
+- Sandoz Inc (3): Epinephrine, Methotrexate Sodium, Penicillin V Potassium. [E2]
+- Aurobindo Pharma Limited (2): Morphine Sulfate, Tobramycin Sulfate. [E2]
+- Cipla USA Inc (2): Amoxicillin, Clindamycin Palmitate HCl. [E2]
+- Lupin Limited (1): Gentamicin Sulfate. [E2]
+- Mylan Pharmaceuticals Inc (1): Ampicillin-Sulbactam. [E2]
+- Teva Pharmaceuticals USA Inc (1): Aztreonam. [E2]
+
+For every sponsor, the application count equals the distinct-ingredient count, so no sponsor holds two tentative approvals for the same ingredient. [E2]
+
+Several ingredients have tentative approvals from more than one sponsor: [E1]
+- Ampicillin-Sulbactam: Hikma Pharmaceuticals LLC, Fresenius Kabi USA LLC and Mylan Pharmaceuticals Inc. [E1]
+- Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi USA LLC and Sandoz Inc. [E1]
+- Epinephrine: Baxter Healthcare Corporation and Sandoz Inc. [E1]
+- Aztreonam: Amneal Pharmaceuticals LLC and Teva Pharmaceuticals USA Inc. [E1]
+- Morphine Sulfate: Hikma Pharmaceuticals LLC and Aurobindo Pharma Limited. [E1]
+- Amoxicillin: Hikma Pharmaceuticals LLC and Cipla USA Inc. [E1]
+- Clindamycin Palmitate HCl: Apotex Inc and Cipla USA Inc. [E1]
+
+All 26 tentative-approval applications listed have application type ANDA. [E1]
+
+**Interpretation applied**
+
+- "Tentative approvals": counted only applications whose marketing status is exactly Tentative Approval. The alternate, adding full approvals, was not computed. [E1, E2]
+- "Sponsor": the application holder (sponsor name), not the facility operator. The facility-operator reading was not computed. [E1, E2]
+
+**Caveats**
+
+- These figures come from LLM-authored SQL, not a certified tool, and the tool says to review them before citing in testimony. [E1, E2]
+- The tool raised a high-severity warning that independently written SQL candidates returned different result sets, and it says to treat the values as contested until an analyst reviews the SQL. The row counts of the valid candidates matched, but the evidence does not show why the result sets differ. [E1, E2]
+- The ranking query did not select line numbers, so the tool could not trace it to rows. The application-level listing does carry line numbers, and its sponsor and ingredient pairings are consistent with the ranking. [E1, E2]
+
+**Cannot be answered from this data**
+
+- A breakdown by dosage form or presentation: the query results contain no such field. [E1, E2]
+- Why each approval is tentative, or when it might become a full approval: the query results contain no such field. [E1, E2]
+
+--- VERIFIER: pass_with_notes | 24 claims, 0 flagged
+
+--- WARNINGS attached to evidence
+  [high] SQL_CANDIDATES_DISAGREE: Independently written SQL candidates returned different result sets (row counts [26, 26]). The question or the data admits more than one reading; treat this val
+  [high] SQL_NO_ROW_CITATIONS: The query did not select line_no columns, so its result cannot be traced to rows. Re-run selecting line_no.
+  [medium] TIER2_DERIVED: This value comes from LLM-authored SQL (validated and executed), not a certified tool. Review before citing in testimony.
+  [medium] DQ05_fei_prefix_anomaly: 19 applications rows have an FEI beginning with '4' while 109 begin with '3'. Verify these FEIs against FDA's FEI portal before citing.
+  [medium] DQ06_fei_no_inspection: FEI 4001567890 (Aurobindo Pharma Limited, Cipla USA Inc, Dr. Reddy's Laboratories Ltd, Hainan Poly Pharm Co Ltd, Sandoz Inc) has no inspection record; country a
+
+--- TRACE: 14 LLM calls, 0 tool calls, 58465+17588 tokens, 136415 ms, cost=None, rows cited=26, models=['claude-haiku-5-5', 'claude-opus-5-5', 'claude-sonnet-5-5']
+wrote ../evals/results/runs/offscript_sql.json

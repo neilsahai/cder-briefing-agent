@@ -1,0 +1,71 @@
+· 01 info       Certified query match: q2_amoxicillin_oral_suspension_supply (score 1.0)
+· 02 info       Interpretations pinned: 1
+! 03 gate       Answerability: in_scope_not_in_data  [claude-haiku-5-5 250+800tok 4253ms]
+· 04 plan       Interpretations declared  [claude-sonnet-5-5 325+604tok 3850ms]
+! 05 escalation Planner model: Opus (escalated)
+· 06 tool_call  resolve_entity → E1
+· 07 tool_call  resolve_entity → E2
+! 08 tool_call  cq_supply_picture → E3  [claude-opus-5-5 1492+118tok 1574ms]
+· 09 plan       Planner finished  [claude-opus-5-5 3774+931tok 9323ms]
+· 10 narrate    Narration draft 1  [claude-sonnet-5-5 4785+2960tok 17988ms]
+· 11 render     Rendered 51 placeholders; no literal digits
+! 12 verify     Verifier: pass_with_notes — 21 claims, 0 flagged  [claude-opus-5-5 4543+2593tok 21216ms]
+· 13 tier       Tier 1 — Certified
+· 14 final      Answer assembled
+
+====================================================================================================
+TIER 1 — Certified: 1 ambiguous term(s) resolved by analyst pins: approved; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; interpretations disclosed; verifier passed; matches certified query 'cq_supply_picture' verified by N. Sahai (seed; validated against DECISIONS.md D4/D9 and tests)
+====================================================================================================
+
+> As of 2025-10-23, Amoxicillin has 4 fully approved applications across all dosage forms, 3 actively marketed, and 1 oral suspension shortage with Current status, which is a stale record.
+
+## Answer
+
+As of 2025-10-23, Amoxicillin has 4 fully approved applications, and 3 of them are actively marketed (marketing status Prescription). These counts cover every Amoxicillin dosage form, not only oral suspension, so they are an upper bound for oral suspension. [E3]
+
+1 Amoxicillin oral suspension shortage is in Current status: DS-2023-0142, Oral Suspension 250mg/5mL. Its last revision is old, so confirm it before quoting it. [E3]
+
+## Detail
+
+**Applications (all Amoxicillin dosage forms)**
+- Total Amoxicillin applications: 6. Of these, 4 have full approval and 2 have Tentative Approval. [E3]
+- Marketed (Prescription): Sandoz Inc (ANDA065355), Aurobindo Pharma Limited (ANDA078201) and Lupin Limited (ANDA091234). [E3]
+- Approved but Discontinued: 1, held by Teva Pharmaceuticals USA Inc (ANDA065491). [E3]
+- Tentative Approval, listed separately: Hikma Pharmaceuticals LLC (ANDA082345) and Cipla USA Inc (ANDA095678). [E3]
+- The sponsors are application holders. They are not necessarily the companies that run the manufacturing sites. [E3]
+
+**Shortages (oral suspension, latest revision per shortage)**
+- DS-2023-0142, Oral Suspension 250mg/5mL, NDC 65162-0175-00: **Current**. It was first posted 2023-08-01 and last revised 2024-01-10. The reason category is Manufacturing Delay, and the related application is ANDA065355. [E3]
+- Status history for that shortage: **Resolved** on 2023-11-15, then back to **Current** on 2024-01-10. [E3]
+- DS-2022-0089, Oral Suspension 400mg/5mL: **Discontinued** as of 2023-01-20. The manufacturer has stopped or will stop producing it, and supply will not recover from that source. It is not Resolved and is not counted as Current. [E3]
+
+## Interpretation applied
+
+- **Approved:** The reading used is full approval only, which gives 4. The alternate also counts Tentative Approval, which gives 6 applications. Tentative approvals are not marketed. [E3]
+- **Currently in shortage:** The reading used is Current status only, taking the latest revision per shortage. Resolved and Discontinued are kept separate. The alternate that adds Discontinued was not computed. [E3]
+- **Actively marketed:** The reading used is marketing status Prescription. [E3]
+- **Oral suspension:** The presentation filter matches "Oral Suspension%". The matching presentations are Oral Suspension 200mg/5mL, Oral Suspension 250mg/5mL, Oral Suspension 40-200mg/5mL, Oral Suspension 400-57mg/5mL and Oral Suspension 400mg/5mL. [E2]
+- **Amoxicillin:** The reading used is the generic name Amoxicillin. Amoxicillin-Clavulanate is a separate generic and is excluded. [E1]
+
+## Caveats
+
+- Applications have no dosage-form field, so the application counts cannot be limited to oral suspension. They may overstate oral suspension supply. [E3]
+- DS-2023-0142 has conflicting status records, Resolved and then Current. The latest, Current, is used. [E3]
+- The Current status for DS-2023-0142 was last revised 2024-01-10. That is more than eighteen months before the as-of date, so it needs confirming. [E3]
+- Amoxicillin-Clavulanate shortage records link to ANDA078201, whose active ingredient is Amoxicillin. That link looks wrong, so application facts for those records are unreliable. They are excluded here. [E3]
+
+## Cannot be answered from this data
+
+- How many approved or marketed applications are specifically for oral suspension. [E3]
+- Whether DS-2023-0142 is still in shortage today. That needs confirming with Drug Shortage Staff. [E3]
+
+--- VERIFIER: pass_with_notes | 21 claims, 0 flagged
+
+--- WARNINGS attached to evidence
+  [high] DQ12_missing_dosage_form: The question asks about 'Oral Suspension' but applications.csv has no dosage-form column. These application counts cover ALL Amoxicillin products (any dosage fo
+  [high] DQ03_ingredient_mismatch: 7 shortage record(s) for 'Amoxicillin-Clavulanate' link to ANDA078201, whose active ingredient is 'Amoxicillin'. Possible mislink; application-level facts for t
+  [high] DQ01_status_conflict: Shortage DS-2023-0142 has conflicting status records: Resolved (rev 2023-11-15); Current (rev 2024-01-10). Latest revision is 'Current' and is used; the earlier
+  [medium] DQ08_stale_current: Shortage DS-2023-0142 (Amoxicillin) is recorded as Current but was last revised 2024-01-10, more than 18 months before the as-of date 2025-10-23. Confirm status
+
+--- TRACE: 6 LLM calls, 3 tool calls, 15169+8006 tokens, 56818 ms, cost=None, rows cited=9, models=['claude-haiku-5-5', 'claude-opus-5-5', 'claude-sonnet-5-5']
+wrote ../evals/results/runs/q2_pinned.json

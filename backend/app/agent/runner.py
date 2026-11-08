@@ -14,6 +14,9 @@ from ..llm.provider import get_provider, structured, text_of, tool_uses
 from ..llm.routing import planner_escalation
 from ..models import Interpretation, RowRef, Warning
 from ..tools import REGISTRY, anthropic_tool_specs, call_tool
+from ..registry.certified import get_registry
+from ..registry.runs import save_run
+from .sql_candidates import run_sql_candidates
 from . import prompts
 from .evidence import EvidenceRegistry, RenderError, citations_in, render
 from ..tools.warnings_util import group_warnings_by_code
@@ -56,6 +59,7 @@ class Answer(BaseModel):
     rows: list[RowRef]
     substitutions: list[dict[str, Any]]
     certified_query_match: dict[str, Any] | None = None
+    pins: dict[str, str] = Field(default_factory=dict)
     escalation: dict[str, Any]
     trace: Trace
     manual_lookups_replaced: int
@@ -76,16 +80,34 @@ def _tool_result_payload(ev_id: str, result) -> str:
     }, default=str)
 
 
-def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], None] | None = None,
-        certified_lookup: Callable[[str], dict | None] | None = None) -> Answer:
+def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None = None,
+        sink: Callable[[TraceStep], None] | None = None, use_registry: bool = True, persist: bool = True) -> Answer:
     tracer = Tracer(question, sink)
     prov = get_provider()
     registry = EvidenceRegistry()
+    pins = dict(pins or {})
 
-    # ------------------------------------------------------------------ 0. certified registry match (Phase 3 hook)
-    cq_match = certified_lookup(question) if certified_lookup else None
-    if cq_match:
-        tracer.step("info", "Certified query match", output=cq_match)
+    # ------------------------------------------------------------------ 0. certified registry match
+    cq_match = None
+    if use_registry:
+        cand = get_registry().match(question)
+        if cand and cand["match_kind"] == "borderline":
+            # confirm with a small model: is this the same question (same facts asked, same scope)?
+            conf, ccall, _ = structured(prov, "entity", system="You compare two analyst questions over the same FDA dataset.",
+                                        messages=[{"role": "user", "content": f"Q_NEW: {question}\nQ_CERTIFIED: {cand['question']}\nDo they ask for the same facts with the same scope, such that the certified answer plan would correctly answer Q_NEW?"}],
+                                        tool={"name": "same_question", "description": "Decide if the two questions are equivalent.",
+                                              "input_schema": {"type": "object", "properties": {"equivalent": {"type": "boolean"}, "reason": {"type": "string"}}, "required": ["equivalent", "reason"]}},
+                                        max_tokens=300)
+            tracer.step("info", f"Borderline certified match (score {cand['score']}) → {'confirmed' if conf['equivalent'] else 'rejected'}", llm=ccall, output=conf)
+            cand = cand if conf["equivalent"] else None
+        if cand:
+            cq_match = {"name": cand["name"], "tool": cand["tool"], "args": cand["args"], "pins": cand["pins"], "verified_by": cand["verified_by"],
+                        "verified_at": cand["verified_at"], "version": cand["version"], "score": cand["score"]}
+            for k, v in cand["pins"].items():
+                pins.setdefault(k, v)
+            tracer.step("info", f"Certified query match: {cand['name']} (score {cand['score']})", output=cq_match)
+    if pins:
+        tracer.step("info", f"Interpretations pinned: {len(pins)}", output=pins)
 
     # ------------------------------------------------------------------ 1. gate
     gate, call, _ = structured(prov, "gate", system=prompts.gate_system(), messages=[{"role": "user", "content": question}], tool=GATE_TOOL, max_tokens=800)
@@ -103,18 +125,26 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
               + (f"What this tool can answer: {gate.get('answerable_part')}" if gate.get("answerable_part") else
                  "This tool answers questions about drug shortage records, drug applications, and establishment inspections in the provided FDA snapshot."))
         tracer.step("tier", "Tier 4", output={"tier": 4})
-        return Answer(run_id=tracer.trace.run_id, question=question, tier=4, tier_label=TIER_LABELS[4],
-                      tier_reasons=[gate["reason"]], headline="Not answerable from this data.", markdown=md, markdown_template=md,
-                      gate=gate, interpretations_declared=[], interpretations_applied=[], divergent_interpretations=[],
-                      cannot_answer=[gate.get("unanswerable_part") or gate["reason"]], warnings=[], claims=[], verification={},
-                      evidence=[], rows=[], substitutions=[], escalation={"escalate": False, "reasons": []}, trace=tracer.trace,
-                      manual_lookups_replaced=0)
+        a4 = Answer(run_id=tracer.trace.run_id, question=question, tier=4, tier_label=TIER_LABELS[4],
+                    tier_reasons=[gate["reason"]], headline="Not answerable from this data.", markdown=md, markdown_template=md,
+                    gate=gate, interpretations_declared=[], interpretations_applied=[], divergent_interpretations=[],
+                    cannot_answer=[gate.get("unanswerable_part") or gate["reason"]], warnings=[], claims=[], verification={},
+                    evidence=[], rows=[], substitutions=[], pins=pins, escalation={"escalate": False, "reasons": []}, trace=tracer.trace,
+                    manual_lookups_replaced=0)
+        if persist:
+            save_run(json.loads(a4.model_dump_json()))
+        return a4
 
     # ------------------------------------------------------------------ 2. planner (declare interpretations first)
     tools = anthropic_tool_specs() + [DECLARE_INTERPRETATIONS_TOOL, FINISH_TOOL]
     user_msg = question if not as_of else f"{question}\n\n(as_of date to use: {as_of})"
     if cq_match:
-        user_msg += f"\n\nNOTE: a certified query '{cq_match['tool']}' with args {json.dumps(cq_match.get('args', {}))} was verified for a question like this. Prefer it."
+        user_msg += (f"\n\nCERTIFIED PLAN AVAILABLE: tool `{cq_match['tool']}` with args {json.dumps(cq_match.get('args', {}))} was verified by "
+                     f"{cq_match['verified_by']} for an equivalent question. Call it with exactly these args as your primary evidence. "
+                     f"You may additionally compute alternates for disclosure.")
+    if pins:
+        user_msg += ("\n\nINTERPRETATIONS PINNED BY THE ANALYST (treat as resolved; do not present alternates as open): "
+                     + "; ".join(f"'{k}' = {v}" for k, v in pins.items()))
     messages: list[dict[str, Any]] = [{"role": "user", "content": user_msg}]
 
     # first turn: force declare_interpretations
@@ -152,9 +182,10 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
             t = tracer.timer()
             try:
                 res = call_tool(u.name, u.input)
-                ev = registry.add(u.name, u.input, res, certified=REGISTRY[u.name].certified)
-                if u.name == "sql_query":
+                if u.name == "sql_query" and not res.value.get("error"):
                     used_sql = True
+                    res = run_sql_candidates(prov, tracer, u.input, res)
+                ev = registry.add(u.name, u.input, res, certified=REGISTRY[u.name].certified)
                 payload = _tool_result_payload(ev.id, res)
                 tracer.step("sql" if u.name == "sql_query" else "tool_call", f"{u.name} → {ev.id}", llm=None if first_llm_attached else call,
                             input=u.input, output={"evidence_id": ev.id, "rows_cited": len(res.rows), "warnings": [w.code for w in res.warnings],
@@ -259,8 +290,15 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
     # ------------------------------------------------------------------ 5. trust tier
     warnings = group_warnings_by_code(registry.all_warnings())
     interps = registry.all_interpretations()
-    divergent = [d for d in finish.get("divergent_interpretations", []) if d.get("differs_materially")]
     reasons: list[str] = []
+    def _pinned(term: str) -> bool:
+        t = term.lower()
+        return any(k.lower() in t or t in k.lower() for k in pins)
+    divergent_all = [d for d in finish.get("divergent_interpretations", []) if d.get("differs_materially")]
+    divergent = [d for d in divergent_all if not _pinned(d.get("term", ""))]
+    pinned_resolved = [d for d in divergent_all if _pinned(d.get("term", ""))]
+    if pinned_resolved:
+        reasons.append(f"{len(pinned_resolved)} ambiguous term(s) resolved by analyst pins: " + ", ".join(d['term'] for d in pinned_resolved))
     tier = 1
     if last_err or (verification and verification.get("overall") == "fail") or any(c.verdict in ("unsupported", "misattributed") for c in claims):
         tier = 3
@@ -275,6 +313,9 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
         reasons.append("part of the question cannot be answered from this data (disclosed)")
         if gate["category"] == "in_scope_not_in_data" and not registry.items:
             tier = 4
+    if tier == 1 and any(not e.certified for e in registry.items):
+        tier = 2
+        reasons.append("some evidence came from a non-certified tool")
     if tier == 1:
         reasons.append("all evidence from certified tools; interpretations disclosed; verifier passed")
     if cq_match and tier == 1:
@@ -285,7 +326,7 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
     lookups = len(registry.all_rows())
     tracer.step("final", "Answer assembled", output={"rows_cited": lookups, **tracer.trace.totals()})
 
-    return Answer(run_id=tracer.trace.run_id, question=question, tier=tier, tier_label=TIER_LABELS[tier], tier_reasons=reasons,
+    answer = Answer(run_id=tracer.trace.run_id, question=question, tier=tier, tier_label=TIER_LABELS[tier], tier_reasons=reasons,
                   headline=headline, markdown=rendered, markdown_template=template, gate=gate,
                   interpretations_declared=declared.get("interpretations", []), interpretations_applied=interps,
                   divergent_interpretations=finish.get("divergent_interpretations", []), cannot_answer=finish.get("cannot_answer", []),
@@ -294,5 +335,8 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
                              "source_tables": e.result.source_tables, "value": e.result.value,
                              "warnings": [w.model_dump() for w in e.result.warnings],
                              "interpretations": [i.model_dump() for i in e.result.interpretations]} for e in registry.items],
-                  rows=registry.all_rows(), substitutions=subs, certified_query_match=cq_match,
+                  rows=registry.all_rows(), substitutions=subs, certified_query_match=cq_match, pins=pins,
                   escalation={"escalate": esc.escalate, "reasons": esc.reasons}, trace=tracer.trace, manual_lookups_replaced=lookups)
+    if persist:
+        save_run(json.loads(answer.model_dump_json()))
+    return answer

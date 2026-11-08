@@ -158,6 +158,8 @@ def render(template: str, registry: EvidenceRegistry) -> tuple[str, list[dict[st
     literal_hits: list[dict[str, Any]] = []
     for m in NUMBER_TOKEN.finditer(stripped):
         tok = m.group(0).strip(".,;:)(-")
+        if re.fullmatch(r"E\d+", tok):  # evidence ids in prose are fine
+            continue
         if tok and tok in allowed:
             literal_hits.append({"literal": tok, "verified_in_evidence": True})
             continue

@@ -1,0 +1,3085 @@
+{
+ "run_id": "214c12f74449",
+ "question": "Which sponsors hold the most tentative approvals, and for which ingredients?",
+ "tier": 2,
+ "tier_label": "Derived",
+ "tier_reasons": [
+  "answer depends on LLM-authored SQL (validated, executed, not certified)",
+  "part of the question cannot be answered from this data (disclosed)"
+ ],
+ "headline": "Hikma Pharmaceuticals LLC holds the most tentative approvals with 4, and the result is derived and contested, not certified.",
+ "markdown": "**Answer**\n\nAcross 11 sponsors with tentative approvals, Hikma Pharmaceuticals LLC holds the most, with 4 applications. [E2] The next sponsors each hold 3: Amneal Pharmaceuticals LLC, Apotex Inc, Baxter Healthcare Corporation, Fresenius Kabi USA LLC and Sandoz Inc. [E2] The evidence does not state an as-of date, so none can be given. [E1, E2]\n\n**Detail**\n\nRanking by number of applications with marketing status Tentative Approval, with the ingredients for each sponsor:\n\n- Hikma Pharmaceuticals LLC (4): Amoxicillin, Ampicillin-Sulbactam, Morphine Sulfate, Trimethoprim-Sulfamethoxazole. [E2]\n- Amneal Pharmaceuticals LLC (3): Albuterol Sulfate, Aztreonam, Vincristine Sulfate. [E2]\n- Apotex Inc (3): Clindamycin Palmitate HCl, Piperacillin-Tazobactam, Potassium Chloride. [E2]\n- Baxter Healthcare Corporation (3): Ceftriaxone Sodium, Cephalexin, Epinephrine. [E2]\n- Fresenius Kabi USA LLC (3): Ampicillin-Sulbactam, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- Sandoz Inc (3): Epinephrine, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- Aurobindo Pharma Limited (2): Morphine Sulfate, Tobramycin Sulfate. [E2]\n- Cipla USA Inc (2): Amoxicillin, Clindamycin Palmitate HCl. [E2]\n- Lupin Limited (1): Gentamicin Sulfate. [E2]\n- Mylan Pharmaceuticals Inc (1): Ampicillin-Sulbactam. [E2]\n- Teva Pharmaceuticals USA Inc (1): Aztreonam. [E2]\n\nFor every sponsor, the application count equals the distinct-ingredient count, so no sponsor holds two tentative approvals for the same ingredient. [E2]\n\nSeveral ingredients have tentative approvals from more than one sponsor: [E1]\n- Ampicillin-Sulbactam: Hikma Pharmaceuticals LLC, Fresenius Kabi USA LLC and Mylan Pharmaceuticals Inc. [E1]\n- Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi USA LLC and Sandoz Inc. [E1]\n- Epinephrine: Baxter Healthcare Corporation and Sandoz Inc. [E1]\n- Aztreonam: Amneal Pharmaceuticals LLC and Teva Pharmaceuticals USA Inc. [E1]\n- Morphine Sulfate: Hikma Pharmaceuticals LLC and Aurobindo Pharma Limited. [E1]\n- Amoxicillin: Hikma Pharmaceuticals LLC and Cipla USA Inc. [E1]\n- Clindamycin Palmitate HCl: Apotex Inc and Cipla USA Inc. [E1]\n\nAll 26 tentative-approval applications listed have application type ANDA. [E1]\n\n**Interpretation applied**\n\n- \"Tentative approvals\": counted only applications whose marketing status is exactly Tentative Approval. The alternate, adding full approvals, was not computed. [E1, E2]\n- \"Sponsor\": the application holder (sponsor name), not the facility operator. The facility-operator reading was not computed. [E1, E2]\n\n**Caveats**\n\n- These figures come from LLM-authored SQL, not a certified tool, and the tool says to review them before citing in testimony. [E1, E2]\n- The tool raised a high-severity warning that independently written SQL candidates returned different result sets, and it says to treat the values as contested until an analyst reviews the SQL. The row counts of the valid candidates matched, but the evidence does not show why the result sets differ. [E1, E2]\n- The ranking query did not select line numbers, so the tool could not trace it to rows. The application-level listing does carry line numbers, and its sponsor and ingredient pairings are consistent with the ranking. [E1, E2]\n\n**Cannot be answered from this data**\n\n- A breakdown by dosage form or presentation: the query results contain no such field. [E1, E2]\n- Why each approval is tentative, or when it might become a full approval: the query results contain no such field. [E1, E2]",
+ "markdown_template": "**Answer**\n\nAcross {{E2.row_count}} sponsors with tentative approvals, {{E2.records[0].sponsor_name}} holds the most, with {{E2.records[0].tentative_count}} applications. [E2] The next sponsors each hold {{E2.records[1].tentative_count}}: {{E2.records[1].sponsor_name}}, {{E2.records[2].sponsor_name}}, {{E2.records[3].sponsor_name}}, {{E2.records[4].sponsor_name}} and {{E2.records[5].sponsor_name}}. [E2] The evidence does not state an as-of date, so none can be given. [E1, E2]\n\n**Detail**\n\nRanking by number of applications with marketing status Tentative Approval, with the ingredients for each sponsor:\n\n- {{E2.records[0].sponsor_name}} ({{E2.records[0].tentative_count}}): Amoxicillin, Ampicillin-Sulbactam, Morphine Sulfate, Trimethoprim-Sulfamethoxazole. [E2]\n- {{E2.records[1].sponsor_name}} ({{E2.records[1].tentative_count}}): Albuterol Sulfate, Aztreonam, Vincristine Sulfate. [E2]\n- {{E2.records[2].sponsor_name}} ({{E2.records[2].tentative_count}}): Clindamycin Palmitate HCl, Piperacillin-Tazobactam, Potassium Chloride. [E2]\n- {{E2.records[3].sponsor_name}} ({{E2.records[3].tentative_count}}): Ceftriaxone Sodium, Cephalexin, Epinephrine. [E2]\n- {{E2.records[4].sponsor_name}} ({{E2.records[4].tentative_count}}): Ampicillin-Sulbactam, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- {{E2.records[5].sponsor_name}} ({{E2.records[5].tentative_count}}): Epinephrine, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- {{E2.records[6].sponsor_name}} ({{E2.records[6].tentative_count}}): Morphine Sulfate, Tobramycin Sulfate. [E2]\n- {{E2.records[7].sponsor_name}} ({{E2.records[7].tentative_count}}): Amoxicillin, Clindamycin Palmitate HCl. [E2]\n- {{E2.records[8].sponsor_name}} ({{E2.records[8].tentative_count}}): Gentamicin Sulfate. [E2]\n- {{E2.records[9].sponsor_name}} ({{E2.records[9].tentative_count}}): Ampicillin-Sulbactam. [E2]\n- {{E2.records[10].sponsor_name}} ({{E2.records[10].tentative_count}}): Aztreonam. [E2]\n\nFor every sponsor, the application count equals the distinct-ingredient count, so no sponsor holds two tentative approvals for the same ingredient. [E2]\n\nSeveral ingredients have tentative approvals from more than one sponsor: [E1]\n- Ampicillin-Sulbactam: Hikma Pharmaceuticals LLC, Fresenius Kabi USA LLC and Mylan Pharmaceuticals Inc. [E1]\n- Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi USA LLC and Sandoz Inc. [E1]\n- Epinephrine: Baxter Healthcare Corporation and Sandoz Inc. [E1]\n- Aztreonam: Amneal Pharmaceuticals LLC and Teva Pharmaceuticals USA Inc. [E1]\n- Morphine Sulfate: Hikma Pharmaceuticals LLC and Aurobindo Pharma Limited. [E1]\n- Amoxicillin: Hikma Pharmaceuticals LLC and Cipla USA Inc. [E1]\n- Clindamycin Palmitate HCl: Apotex Inc and Cipla USA Inc. [E1]\n\nAll {{E1.row_count}} tentative-approval applications listed have application type ANDA. [E1]\n\n**Interpretation applied**\n\n- \"Tentative approvals\": counted only applications whose marketing status is exactly Tentative Approval. The alternate, adding full approvals, was not computed. [E1, E2]\n- \"Sponsor\": the application holder (sponsor name), not the facility operator. The facility-operator reading was not computed. [E1, E2]\n\n**Caveats**\n\n- These figures come from LLM-authored SQL, not a certified tool, and the tool says to review them before citing in testimony. [E1, E2]\n- The tool raised a high-severity warning that independently written SQL candidates returned different result sets, and it says to treat the values as contested until an analyst reviews the SQL. The row counts of the valid candidates matched, but the evidence does not show why the result sets differ. [E1, E2]\n- The ranking query did not select line numbers, so the tool could not trace it to rows. The application-level listing does carry line numbers, and its sponsor and ingredient pairings are consistent with the ranking. [E1, E2]\n\n**Cannot be answered from this data**\n\n- A breakdown by dosage form or presentation: the query results contain no such field. [E1, E2]\n- Why each approval is tentative, or when it might become a full approval: the query results contain no such field. [E1, E2]",
+ "gate": {
+  "category": "answerable",
+  "reason": "Application table has marketing_status (Tentative Approval) and sponsor_name and active_ingredient fields, so counting tentative-approval applications by sponsor and listing their ingredients is directly computable. \"Most\" is a ranking to be computed; no ambiguity in the data fields needed. Caveat: \"approved\" is ambiguous, but the question asks about tentative approvals specifically, so the marketing_status='Tentative Approval' filter applies. Sponsor is the Application holder (sponsor_name), not the facility operator, so the sponsor interpretation of \"manufacturer\" applies if that term were used; here \"sponsors\" is explicit.",
+  "ambiguous_terms": [
+   "approved"
+  ],
+  "literals_to_resolve": [
+   {
+    "text": "tentative approvals",
+    "kind": "application"
+   },
+   {
+    "text": "sponsors",
+    "kind": "firm"
+   },
+   {
+    "text": "ingredients",
+    "kind": "generic_name"
+   }
+  ]
+ },
+ "interpretations_declared": [
+  {
+   "term": "approved / tentative approvals",
+   "default_reading": "Count only marketing_status='Tentative Approval' applications (not full approvals)",
+   "alternates": [
+    "include_tentative (full + tentative)"
+   ],
+   "will_compute_alternate": false,
+   "decision_ref": "D9"
+  },
+  {
+   "term": "sponsor",
+   "default_reading": "Application holder (sponsor_name), not facility operator",
+   "alternates": [
+    "facility_operator"
+   ],
+   "will_compute_alternate": false,
+   "decision_ref": "D8"
+  }
+ ],
+ "interpretations_applied": [
+  {
+   "term": "Tentative approval = marketing_status 'Tentative Approval' exactly",
+   "chosen": "encoded in SQL",
+   "alternatives": [],
+   "decision_ref": "D13",
+   "note": null
+  },
+  {
+   "term": "Sponsor = application holder sponsor_name",
+   "chosen": "encoded in SQL",
+   "alternatives": [],
+   "decision_ref": "D13",
+   "note": null
+  },
+  {
+   "term": "List all tentative-approval applications by sponsor and ingr",
+   "chosen": "planner SQL",
+   "alternatives": [
+    "sql_candidate_b SQL"
+   ],
+   "decision_ref": "D13",
+   "note": "candidate result sets differ"
+  },
+  {
+   "term": "Count = number of applications with marketing_status 'Tentative Approval' per sponsor_name",
+   "chosen": "encoded in SQL",
+   "alternatives": [],
+   "decision_ref": "D13",
+   "note": null
+  },
+  {
+   "term": "Sponsor = application holder, not facility operator",
+   "chosen": "encoded in SQL",
+   "alternatives": [],
+   "decision_ref": "D13",
+   "note": null
+  },
+  {
+   "term": "Rank sponsors by number of tentative-approval applications, ",
+   "chosen": "planner SQL",
+   "alternatives": [
+    "sql_candidate_b SQL"
+   ],
+   "decision_ref": "D13",
+   "note": "candidate result sets differ"
+  }
+ ],
+ "divergent_interpretations": [
+  {
+   "term": "sponsor",
+   "differs_materially": false,
+   "how": "Only the application holder (sponsor_name) reading was computed. The facility-operator reading was not run because tentative approvals belong to the application holder."
+  },
+  {
+   "term": "SQL candidate disagreement",
+   "differs_materially": false,
+   "evidence_a": "E1",
+   "evidence_b": "E2",
+   "how": "Candidates used the same filter (marketing_status = 'Tentative Approval') and grouping and returned the same number of rows. The flagged disagreement seems to come from column layout and list formatting, not from a different reading. Even so, the tool marks it as contested until an analyst reviews it."
+  }
+ ],
+ "cannot_answer": [
+  "No certified tool ranks sponsors by tentative approvals. applications_for_ingredient works one ingredient at a time, so this answer comes from Tier-2 Derived SQL and needs analyst review before testimony.",
+  "The data has no dosage-form column for applications, so tentative approvals cannot be broken down by presentation.",
+  "The data does not record why each approval is tentative (which patent or exclusivity) or when it is expected to become a full approval."
+ ],
+ "warnings": [
+  {
+   "code": "SQL_CANDIDATES_DISAGREE",
+   "severity": "high",
+   "message": "Independently written SQL candidates returned different result sets (row counts [26, 26]). The question or the data admits more than one reading; treat this value as contested until an analyst reviews the SQL.",
+   "rows": []
+  },
+  {
+   "code": "SQL_NO_ROW_CITATIONS",
+   "severity": "high",
+   "message": "The query did not select line_no columns, so its result cannot be traced to rows. Re-run selecting line_no.",
+   "rows": []
+  },
+  {
+   "code": "TIER2_DERIVED",
+   "severity": "medium",
+   "message": "This value comes from LLM-authored SQL (validated and executed), not a certified tool. Review before citing in testimony.",
+   "rows": []
+  },
+  {
+   "code": "DQ05_fei_prefix_anomaly",
+   "severity": "medium",
+   "message": "19 applications rows have an FEI beginning with '4' while 109 begin with '3'. Verify these FEIs against FDA's FEI portal before citing.",
+   "rows": [
+    {
+     "table": "applications",
+     "line": 11,
+     "key": "ANDA086712"
+    },
+    {
+     "table": "applications",
+     "line": 20,
+     "key": "ANDA095566"
+    },
+    {
+     "table": "applications",
+     "line": 24,
+     "key": "ANDA102459"
+    },
+    {
+     "table": "applications",
+     "line": 26,
+     "key": "ANDA103813"
+    },
+    {
+     "table": "applications",
+     "line": 33,
+     "key": "ANDA107391"
+    },
+    {
+     "table": "applications",
+     "line": 41,
+     "key": "ANDA111976"
+    },
+    {
+     "table": "applications",
+     "line": 45,
+     "key": "ANDA114396"
+    },
+    {
+     "table": "applications",
+     "line": 52,
+     "key": "ANDA120336"
+    },
+    {
+     "table": "applications",
+     "line": 60,
+     "key": "ANDA125566"
+    },
+    {
+     "table": "applications",
+     "line": 67,
+     "key": "ANDA128931"
+    },
+    {
+     "table": "applications",
+     "line": 78,
+     "key": "ANDA136199"
+    },
+    {
+     "table": "applications",
+     "line": 82,
+     "key": "ANDA138913"
+    },
+    {
+     "table": "applications",
+     "line": 91,
+     "key": "ANDA145779"
+    },
+    {
+     "table": "applications",
+     "line": 107,
+     "key": "ANDA154578"
+    },
+    {
+     "table": "applications",
+     "line": 114,
+     "key": "ANDA158024"
+    },
+    {
+     "table": "applications",
+     "line": 117,
+     "key": "ANDA159874"
+    },
+    {
+     "table": "applications",
+     "line": 122,
+     "key": "ANDA163047"
+    },
+    {
+     "table": "applications",
+     "line": 125,
+     "key": "ANDA164510"
+    },
+    {
+     "table": "applications",
+     "line": 128,
+     "key": "ANDA166600"
+    }
+   ]
+  },
+  {
+   "code": "DQ06_fei_no_inspection",
+   "severity": "medium",
+   "message": "FEI 4001567890 (Aurobindo Pharma Limited, Cipla USA Inc, Dr. Reddy's Laboratories Ltd, Hainan Poly Pharm Co Ltd, Sandoz Inc) has no inspection record; country and inspection history are UNKNOWN for this site.",
+   "rows": [
+    {
+     "table": "applications",
+     "line": 11,
+     "key": "ANDA086712"
+    },
+    {
+     "table": "applications",
+     "line": 33,
+     "key": "ANDA107391"
+    },
+    {
+     "table": "applications",
+     "line": 41,
+     "key": "ANDA111976"
+    },
+    {
+     "table": "applications",
+     "line": 52,
+     "key": "ANDA120336"
+    },
+    {
+     "table": "applications",
+     "line": 82,
+     "key": "ANDA138913"
+    },
+    {
+     "table": "applications",
+     "line": 91,
+     "key": "ANDA145779"
+    }
+   ]
+  }
+ ],
+ "claims": [
+  {
+   "text": "11 sponsors hold tentative approvals",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "E2 row_count 11"
+  },
+  {
+   "text": "Hikma Pharmaceuticals LLC holds the most, with 4",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Amneal, Apotex, Baxter, Fresenius Kabi, Sandoz each hold 3",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Evidence gives no as-of date",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "No as-of field in either item"
+  },
+  {
+   "text": "Per-sponsor ingredient lists (all 11 sponsors)",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "Every list matches the E2 ingredients"
+  },
+  {
+   "text": "Aurobindo and Cipla 2 each; Lupin, Mylan, Teva 1 each",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Application count equals distinct-ingredient count for every sponsor",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "tentative_count = n_ingredients in all rows"
+  },
+  {
+   "text": "Ampicillin-Sulbactam: Hikma, Fresenius Kabi, Mylan",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi and Sandoz",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Epinephrine: Baxter and Sandoz",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Aztreonam: Amneal and Teva",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Morphine Sulfate: Hikma and Aurobindo",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Amoxicillin: Hikma and Cipla",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Clindamycin Palmitate HCl: Apotex and Cipla",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "All 26 tentative-approval applications are ANDA",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Tentative approval = marketing_status exactly 'Tentative Approval'",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "Disclosed interpretation encoded in SQL"
+  },
+  {
+   "text": "Alternate reading 'adding full approvals' was not computed",
+   "verdict": "interpretation",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": "Evidence lists no such alternate (alt: []); the specific alternate is answer-authored"
+  },
+  {
+   "text": "Sponsor = application holder, not facility operator",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Figures come from LLM-authored SQL; review before testimony",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "TIER2_DERIVED"
+  },
+  {
+   "text": "High warning: SQL candidates disagree; treat as contested",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Valid candidates' row counts matched",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "[26,26] and [11,11]"
+  },
+  {
+   "text": "Ranking query could not be traced to rows (no line_no)",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": "SQL_NO_ROW_CITATIONS high warning surfaced"
+  },
+  {
+   "text": "E1 listing carries line numbers and is consistent with ranking",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "No dosage-form field and no reason/timing for tentative status in results",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1",
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  }
+ ],
+ "verification": {
+  "claims": [
+   {
+    "text": "11 sponsors hold tentative approvals",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ],
+    "note": "E2 row_count 11"
+   },
+   {
+    "text": "Hikma Pharmaceuticals LLC holds the most, with 4",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ]
+   },
+   {
+    "text": "Amneal, Apotex, Baxter, Fresenius Kabi, Sandoz each hold 3",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ]
+   },
+   {
+    "text": "Evidence gives no as-of date",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ],
+    "note": "No as-of field in either item"
+   },
+   {
+    "text": "Per-sponsor ingredient lists (all 11 sponsors)",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ],
+    "note": "Every list matches the E2 ingredients"
+   },
+   {
+    "text": "Aurobindo and Cipla 2 each; Lupin, Mylan, Teva 1 each",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ]
+   },
+   {
+    "text": "Application count equals distinct-ingredient count for every sponsor",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ],
+    "note": "tentative_count = n_ingredients in all rows"
+   },
+   {
+    "text": "Ampicillin-Sulbactam: Hikma, Fresenius Kabi, Mylan",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi and Sandoz",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Epinephrine: Baxter and Sandoz",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Aztreonam: Amneal and Teva",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Morphine Sulfate: Hikma and Aurobindo",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Amoxicillin: Hikma and Cipla",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Clindamycin Palmitate HCl: Apotex and Cipla",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "All 26 tentative-approval applications are ANDA",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ]
+   },
+   {
+    "text": "Tentative approval = marketing_status exactly 'Tentative Approval'",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ],
+    "note": "Disclosed interpretation encoded in SQL"
+   },
+   {
+    "text": "Alternate reading 'adding full approvals' was not computed",
+    "verdict": "interpretation",
+    "evidence_ids": [
+     "E1"
+    ],
+    "note": "Evidence lists no such alternate (alt: []); the specific alternate is answer-authored"
+   },
+   {
+    "text": "Sponsor = application holder, not facility operator",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ]
+   },
+   {
+    "text": "Figures come from LLM-authored SQL; review before testimony",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ],
+    "note": "TIER2_DERIVED"
+   },
+   {
+    "text": "High warning: SQL candidates disagree; treat as contested",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ]
+   },
+   {
+    "text": "Valid candidates' row counts matched",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ],
+    "note": "[26,26] and [11,11]"
+   },
+   {
+    "text": "Ranking query could not be traced to rows (no line_no)",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ],
+    "note": "SQL_NO_ROW_CITATIONS high warning surfaced"
+   },
+   {
+    "text": "E1 listing carries line numbers and is consistent with ranking",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ]
+   },
+   {
+    "text": "No dosage-form field and no reason/timing for tentative status in results",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1",
+     "E2"
+    ]
+   }
+  ],
+  "interpretations_disclosed": true,
+  "high_warnings_surfaced": true,
+  "status_semantics_respected": true,
+  "no_country_asserted_for_unknown": true,
+  "overall": "pass_with_notes",
+  "summary": "The answer passes, with notes. All counts, sponsor-ingredient pairings, ingredients shared across sponsors and the ANDA claim match E1 and E2, and they come from the applications table, which is correct. Both high-severity warnings appear as caveats: candidates disagree, and there are no row citations. No country or shortage-status claims are made. Note 1: the stated alternate reading ('adding full approvals') does not come from the evidence, which lists alt: [] for that interpretation. Note 2: the medium DQ05/DQ06 FEI warnings were left out, which is acceptable because the answer makes no FEI or country claims."
+ },
+ "evidence": [
+  {
+   "id": "E1",
+   "tool": "sql_query",
+   "args": {
+    "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+    "purpose": "List all tentative-approval applications by sponsor and ingredient to rank sponsors by count.",
+    "interpretation_notes": [
+     "Tentative approval = marketing_status 'Tentative Approval' exactly",
+     "Sponsor = application holder sponsor_name"
+    ]
+   },
+   "certified": false,
+   "rows": [
+    "applications#L37",
+    "applications#L123",
+    "applications#L96",
+    "applications#L40",
+    "applications#L109",
+    "applications#L90",
+    "applications#L119",
+    "applications#L91",
+    "applications#L112",
+    "applications#L59",
+    "applications#L104",
+    "applications#L7",
+    "applications#L47",
+    "applications#L55",
+    "applications#L53",
+    "applications#L79",
+    "applications#L5",
+    "applications#L129",
+    "applications#L61",
+    "applications#L120",
+    "applications#L97",
+    "applications#L25",
+    "applications#L84",
+    "applications#L60",
+    "applications#L52",
+    "applications#L49"
+   ],
+   "source_tables": [
+    "applications"
+   ],
+   "value": {
+    "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+    "purpose": "List all tentative-approval applications by sponsor and ingredient to rank sponsors by count.",
+    "row_count": 26,
+    "columns": [
+     "sponsor_name",
+     "active_ingredient",
+     "application_number",
+     "app_type",
+     "approval_date",
+     "line_no"
+    ],
+    "records": [
+     {
+      "sponsor_name": "Amneal Pharmaceuticals LLC",
+      "active_ingredient": "Albuterol Sulfate",
+      "application_number": "ANDA109649",
+      "app_type": "ANDA",
+      "approval_date": "2007-02-21",
+      "line_no": "37"
+     },
+     {
+      "sponsor_name": "Amneal Pharmaceuticals LLC",
+      "active_ingredient": "Aztreonam",
+      "application_number": "ANDA163774",
+      "app_type": "ANDA",
+      "approval_date": "2008-03-13",
+      "line_no": "123"
+     },
+     {
+      "sponsor_name": "Amneal Pharmaceuticals LLC",
+      "active_ingredient": "Vincristine Sulfate",
+      "application_number": "ANDA149173",
+      "app_type": "ANDA",
+      "approval_date": "2009-08-26",
+      "line_no": "96"
+     },
+     {
+      "sponsor_name": "Apotex Inc",
+      "active_ingredient": "Clindamycin Palmitate HCl",
+      "application_number": "ANDA111360",
+      "app_type": "ANDA",
+      "approval_date": "2012-02-26",
+      "line_no": "40"
+     },
+     {
+      "sponsor_name": "Apotex Inc",
+      "active_ingredient": "Piperacillin-Tazobactam",
+      "application_number": "ANDA155200",
+      "app_type": "ANDA",
+      "approval_date": "2017-03-11",
+      "line_no": "109"
+     },
+     {
+      "sponsor_name": "Apotex Inc",
+      "active_ingredient": "Potassium Chloride",
+      "application_number": "ANDA145177",
+      "app_type": "ANDA",
+      "approval_date": "2020-08-07",
+      "line_no": "90"
+     },
+     {
+      "sponsor_name": "Aurobindo Pharma Limited",
+      "active_ingredient": "Morphine Sulfate",
+      "application_number": "ANDA161000",
+      "app_type": "ANDA",
+      "approval_date": "2012-09-09",
+      "line_no": "119"
+     },
+     {
+      "sponsor_name": "Aurobindo Pharma Limited",
+      "active_ingredient": "Tobramycin Sulfate",
+      "application_number": "ANDA145779",
+      "app_type": "ANDA",
+      "approval_date": "2004-02-05",
+      "line_no": "91"
+     },
+     {
+      "sponsor_name": "Baxter Healthcare Corporation",
+      "active_ingredient": "Ceftriaxone Sodium",
+      "application_number": "ANDA156723",
+      "app_type": "ANDA",
+      "approval_date": "2017-07-08",
+      "line_no": "112"
+     },
+     {
+      "sponsor_name": "Baxter Healthcare Corporation",
+      "active_ingredient": "Cephalexin",
+      "application_number": "ANDA125373",
+      "app_type": "ANDA",
+      "approval_date": "2003-05-15",
+      "line_no": "59"
+     },
+     {
+      "sponsor_name": "Baxter Healthcare Corporation",
+      "active_ingredient": "Epinephrine",
+      "application_number": "ANDA152906",
+      "app_type": "ANDA",
+      "approval_date": "2021-10-11",
+      "line_no": "104"
+     },
+     {
+      "sponsor_name": "Cipla USA Inc",
+      "active_ingredient": "Amoxicillin",
+      "application_number": "ANDA095678",
+      "app_type": "ANDA",
+      "approval_date": "2016-09-01",
+      "line_no": "7"
+     },
+     {
+      "sponsor_name": "Cipla USA Inc",
+      "active_ingredient": "Clindamycin Palmitate HCl",
+      "application_number": "ANDA116007",
+      "app_type": "ANDA",
+      "approval_date": "2020-12-22",
+      "line_no": "47"
+     },
+     {
+      "sponsor_name": "Fresenius Kabi USA LLC",
+      "active_ingredient": "Ampicillin-Sulbactam",
+      "application_number": "ANDA122009",
+      "app_type": "ANDA",
+      "approval_date": "2009-11-19",
+      "line_no": "55"
+     },
+     {
+      "sponsor_name": "Fresenius Kabi USA LLC",
+      "active_ingredient": "Methotrexate Sodium",
+      "application_number": "ANDA120809",
+      "app_type": "ANDA",
+      "approval_date": "2019-12-08",
+      "line_no": "53"
+     },
+     {
+      "sponsor_name": "Fresenius Kabi USA LLC",
+      "active_ingredient": "Penicillin V Potassium",
+      "application_number": "ANDA136807",
+      "app_type": "ANDA",
+      "approval_date": "2020-08-12",
+      "line_no": "79"
+     },
+     {
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "active_ingredient": "Amoxicillin",
+      "application_number": "ANDA082345",
+      "app_type": "ANDA",
+      "approval_date": "2011-05-18",
+      "line_no": "5"
+     },
+     {
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "active_ingredient": "Ampicillin-Sulbactam",
+      "application_number": "ANDA167397",
+      "app_type": "ANDA",
+      "approval_date": "2005-01-19",
+      "line_no": "129"
+     },
+     {
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "active_ingredient": "Morphine Sulfate",
+      "application_number": "ANDA126180",
+      "app_type": "ANDA",
+      "approval_date": "2009-04-13",
+      "line_no": "61"
+     },
+     {
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "active_ingredient": "Trimethoprim-Sulfamethoxazole",
+      "application_number": "ANDA161503",
+      "app_type": "ANDA",
+      "approval_date": "2009-06-18",
+      "line_no": "120"
+     },
+     {
+      "sponsor_name": "Lupin Limited",
+      "active_ingredient": "Gentamicin Sulfate",
+      "application_number": "ANDA149361",
+      "app_type": "ANDA",
+      "approval_date": "2000-05-13",
+      "line_no": "97"
+     },
+     {
+      "sponsor_name": "Mylan Pharmaceuticals Inc",
+      "active_ingredient": "Ampicillin-Sulbactam",
+      "application_number": "ANDA103243",
+      "app_type": "ANDA",
+      "approval_date": "2009-02-13",
+      "line_no": "25"
+     },
+     {
+      "sponsor_name": "Sandoz Inc",
+      "active_ingredient": "Epinephrine",
+      "application_number": "ANDA140655",
+      "app_type": "ANDA",
+      "approval_date": "2010-06-17",
+      "line_no": "84"
+     },
+     {
+      "sponsor_name": "Sandoz Inc",
+      "active_ingredient": "Methotrexate Sodium",
+      "application_number": "ANDA125566",
+      "app_type": "ANDA",
+      "approval_date": "2005-08-12",
+      "line_no": "60"
+     },
+     {
+      "sponsor_name": "Sandoz Inc",
+      "active_ingredient": "Penicillin V Potassium",
+      "application_number": "ANDA120336",
+      "app_type": "ANDA",
+      "approval_date": "2020-10-26",
+      "line_no": "52"
+     },
+     {
+      "sponsor_name": "Teva Pharmaceuticals USA Inc",
+      "active_ingredient": "Aztreonam",
+      "application_number": "ANDA117424",
+      "app_type": "ANDA",
+      "approval_date": "2013-04-08",
+      "line_no": "49"
+     }
+    ],
+    "candidates": [
+     {
+      "source": "planner",
+      "model": null,
+      "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+      "row_count": 26,
+      "error": null
+     },
+     {
+      "source": "sql_candidate_b",
+      "model": "claude-sonnet-5-5",
+      "sql": "SELECT sponsor_name, active_ingredient, COUNT(*) AS application_count, SUM(COUNT(*)) OVER (PARTITION BY sponsor_name) AS sponsor_total, list(line_no ORDER BY line_no) AS applications_line_nos, list(application_number ORDER BY line_no) AS application_numbers\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name, active_ingredient\nORDER BY sponsor_total DESC, sponsor_name, application_count DESC, active_ingredient",
+      "row_count": 26,
+      "error": null
+     },
+     {
+      "source": "sql_candidate_c",
+      "model": "claude-opus-5-5",
+      "sql": "SELECT\n  a.line_no AS applications_line_no,\n  a.sponsor_name,\n  a.active_ingredient,\n  a.application_number,\n  a.app_type,\n  a.approval_date,\n  COUNT(*) OVER (PARTITION BY a.sponsor_name) AS sponsor_tentative_count,\n  DENSE_RANK() OVER (ORDER BY COUNT(*) OVER (PARTITION BY a.sponsor_name) DESC) AS sponsor_rank\nFROM applications a\nWHERE a.marketing_status = 'Tentative Approval'\nORDER BY sponsor_tentative_count DESC, a.sponsor_name, a.active_ingredient, a.application_number, a.line_no",
+      "row_count": null,
+      "error": "execution error: Parser Error: window functions are not allowed in window definitions"
+     }
+    ],
+    "candidate_agreement": {
+     "n_valid": 2,
+     "all_agree": false,
+     "row_counts": [
+      26,
+      26
+     ]
+    }
+   },
+   "warnings": [
+    {
+     "code": "TIER2_DERIVED",
+     "severity": "medium",
+     "message": "This value comes from LLM-authored SQL (validated and executed), not a certified tool. Review before citing in testimony.",
+     "rows": []
+    },
+    {
+     "code": "DQ05_fei_prefix_anomaly",
+     "severity": "medium",
+     "message": "19 applications rows have an FEI beginning with '4' while 109 begin with '3'. Verify these FEIs against FDA's FEI portal before citing.",
+     "rows": [
+      {
+       "table": "applications",
+       "line": 11,
+       "key": "ANDA086712"
+      },
+      {
+       "table": "applications",
+       "line": 20,
+       "key": "ANDA095566"
+      },
+      {
+       "table": "applications",
+       "line": 24,
+       "key": "ANDA102459"
+      },
+      {
+       "table": "applications",
+       "line": 26,
+       "key": "ANDA103813"
+      },
+      {
+       "table": "applications",
+       "line": 33,
+       "key": "ANDA107391"
+      },
+      {
+       "table": "applications",
+       "line": 41,
+       "key": "ANDA111976"
+      },
+      {
+       "table": "applications",
+       "line": 45,
+       "key": "ANDA114396"
+      },
+      {
+       "table": "applications",
+       "line": 52,
+       "key": "ANDA120336"
+      },
+      {
+       "table": "applications",
+       "line": 60,
+       "key": "ANDA125566"
+      },
+      {
+       "table": "applications",
+       "line": 67,
+       "key": "ANDA128931"
+      },
+      {
+       "table": "applications",
+       "line": 78,
+       "key": "ANDA136199"
+      },
+      {
+       "table": "applications",
+       "line": 82,
+       "key": "ANDA138913"
+      },
+      {
+       "table": "applications",
+       "line": 91,
+       "key": "ANDA145779"
+      },
+      {
+       "table": "applications",
+       "line": 107,
+       "key": "ANDA154578"
+      },
+      {
+       "table": "applications",
+       "line": 114,
+       "key": "ANDA158024"
+      },
+      {
+       "table": "applications",
+       "line": 117,
+       "key": "ANDA159874"
+      },
+      {
+       "table": "applications",
+       "line": 122,
+       "key": "ANDA163047"
+      },
+      {
+       "table": "applications",
+       "line": 125,
+       "key": "ANDA164510"
+      },
+      {
+       "table": "applications",
+       "line": 128,
+       "key": "ANDA166600"
+      }
+     ]
+    },
+    {
+     "code": "DQ06_fei_no_inspection",
+     "severity": "medium",
+     "message": "FEI 4001567890 (Aurobindo Pharma Limited, Cipla USA Inc, Dr. Reddy's Laboratories Ltd, Hainan Poly Pharm Co Ltd, Sandoz Inc) has no inspection record; country and inspection history are UNKNOWN for this site.",
+     "rows": [
+      {
+       "table": "applications",
+       "line": 11,
+       "key": "ANDA086712"
+      },
+      {
+       "table": "applications",
+       "line": 33,
+       "key": "ANDA107391"
+      },
+      {
+       "table": "applications",
+       "line": 41,
+       "key": "ANDA111976"
+      },
+      {
+       "table": "applications",
+       "line": 52,
+       "key": "ANDA120336"
+      },
+      {
+       "table": "applications",
+       "line": 82,
+       "key": "ANDA138913"
+      },
+      {
+       "table": "applications",
+       "line": 91,
+       "key": "ANDA145779"
+      }
+     ]
+    },
+    {
+     "code": "SQL_CANDIDATES_DISAGREE",
+     "severity": "high",
+     "message": "Independently written SQL candidates returned different result sets (row counts [26, 26]). The question or the data admits more than one reading; treat this value as contested until an analyst reviews the SQL.",
+     "rows": []
+    }
+   ],
+   "interpretations": [
+    {
+     "term": "Tentative approval = marketing_status 'Tentative Approval' exactly",
+     "chosen": "encoded in SQL",
+     "alternatives": [],
+     "decision_ref": "D13",
+     "note": null
+    },
+    {
+     "term": "Sponsor = application holder sponsor_name",
+     "chosen": "encoded in SQL",
+     "alternatives": [],
+     "decision_ref": "D13",
+     "note": null
+    },
+    {
+     "term": "List all tentative-approval applications by sponsor and ingr",
+     "chosen": "planner SQL",
+     "alternatives": [
+      "sql_candidate_b SQL"
+     ],
+     "decision_ref": "D13",
+     "note": "candidate result sets differ"
+    }
+   ]
+  },
+  {
+   "id": "E2",
+   "tool": "sql_query",
+   "args": {
+    "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+    "purpose": "Rank sponsors by number of tentative-approval applications, listing ingredients for each.",
+    "interpretation_notes": [
+     "Count = number of applications with marketing_status 'Tentative Approval' per sponsor_name",
+     "Sponsor = application holder, not facility operator"
+    ]
+   },
+   "certified": false,
+   "rows": [],
+   "source_tables": [
+    "applications"
+   ],
+   "value": {
+    "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+    "purpose": "Rank sponsors by number of tentative-approval applications, listing ingredients for each.",
+    "row_count": 11,
+    "columns": [
+     "sponsor_name",
+     "tentative_count",
+     "n_ingredients",
+     "ingredients",
+     "application_numbers",
+     "line_nos"
+    ],
+    "records": [
+     {
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "tentative_count": "4",
+      "n_ingredients": "4",
+      "ingredients": "['Amoxicillin' 'Ampicillin-Sulbactam' 'Morphine Sulfate'\n 'Trimethoprim-Sulfamethoxazole']",
+      "application_numbers": "['ANDA082345' 'ANDA126180' 'ANDA161503' 'ANDA167397']",
+      "line_nos": "[  5  61 120 129]"
+     },
+     {
+      "sponsor_name": "Amneal Pharmaceuticals LLC",
+      "tentative_count": "3",
+      "n_ingredients": "3",
+      "ingredients": "['Albuterol Sulfate' 'Aztreonam' 'Vincristine Sulfate']",
+      "application_numbers": "['ANDA109649' 'ANDA149173' 'ANDA163774']",
+      "line_nos": "[ 37  96 123]"
+     },
+     {
+      "sponsor_name": "Apotex Inc",
+      "tentative_count": "3",
+      "n_ingredients": "3",
+      "ingredients": "['Clindamycin Palmitate HCl' 'Piperacillin-Tazobactam'\n 'Potassium Chloride']",
+      "application_numbers": "['ANDA111360' 'ANDA145177' 'ANDA155200']",
+      "line_nos": "[ 40  90 109]"
+     },
+     {
+      "sponsor_name": "Baxter Healthcare Corporation",
+      "tentative_count": "3",
+      "n_ingredients": "3",
+      "ingredients": "['Ceftriaxone Sodium' 'Cephalexin' 'Epinephrine']",
+      "application_numbers": "['ANDA125373' 'ANDA152906' 'ANDA156723']",
+      "line_nos": "[ 59 104 112]"
+     },
+     {
+      "sponsor_name": "Fresenius Kabi USA LLC",
+      "tentative_count": "3",
+      "n_ingredients": "3",
+      "ingredients": "['Ampicillin-Sulbactam' 'Methotrexate Sodium' 'Penicillin V Potassium']",
+      "application_numbers": "['ANDA120809' 'ANDA122009' 'ANDA136807']",
+      "line_nos": "[53 55 79]"
+     },
+     {
+      "sponsor_name": "Sandoz Inc",
+      "tentative_count": "3",
+      "n_ingredients": "3",
+      "ingredients": "['Epinephrine' 'Methotrexate Sodium' 'Penicillin V Potassium']",
+      "application_numbers": "['ANDA120336' 'ANDA125566' 'ANDA140655']",
+      "line_nos": "[52 60 84]"
+     },
+     {
+      "sponsor_name": "Aurobindo Pharma Limited",
+      "tentative_count": "2",
+      "n_ingredients": "2",
+      "ingredients": "['Morphine Sulfate' 'Tobramycin Sulfate']",
+      "application_numbers": "['ANDA145779' 'ANDA161000']",
+      "line_nos": "[ 91 119]"
+     },
+     {
+      "sponsor_name": "Cipla USA Inc",
+      "tentative_count": "2",
+      "n_ingredients": "2",
+      "ingredients": "['Amoxicillin' 'Clindamycin Palmitate HCl']",
+      "application_numbers": "['ANDA095678' 'ANDA116007']",
+      "line_nos": "[ 7 47]"
+     },
+     {
+      "sponsor_name": "Lupin Limited",
+      "tentative_count": "1",
+      "n_ingredients": "1",
+      "ingredients": "['Gentamicin Sulfate']",
+      "application_numbers": "['ANDA149361']",
+      "line_nos": "[97]"
+     },
+     {
+      "sponsor_name": "Mylan Pharmaceuticals Inc",
+      "tentative_count": "1",
+      "n_ingredients": "1",
+      "ingredients": "['Ampicillin-Sulbactam']",
+      "application_numbers": "['ANDA103243']",
+      "line_nos": "[25]"
+     },
+     {
+      "sponsor_name": "Teva Pharmaceuticals USA Inc",
+      "tentative_count": "1",
+      "n_ingredients": "1",
+      "ingredients": "['Aztreonam']",
+      "application_numbers": "['ANDA117424']",
+      "line_nos": "[49]"
+     }
+    ],
+    "candidates": [
+     {
+      "source": "planner",
+      "model": null,
+      "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+      "row_count": 11,
+      "error": null
+     },
+     {
+      "source": "sql_candidate_b",
+      "model": "claude-sonnet-5-5",
+      "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_application_count,\n       list_sort(list(DISTINCT active_ingredient)) AS ingredients,\n       list(line_no ORDER BY line_no) AS applications_line_nos\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_application_count DESC, sponsor_name",
+      "row_count": 11,
+      "error": null
+     },
+     {
+      "source": "sql_candidate_c",
+      "model": "claude-opus-5-5",
+      "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_approval_count,\n       string_agg(DISTINCT active_ingredient, '; ' ORDER BY active_ingredient) AS ingredients,\n       list(application_number ORDER BY application_number) AS application_numbers,\n       list(line_no ORDER BY line_no) AS applications_line_no\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_approval_count DESC, sponsor_name",
+      "row_count": null,
+      "error": "multiple statements are not allowed"
+     }
+    ],
+    "candidate_agreement": {
+     "n_valid": 2,
+     "all_agree": false,
+     "row_counts": [
+      11,
+      11
+     ]
+    }
+   },
+   "warnings": [
+    {
+     "code": "SQL_NO_ROW_CITATIONS",
+     "severity": "high",
+     "message": "The query did not select line_no columns, so its result cannot be traced to rows. Re-run selecting line_no.",
+     "rows": []
+    },
+    {
+     "code": "TIER2_DERIVED",
+     "severity": "medium",
+     "message": "This value comes from LLM-authored SQL (validated and executed), not a certified tool. Review before citing in testimony.",
+     "rows": []
+    },
+    {
+     "code": "SQL_CANDIDATES_DISAGREE",
+     "severity": "high",
+     "message": "Independently written SQL candidates returned different result sets (row counts [11, 11]). The question or the data admits more than one reading; treat this value as contested until an analyst reviews the SQL.",
+     "rows": []
+    }
+   ],
+   "interpretations": [
+    {
+     "term": "Count = number of applications with marketing_status 'Tentative Approval' per sponsor_name",
+     "chosen": "encoded in SQL",
+     "alternatives": [],
+     "decision_ref": "D13",
+     "note": null
+    },
+    {
+     "term": "Sponsor = application holder, not facility operator",
+     "chosen": "encoded in SQL",
+     "alternatives": [],
+     "decision_ref": "D13",
+     "note": null
+    },
+    {
+     "term": "Rank sponsors by number of tentative-approval applications, ",
+     "chosen": "planner SQL",
+     "alternatives": [
+      "sql_candidate_b SQL"
+     ],
+     "decision_ref": "D13",
+     "note": "candidate result sets differ"
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "table": "applications",
+   "line": 37,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 123,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 96,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 40,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 109,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 90,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 119,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 91,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 112,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 59,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 104,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 7,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 47,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 55,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 53,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 79,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 5,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 129,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 61,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 120,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 97,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 25,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 84,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 60,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 52,
+   "key": ""
+  },
+  {
+   "table": "applications",
+   "line": 49,
+   "key": ""
+  }
+ ],
+ "substitutions": [
+  {
+   "placeholder": "{{E2.row_count}}",
+   "evidence": "E2",
+   "path": ".row_count",
+   "value": 11,
+   "rendered": "11"
+  },
+  {
+   "placeholder": "{{E2.records[0].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[0].sponsor_name",
+   "value": "Hikma Pharmaceuticals LLC",
+   "rendered": "Hikma Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E2.records[0].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[0].tentative_count",
+   "value": "4",
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E2.records[1].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[1].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[1].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[1].sponsor_name",
+   "value": "Amneal Pharmaceuticals LLC",
+   "rendered": "Amneal Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E2.records[2].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[2].sponsor_name",
+   "value": "Apotex Inc",
+   "rendered": "Apotex Inc"
+  },
+  {
+   "placeholder": "{{E2.records[3].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[3].sponsor_name",
+   "value": "Baxter Healthcare Corporation",
+   "rendered": "Baxter Healthcare Corporation"
+  },
+  {
+   "placeholder": "{{E2.records[4].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[4].sponsor_name",
+   "value": "Fresenius Kabi USA LLC",
+   "rendered": "Fresenius Kabi USA LLC"
+  },
+  {
+   "placeholder": "{{E2.records[5].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[5].sponsor_name",
+   "value": "Sandoz Inc",
+   "rendered": "Sandoz Inc"
+  },
+  {
+   "placeholder": "{{E2.records[0].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[0].sponsor_name",
+   "value": "Hikma Pharmaceuticals LLC",
+   "rendered": "Hikma Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E2.records[0].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[0].tentative_count",
+   "value": "4",
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E2.records[1].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[1].sponsor_name",
+   "value": "Amneal Pharmaceuticals LLC",
+   "rendered": "Amneal Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E2.records[1].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[1].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[2].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[2].sponsor_name",
+   "value": "Apotex Inc",
+   "rendered": "Apotex Inc"
+  },
+  {
+   "placeholder": "{{E2.records[2].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[2].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[3].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[3].sponsor_name",
+   "value": "Baxter Healthcare Corporation",
+   "rendered": "Baxter Healthcare Corporation"
+  },
+  {
+   "placeholder": "{{E2.records[3].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[3].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[4].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[4].sponsor_name",
+   "value": "Fresenius Kabi USA LLC",
+   "rendered": "Fresenius Kabi USA LLC"
+  },
+  {
+   "placeholder": "{{E2.records[4].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[4].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[5].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[5].sponsor_name",
+   "value": "Sandoz Inc",
+   "rendered": "Sandoz Inc"
+  },
+  {
+   "placeholder": "{{E2.records[5].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[5].tentative_count",
+   "value": "3",
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E2.records[6].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[6].sponsor_name",
+   "value": "Aurobindo Pharma Limited",
+   "rendered": "Aurobindo Pharma Limited"
+  },
+  {
+   "placeholder": "{{E2.records[6].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[6].tentative_count",
+   "value": "2",
+   "rendered": "2"
+  },
+  {
+   "placeholder": "{{E2.records[7].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[7].sponsor_name",
+   "value": "Cipla USA Inc",
+   "rendered": "Cipla USA Inc"
+  },
+  {
+   "placeholder": "{{E2.records[7].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[7].tentative_count",
+   "value": "2",
+   "rendered": "2"
+  },
+  {
+   "placeholder": "{{E2.records[8].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[8].sponsor_name",
+   "value": "Lupin Limited",
+   "rendered": "Lupin Limited"
+  },
+  {
+   "placeholder": "{{E2.records[8].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[8].tentative_count",
+   "value": "1",
+   "rendered": "1"
+  },
+  {
+   "placeholder": "{{E2.records[9].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[9].sponsor_name",
+   "value": "Mylan Pharmaceuticals Inc",
+   "rendered": "Mylan Pharmaceuticals Inc"
+  },
+  {
+   "placeholder": "{{E2.records[9].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[9].tentative_count",
+   "value": "1",
+   "rendered": "1"
+  },
+  {
+   "placeholder": "{{E2.records[10].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[10].sponsor_name",
+   "value": "Teva Pharmaceuticals USA Inc",
+   "rendered": "Teva Pharmaceuticals USA Inc"
+  },
+  {
+   "placeholder": "{{E2.records[10].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[10].tentative_count",
+   "value": "1",
+   "rendered": "1"
+  },
+  {
+   "placeholder": "{{E1.row_count}}",
+   "evidence": "E1",
+   "path": ".row_count",
+   "value": 26,
+   "rendered": "26"
+  },
+  {
+   "placeholder": "{{E2.records[0].sponsor_name}}",
+   "evidence": "E2",
+   "path": ".records[0].sponsor_name",
+   "value": "Hikma Pharmaceuticals LLC",
+   "rendered": "Hikma Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E2.records[0].tentative_count}}",
+   "evidence": "E2",
+   "path": ".records[0].tentative_count",
+   "value": "4",
+   "rendered": "4"
+  }
+ ],
+ "certified_query_match": null,
+ "pins": {},
+ "escalation": {
+  "escalate": true,
+  "reasons": [
+   "no certified tool covers the question; LLM-authored SQL required"
+  ]
+ },
+ "trace": {
+  "run_id": "214c12f74449",
+  "question": "Which sponsors hold the most tentative approvals, and for which ingredients?",
+  "started_at": "2026-11-08T00:47:46.642937+00:00",
+  "steps": [
+   {
+    "seq": 1,
+    "kind": "gate",
+    "title": "Answerability: answerable",
+    "started_at": "2026-11-08T00:47:49.806848+00:00",
+    "duration_ms": 2188,
+    "llm": {
+     "role": "gate",
+     "model": "claude-haiku-5-5",
+     "provider": "anthropic",
+     "input_tokens": 227,
+     "output_tokens": 388,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 3379,
+     "latency_ms": 2188,
+     "cost_usd": null
+    },
+    "input": "Which sponsors hold the most tentative approvals, and for which ingredients?",
+    "output": {
+     "category": "answerable",
+     "reason": "Application table has marketing_status (Tentative Approval) and sponsor_name and active_ingredient fields, so counting tentative-approval applications by sponsor and listing their ingredients is directly computable. \"Most\" is a ranking to be computed; no ambiguity in the data fields needed. Caveat: \"approved\" is ambiguous, but the question asks about tentative approvals specifically, so the marketing_status='Tentative Approval' filter applies. Sponsor is the Application holder (sponsor_name), not the facility operator, so the sponsor interpretation of \"manufacturer\" applies if that term were used; here \"sponsors\" is explicit.",
+     "ambiguous_terms": [
+      "approved"
+     ],
+     "literals_to_resolve": [
+      {
+       "text": "tentative approvals",
+       "kind": "application"
+      },
+      {
+       "text": "sponsors",
+       "kind": "firm"
+      },
+      {
+       "text": "ingredients",
+       "kind": "generic_name"
+      }
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 2,
+    "kind": "plan",
+    "title": "Interpretations declared",
+    "started_at": "2026-11-08T00:47:52.519061+00:00",
+    "duration_ms": 2525,
+    "llm": {
+     "role": "planner",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 100,
+     "output_tokens": 357,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 9635,
+     "latency_ms": 2525,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "restated_question": "Which application holders (sponsor_name) hold the most applications with marketing_status = 'Tentative Approval', and for which active ingredients?",
+     "interpretations": [
+      {
+       "term": "approved / tentative approvals",
+       "default_reading": "Count only marketing_status='Tentative Approval' applications (not full approvals)",
+       "alternates": [
+        "include_tentative (full + tentative)"
+       ],
+       "will_compute_alternate": false,
+       "decision_ref": "D9"
+      },
+      {
+       "term": "sponsor",
+       "default_reading": "Application holder (sponsor_name), not facility operator",
+       "alternates": [
+        "facility_operator"
+       ],
+       "will_compute_alternate": false,
+       "decision_ref": "D8"
+      }
+     ],
+     "plan": [
+      "sql_query over applications grouping tentative approvals by sponsor and ingredient (no certified tool ranks sponsors across all ingredients)",
+      "finish"
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 3,
+    "kind": "escalation",
+    "title": "Planner model: Opus (escalated)",
+    "started_at": "2026-11-08T00:47:52.519141+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "escalate": true,
+     "reasons": [
+      "no certified tool covers the question; LLM-authored SQL required"
+     ]
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 4,
+    "kind": "sql",
+    "title": "SQL candidate (claude-sonnet-5-5) → 26 rows",
+    "started_at": "2026-11-08T00:47:57.978175+00:00",
+    "duration_ms": 2834,
+    "llm": {
+     "role": "sql_candidate_b",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 180,
+     "output_tokens": 333,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 1462,
+     "latency_ms": 2834,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT sponsor_name, active_ingredient, COUNT(*) AS application_count, SUM(COUNT(*)) OVER (PARTITION BY sponsor_name) AS sponsor_total, list(line_no ORDER BY line_no) AS applications_line_nos, list(application_number ORDER BY line_no) AS application_numbers\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name, active_ingredient\nORDER BY sponsor_total DESC, sponsor_name, application_count DESC, active_ingredient"
+    },
+    "output": {
+     "row_count": 26,
+     "error": null
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 5,
+    "kind": "sql",
+    "title": "SQL candidate (claude-opus-5-5) → error",
+    "started_at": "2026-11-08T00:48:03.073410+00:00",
+    "duration_ms": 4702,
+    "llm": {
+     "role": "sql_candidate_c",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 180,
+     "output_tokens": 464,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 1462,
+     "latency_ms": 4702,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT\n  a.line_no AS applications_line_no,\n  a.sponsor_name,\n  a.active_ingredient,\n  a.application_number,\n  a.app_type,\n  a.approval_date,\n  COUNT(*) OVER (PARTITION BY a.sponsor_name) AS sponsor_tentative_count,\n  DENSE_RANK() OVER (ORDER BY COUNT(*) OVER (PARTITION BY a.sponsor_name) DESC) AS sponsor_rank\nFROM applications a\nWHERE a.marketing_status = 'Tentative Approval'\nORDER BY sponsor_tentative_count DESC, a.sponsor_name, a.active_ingredient, a.application_number, a.line_no"
+    },
+    "output": {
+     "row_count": null,
+     "error": "execution error: Parser Error: window functions are not allowed in window definitions"
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 6,
+    "kind": "sql",
+    "title": "SQL candidates: DISAGREE (2 valid)",
+    "started_at": "2026-11-08T00:48:03.073537+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "n_valid": 2,
+     "all_agree": false,
+     "row_counts": [
+      26,
+      26
+     ]
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 7,
+    "kind": "sql",
+    "title": "sql_query → E1",
+    "started_at": "2026-11-08T00:48:03.073768+00:00",
+    "duration_ms": 8253,
+    "llm": {
+     "role": "planner_escalated",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 491,
+     "output_tokens": 249,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 9635,
+     "latency_ms": 2300,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+     "purpose": "List all tentative-approval applications by sponsor and ingredient to rank sponsors by count.",
+     "interpretation_notes": [
+      "Tentative approval = marketing_status 'Tentative Approval' exactly",
+      "Sponsor = application holder sponsor_name"
+     ]
+    },
+    "output": {
+     "evidence_id": "E1",
+     "rows_cited": 26,
+     "warnings": [
+      "TIER2_DERIVED",
+      "DQ05_fei_prefix_anomaly",
+      "DQ06_fei_no_inspection",
+      "SQL_CANDIDATES_DISAGREE"
+     ],
+     "value_preview": {
+      "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+      "purpose": "List all tentative-approval applications by sponsor and ingredient to rank sponsors by count.",
+      "row_count": 26,
+      "columns": [
+       "sponsor_name",
+       "active_ingredient",
+       "application_number",
+       "app_type",
+       "approval_date",
+       "line_no"
+      ],
+      "records": "<26 records; see evidence>",
+      "candidates": [
+       {
+        "source": "planner",
+        "model": null,
+        "sql": "SELECT sponsor_name, active_ingredient, application_number, app_type, approval_date, line_no FROM applications WHERE marketing_status = 'Tentative Approval' ORDER BY sponsor_name, active_ingredient",
+        "row_count": 26,
+        "error": null
+       },
+       {
+        "source": "sql_candidate_b",
+        "model": "claude-sonnet-5-5",
+        "sql": "SELECT sponsor_name, active_ingredient, COUNT(*) AS application_count, SUM(COUNT(*)) OVER (PARTITION BY sponsor_name) AS sponsor_total, list(line_no ORDER BY line_no) AS applications_line_nos, list(application_number ORDER BY line_no) AS application_numbers\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name, active_ingredient\nORDER BY sponsor_total DESC, sponsor_name, application_count DESC, active_ingredient",
+        "row_count": 26,
+        "error": null
+       },
+       {
+        "source": "sql_candidate_c",
+        "model": "claude-opus-5-5",
+        "sql": "SELECT\n  a.line_no AS applications_line_no,\n  a.sponsor_name,\n  a.active_ingredient,\n  a.application_number,\n  a.app_type,\n  a.approval_date,\n  COUNT(*) OVER (PARTITION BY a.sponsor_name) AS sponsor_tentative_count,\n  DENSE_RANK() OVER (ORDER BY COUNT(*) OVER (PARTITION BY a.sponsor_name) DESC) AS sponsor_rank\nFROM applications a\nWHERE a.marketing_status = 'Tentative Approval'\nORDER BY sponsor_tentative_count DESC, a.sponsor_name, a.active_ingredient, a.application_number, a.line_no",
+        "row_count": null,
+        "error": "execution error: Parser Error: window functions are not allowed in window definitions"
+       }
+      ],
+      "candidate_agreement": {
+       "n_valid": 2,
+       "all_agree": false,
+       "row_counts": [
+        26,
+        26
+       ]
+      }
+     }
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 8,
+    "kind": "sql",
+    "title": "SQL candidate (claude-sonnet-5-5) → 11 rows",
+    "started_at": "2026-11-08T00:48:10.065555+00:00",
+    "duration_ms": 2354,
+    "llm": {
+     "role": "sql_candidate_b",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 183,
+     "output_tokens": 279,
+     "cache_read_tokens": 1462,
+     "cache_write_tokens": 0,
+     "latency_ms": 2354,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_application_count,\n       list_sort(list(DISTINCT active_ingredient)) AS ingredients,\n       list(line_no ORDER BY line_no) AS applications_line_nos\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_application_count DESC, sponsor_name"
+    },
+    "output": {
+     "row_count": 11,
+     "error": null
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 9,
+    "kind": "sql",
+    "title": "SQL candidate (claude-opus-5-5) → error",
+    "started_at": "2026-11-08T00:48:12.991885+00:00",
+    "duration_ms": 2770,
+    "llm": {
+     "role": "sql_candidate_c",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 183,
+     "output_tokens": 313,
+     "cache_read_tokens": 1462,
+     "cache_write_tokens": 0,
+     "latency_ms": 2770,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_approval_count,\n       string_agg(DISTINCT active_ingredient, '; ' ORDER BY active_ingredient) AS ingredients,\n       list(application_number ORDER BY application_number) AS application_numbers,\n       list(line_no ORDER BY line_no) AS applications_line_no\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_approval_count DESC, sponsor_name"
+    },
+    "output": {
+     "row_count": null,
+     "error": "multiple statements are not allowed"
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 10,
+    "kind": "sql",
+    "title": "SQL candidates: DISAGREE (2 valid)",
+    "started_at": "2026-11-08T00:48:12.991977+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "n_valid": 2,
+     "all_agree": false,
+     "row_counts": [
+      11,
+      11
+     ]
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 11,
+    "kind": "sql",
+    "title": "sql_query → E2",
+    "started_at": "2026-11-08T00:48:12.992144+00:00",
+    "duration_ms": 5473,
+    "llm": {
+     "role": "planner_escalated",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 2202,
+     "output_tokens": 457,
+     "cache_read_tokens": 9635,
+     "cache_write_tokens": 0,
+     "latency_ms": 4444,
+     "cost_usd": null
+    },
+    "input": {
+     "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+     "purpose": "Rank sponsors by number of tentative-approval applications, listing ingredients for each.",
+     "interpretation_notes": [
+      "Count = number of applications with marketing_status 'Tentative Approval' per sponsor_name",
+      "Sponsor = application holder, not facility operator"
+     ]
+    },
+    "output": {
+     "evidence_id": "E2",
+     "rows_cited": 0,
+     "warnings": [
+      "SQL_NO_ROW_CITATIONS",
+      "TIER2_DERIVED",
+      "SQL_CANDIDATES_DISAGREE"
+     ],
+     "value_preview": {
+      "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+      "purpose": "Rank sponsors by number of tentative-approval applications, listing ingredients for each.",
+      "row_count": 11,
+      "columns": [
+       "sponsor_name",
+       "tentative_count",
+       "n_ingredients",
+       "ingredients",
+       "application_numbers",
+       "line_nos"
+      ],
+      "records": [
+       {
+        "sponsor_name": "Hikma Pharmaceuticals LLC",
+        "tentative_count": "4",
+        "n_ingredients": "4",
+        "ingredients": "['Amoxicillin' 'Ampicillin-Sulbactam' 'Morphine Sulfate'\n 'Trimethoprim-Sulfamethoxazole']",
+        "application_numbers": "['ANDA082345' 'ANDA126180' 'ANDA161503' 'ANDA167397']",
+        "line_nos": "[  5  61 120 129]"
+       },
+       {
+        "sponsor_name": "Amneal Pharmaceuticals LLC",
+        "tentative_count": "3",
+        "n_ingredients": "3",
+        "ingredients": "['Albuterol Sulfate' 'Aztreonam' 'Vincristine Sulfate']",
+        "application_numbers": "['ANDA109649' 'ANDA149173' 'ANDA163774']",
+        "line_nos": "[ 37  96 123]"
+       },
+       {
+        "sponsor_name": "Apotex Inc",
+        "tentative_count": "3",
+        "n_ingredients": "3",
+        "ingredients": "['Clindamycin Palmitate HCl' 'Piperacillin-Tazobactam'\n 'Potassium Chloride']",
+        "application_numbers": "['ANDA111360' 'ANDA145177' 'ANDA155200']",
+        "line_nos": "[ 40  90 109]"
+       },
+       {
+        "sponsor_name": "Baxter Healthcare Corporation",
+        "tentative_count": "3",
+        "n_ingredients": "3",
+        "ingredients": "['Ceftriaxone Sodium' 'Cephalexin' 'Epinephrine']",
+        "application_numbers": "['ANDA125373' 'ANDA152906' 'ANDA156723']",
+        "line_nos": "[ 59 104 112]"
+       },
+       {
+        "sponsor_name": "Fresenius Kabi USA LLC",
+        "tentative_count": "3",
+        "n_ingredients": "3",
+        "ingredients": "['Ampicillin-Sulbactam' 'Methotrexate Sodium' 'Penicillin V Potassium']",
+        "application_numbers": "['ANDA120809' 'ANDA122009' 'ANDA136807']",
+        "line_nos": "[53 55 79]"
+       },
+       {
+        "sponsor_name": "Sandoz Inc",
+        "tentative_count": "3",
+        "n_ingredients": "3",
+        "ingredients": "['Epinephrine' 'Methotrexate Sodium' 'Penicillin V Potassium']",
+        "application_numbers": "['ANDA120336' 'ANDA125566' 'ANDA140655']",
+        "line_nos": "[52 60 84]"
+       },
+       {
+        "sponsor_name": "Aurobindo Pharma Limited",
+        "tentative_count": "2",
+        "n_ingredients": "2",
+        "ingredients": "['Morphine Sulfate' 'Tobramycin Sulfate']",
+        "application_numbers": "['ANDA145779' 'ANDA161000']",
+        "line_nos": "[ 91 119]"
+       },
+       {
+        "sponsor_name": "Cipla USA Inc",
+        "tentative_count": "2",
+        "n_ingredients": "2",
+        "ingredients": "['Amoxicillin' 'Clindamycin Palmitate HCl']",
+        "application_numbers": "['ANDA095678' 'ANDA116007']",
+        "line_nos": "[ 7 47]"
+       },
+       {
+        "sponsor_name": "Lupin Limited",
+        "tentative_count": "1",
+        "n_ingredients": "1",
+        "ingredients": "['Gentamicin Sulfate']",
+        "application_numbers": "['ANDA149361']",
+        "line_nos": "[97]"
+       },
+       {
+        "sponsor_name": "Mylan Pharmaceuticals Inc",
+        "tentative_count": "1",
+        "n_ingredients": "1",
+        "ingredients": "['Ampicillin-Sulbactam']",
+        "application_numbers": "['ANDA103243']",
+        "line_nos": "[25]"
+       },
+       {
+        "sponsor_name": "Teva Pharmaceuticals USA Inc",
+        "tentative_count": "1",
+        "n_ingredients": "1",
+        "ingredients": "['Aztreonam']",
+        "application_numbers": "['ANDA117424']",
+        "line_nos": "[49]"
+       }
+      ],
+      "candidates": [
+       {
+        "source": "planner",
+        "model": null,
+        "sql": "SELECT sponsor_name, COUNT(*) AS tentative_count, COUNT(DISTINCT active_ingredient) AS n_ingredients, list(active_ingredient ORDER BY active_ingredient) AS ingredients, list(application_number ORDER BY line_no) AS application_numbers, list(line_no ORDER BY line_no) AS line_nos FROM applications WHERE marketing_status = 'Tentative Approval' GROUP BY sponsor_name ORDER BY tentative_count DESC, sponsor_name",
+        "row_count": 11,
+        "error": null
+       },
+       {
+        "source": "sql_candidate_b",
+        "model": "claude-sonnet-5-5",
+        "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_application_count,\n       list_sort(list(DISTINCT active_ingredient)) AS ingredients,\n       list(line_no ORDER BY line_no) AS applications_line_nos\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_application_count DESC, sponsor_name",
+        "row_count": 11,
+        "error": null
+       },
+       {
+        "source": "sql_candidate_c",
+        "model": "claude-opus-5-5",
+        "sql": "SELECT sponsor_name,\n       COUNT(*) AS tentative_approval_count,\n       string_agg(DISTINCT active_ingredient, '; ' ORDER BY active_ingredient) AS ingredients,\n       list(application_number ORDER BY application_number) AS application_numbers,\n       list(line_no ORDER BY line_no) AS applications_line_no\nFROM applications\nWHERE marketing_status = 'Tentative Approval'\nGROUP BY sponsor_name\nORDER BY tentative_approval_count DESC, sponsor_name",
+        "row_count": null,
+        "error": "multiple statements are not allowed"
+       }
+      ],
+      "candidate_agreement": {
+       "n_valid": 2,
+       "all_agree": false,
+       "row_counts": [
+        11,
+        11
+       ]
+      }
+     }
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 12,
+    "kind": "plan",
+    "title": "Planner finished",
+    "started_at": "2026-11-08T00:48:24.719670+00:00",
+    "duration_ms": 11727,
+    "llm": {
+     "role": "planner_escalated",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 5478,
+     "output_tokens": 1034,
+     "cache_read_tokens": 9635,
+     "cache_write_tokens": 0,
+     "latency_ms": 11727,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "evidence_used": [
+      "E1",
+      "E2"
+     ],
+     "divergent_interpretations": [
+      {
+       "term": "sponsor",
+       "differs_materially": false,
+       "how": "Only the application holder (sponsor_name) reading was computed. The facility-operator reading was not run because tentative approvals belong to the application holder."
+      },
+      {
+       "term": "SQL candidate disagreement",
+       "differs_materially": false,
+       "evidence_a": "E1",
+       "evidence_b": "E2",
+       "how": "Candidates used the same filter (marketing_status = 'Tentative Approval') and grouping and returned the same number of rows. The flagged disagreement seems to come from column layout and list formatting, not from a different reading. Even so, the tool marks it as contested until an analyst reviews it."
+      }
+     ],
+     "used_sql": true,
+     "cannot_answer": [
+      "No certified tool ranks sponsors by tentative approvals. applications_for_ingredient works one ingredient at a time, so this answer comes from Tier-2 Derived SQL and needs analyst review before testimony.",
+      "The data has no dosage-form column for applications, so tentative approvals cannot be broken down by presentation.",
+      "The data does not record why each approval is tentative (which patent or exclusivity) or when it is expected to become a full approval."
+     ],
+     "analyst_notes": "Lead with E2's ranking: Hikma Pharmaceuticals LLC holds the most tentative approvals. Five sponsors are tied in second place: Amneal, Apotex, Baxter, Fresenius Kabi and Sandoz. Then come Aurobindo and Cipla, then Lupin, Mylan and Teva. List each sponsor's ingredients from E2. Each sponsor has at most one tentative approval per ingredient, so tentative approvals are spread across many products rather than concentrated. For row-level citations, use the application line numbers in E1 (E2 has the aggregated line_no lists, but the tool flagged that it lacks row citations). Several ingredients have tentative approvals from more than one sponsor: Ampicillin-Sulbactam (Hikma, Fresenius, Mylan), Methotrexate, Penicillin V Potassium, Epinephrine, Aztreonam, Morphine, Amoxicillin and Clindamycin. That point matters for a hearing because tentative approvals cannot be marketed and do not add supply today. Do not describe tentative approvals as approved or marketed. Label everything as Derived, not Certified, and mention the contested-SQL flag. Also note that the FEI-format anomaly and uninspected-FEI warnings apply to the applications table, but they do not affect the sponsor counts."
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 13,
+    "kind": "narrate",
+    "title": "Narration draft 1",
+    "started_at": "2026-11-08T00:48:41.380760+00:00",
+    "duration_ms": 16473,
+    "llm": {
+     "role": "narrator",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 9460,
+     "output_tokens": 2898,
+     "cache_read_tokens": 1188,
+     "cache_write_tokens": 0,
+     "latency_ms": 16473,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "markdown_template": "## Answer\n\nHikma Pharmaceuticals LLC holds the most applications with marketing status Tentative Approval, at {{E2.records[0].tentative_count}} [E2]. Five sponsors are tied behind it at {{E2.records[1].tentative_count}} each [E2]. The evidence contains no as-of date, so none is given here. This is a derived result, not a certified one, and it is flagged as contested [E1, E2].\n\n## Detail\n\nThe data holds {{E1.row_count}} tentative-approval applications across {{E2.row_count}} sponsors [E1, E2]. Every one is an ANDA [E1].\n\n- **Hikma Pharmaceuticals LLC** has {{E2.records[0].tentative_count}}, for Amoxicillin, Ampicillin-Sulbactam, Morphine Sulfate and Trimethoprim-Sulfamethoxazole [E1, E2].\n- **Amneal Pharmaceuticals LLC** has {{E2.records[1].tentative_count}}, for Albuterol Sulfate, Aztreonam and Vincristine Sulfate [E1, E2].\n- **Apotex Inc** has {{E2.records[2].tentative_count}}, for Clindamycin Palmitate HCl, Piperacillin-Tazobactam and Potassium Chloride [E1, E2].\n- **Baxter Healthcare Corporation** has {{E2.records[3].tentative_count}}, for Ceftriaxone Sodium, Cephalexin and Epinephrine [E1, E2].\n- **Fresenius Kabi USA LLC** has {{E2.records[4].tentative_count}}, for Ampicillin-Sulbactam, Methotrexate Sodium and Penicillin V Potassium [E1, E2].\n- **Sandoz Inc** has {{E2.records[5].tentative_count}}, for Epinephrine, Methotrexate Sodium and Penicillin V Potassium [E1, E2].\n- **Aurobindo Pharma Limited** has {{E2.records[6].tentative_count}}, for Morphine Sulfate and Tobramycin Sulfate [E1, E2].\n- **Cipla USA Inc** has {{E2.records[7].tentative_count}}, for Amoxicillin and Clindamycin Palmitate HCl [E1, E2].\n- **Lupin Limited** has {{E2.records[8].tentative_count}}, for Gentamicin Sulfate [E1, E2].\n- **Mylan Pharmaceuticals Inc** has {{E2.records[9].tentative_count}}, for Ampicillin-Sulbactam [E1, E2].\n- **Teva Pharmaceuticals USA Inc** has {{E2.records[10].tentative_count}}, for Aztreonam [E1, E2].\n\nEach sponsor holds at most one tentative approval per ingredient. The count of distinct ingredients equals the application count for every sponsor [E2].\n\nSeveral ingredients have tentative approvals from more than one sponsor [E1]:\n- Ampicillin-Sulbactam: Hikma, Fresenius Kabi and Mylan.\n- Methotrexate Sodium: Fresenius Kabi and Sandoz.\n- Penicillin V Potassium: Fresenius Kabi and Sandoz.\n- Epinephrine: Baxter and Sandoz.\n- Aztreonam: Amneal and Teva.\n- Morphine Sulfate: Aurobindo and Hikma.\n- Amoxicillin: Hikma and Cipla.\n- Clindamycin Palmitate HCl: Apotex and Cipla.\n\n## Interpretation applied\n\n- **\"Approved / tentative approvals\":** I counted only applications whose marketing status is exactly Tentative Approval. The alternate reading, which adds full approvals, was not computed [E1].\n- **\"Sponsor\":** I used the application holder (sponsor_name). The alternate reading, the facility operator, was not computed [E1, E2].\n\n## Caveats\n\n- Both queries are LLM-written SQL, not a certified tool. The tool marks them as needing review before testimony [E1, E2].\n- The tool flagged a high-severity warning that independently written SQL candidates returned different result sets. The row counts matched ({{E1.candidate_agreement.row_counts[0]}} and {{E1.candidate_agreement.row_counts[1]}} for the listing, {{E2.candidate_agreement.row_counts[0]}} and {{E2.candidate_agreement.row_counts[1]}} for the ranking). Treat the result as contested until an analyst reviews the SQL [E1, E2].\n- The ranking query (E2) did not select line numbers, so the tool could not trace it to rows. The row-level listing (E1) carries line numbers, and its sponsor and ingredient pairs match the ranking [E1, E2].\n- One further candidate query failed to execute for each question, so only two candidates were compared in each case [E1, E2].\n\n## Cannot be answered from this data\n\n- The data has no dosage-form column for applications. Tentative approvals therefore cannot be broken down by presentation. [E1]\n- The data does not record why each approval is tentative, or when it might become a full approval. [E1]",
+     "headline_template": "Hikma Pharmaceuticals LLC holds the most tentative approvals, with {{E2.records[0].tentative_count}}, and no other sponsor holds more than {{E2.records[1].tentative_count}}."
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 14,
+    "kind": "render",
+    "title": "Render failed",
+    "started_at": "2026-11-08T00:48:41.382295+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": "narration contains 'E2', a value not present in any evidence, near: '...reviews the SQL  . - The ranking query (E2) did not select line numbers, so the to...'",
+    "status": "fail"
+   },
+   {
+    "seq": 15,
+    "kind": "narrate",
+    "title": "Narration draft 2",
+    "started_at": "2026-11-08T00:48:57.572436+00:00",
+    "duration_ms": 16020,
+    "llm": {
+     "role": "narrator",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 9567,
+     "output_tokens": 2587,
+     "cache_read_tokens": 1188,
+     "cache_write_tokens": 0,
+     "latency_ms": 16020,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "markdown_template": "**Answer**\n\nAcross {{E2.row_count}} sponsors with tentative approvals, {{E2.records[0].sponsor_name}} holds the most, with {{E2.records[0].tentative_count}} applications. [E2] Five sponsors are tied next with {{E2.records[1].tentative_count}} each. [E2] The evidence does not state an as-of date, so none can be given. [E1, E2]\n\n**Detail**\n\nRanking by number of applications with marketing status Tentative Approval, with the ingredients for each sponsor:\n\n- {{E2.records[0].sponsor_name}} ({{E2.records[0].tentative_count}}): Amoxicillin, Ampicillin-Sulbactam, Morphine Sulfate, Trimethoprim-Sulfamethoxazole. [E2]\n- {{E2.records[1].sponsor_name}} ({{E2.records[1].tentative_count}}): Albuterol Sulfate, Aztreonam, Vincristine Sulfate. [E2]\n- {{E2.records[2].sponsor_name}} ({{E2.records[2].tentative_count}}): Clindamycin Palmitate HCl, Piperacillin-Tazobactam, Potassium Chloride. [E2]\n- {{E2.records[3].sponsor_name}} ({{E2.records[3].tentative_count}}): Ceftriaxone Sodium, Cephalexin, Epinephrine. [E2]\n- {{E2.records[4].sponsor_name}} ({{E2.records[4].tentative_count}}): Ampicillin-Sulbactam, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- {{E2.records[5].sponsor_name}} ({{E2.records[5].tentative_count}}): Epinephrine, Methotrexate Sodium, Penicillin V Potassium. [E2]\n- {{E2.records[6].sponsor_name}} ({{E2.records[6].tentative_count}}): Morphine Sulfate, Tobramycin Sulfate. [E2]\n- {{E2.records[7].sponsor_name}} ({{E2.records[7].tentative_count}}): Amoxicillin, Clindamycin Palmitate HCl. [E2]\n- {{E2.records[8].sponsor_name}} ({{E2.records[8].tentative_count}}): Gentamicin Sulfate. [E2]\n- {{E2.records[9].sponsor_name}} ({{E2.records[9].tentative_count}}): Ampicillin-Sulbactam. [E2]\n- {{E2.records[10].sponsor_name}} ({{E2.records[10].tentative_count}}): Aztreonam. [E2]\n\nEach sponsor has at most one tentative approval per ingredient, so the count of applications equals the count of distinct ingredients for every sponsor. [E2]\n\nSeveral ingredients have tentative approvals from more than one sponsor: [E1]\n- Ampicillin-Sulbactam: Hikma, Fresenius Kabi and Mylan. [E1]\n- Methotrexate Sodium, Penicillin V Potassium: Fresenius Kabi and Sandoz. [E1]\n- Epinephrine: Baxter and Sandoz. [E1]\n- Aztreonam: Amneal and Teva. [E1]\n- Morphine Sulfate: Hikma and Aurobindo. [E1]\n- Amoxicillin: Hikma and Cipla. [E1]\n- Clindamycin Palmitate HCl: Apotex and Cipla. [E1]\n\nAll {{E1.row_count}} tentative-approval applications are of type ANDA. [E1]\n\n**Interpretation applied**\n\n- \"Tentative approvals\": counted only applications whose marketing status is exactly Tentative Approval. The alternate, adding full approvals, was not computed. [E1, E2]\n- \"Sponsor\": the application holder (sponsor name), not the facility operator. The facility-operator reading was not computed. [E1, E2]\n\n**Caveats**\n\n- These figures come from analyst-unreviewed SQL, not a certified tool, and should be reviewed before use in testimony. [E1, E2]\n- The tool flagged that independently written SQL candidates returned different result sets and marks the result as contested. The candidates returned matching row counts, so the difference appears to be in column layout and list formatting rather than in the filter or grouping. [E1, E2]\n- The ranking query did not select line numbers, so the tool could not trace it to rows. The application-level listing does carry line numbers, and the sponsor and ingredient pairings in it match the ranking. [E1, E2]\n\n**Cannot be answered from this data**\n\n- A breakdown by dosage form or presentation: the applications data has no such column. [E1]\n- Why each approval is tentative (which patent or exclusivity), or when it might become a full approval: this is not recorded. [E1]",
+     "headline_template": "{{E2.records[0].sponsor_name}} holds the most tentative approvals, with {{E2.records[0].tentative_count}} applications, ahead of five sponsors tied at {{E2.records[1].tentative_count}} each."
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 16,
+    "kind": "render",
+    "title": "Rendered 30 placeholders; no literal digits",
+    "started_at": "2026-11-08T00:48:57.575154+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "substitutions": [
+      {
+       "placeholder": "{{E2.row_count}}",
+       "evidence": "E2",
+       "path": ".row_count",
+       "value": 11,
+       "rendered": "11"
+      },
+      {
+       "placeholder": "{{E2.records[0].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[0].sponsor_name",
+       "value": "Hikma Pharmaceuticals LLC",
+       "rendered": "Hikma Pharmaceuticals LLC"
+      },
+      {
+       "placeholder": "{{E2.records[0].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[0].tentative_count",
+       "value": "4",
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E2.records[1].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[1].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[0].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[0].sponsor_name",
+       "value": "Hikma Pharmaceuticals LLC",
+       "rendered": "Hikma Pharmaceuticals LLC"
+      },
+      {
+       "placeholder": "{{E2.records[0].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[0].tentative_count",
+       "value": "4",
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E2.records[1].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[1].sponsor_name",
+       "value": "Amneal Pharmaceuticals LLC",
+       "rendered": "Amneal Pharmaceuticals LLC"
+      },
+      {
+       "placeholder": "{{E2.records[1].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[1].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[2].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[2].sponsor_name",
+       "value": "Apotex Inc",
+       "rendered": "Apotex Inc"
+      },
+      {
+       "placeholder": "{{E2.records[2].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[2].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[3].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[3].sponsor_name",
+       "value": "Baxter Healthcare Corporation",
+       "rendered": "Baxter Healthcare Corporation"
+      },
+      {
+       "placeholder": "{{E2.records[3].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[3].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[4].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[4].sponsor_name",
+       "value": "Fresenius Kabi USA LLC",
+       "rendered": "Fresenius Kabi USA LLC"
+      },
+      {
+       "placeholder": "{{E2.records[4].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[4].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[5].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[5].sponsor_name",
+       "value": "Sandoz Inc",
+       "rendered": "Sandoz Inc"
+      },
+      {
+       "placeholder": "{{E2.records[5].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[5].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E2.records[6].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[6].sponsor_name",
+       "value": "Aurobindo Pharma Limited",
+       "rendered": "Aurobindo Pharma Limited"
+      },
+      {
+       "placeholder": "{{E2.records[6].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[6].tentative_count",
+       "value": "2",
+       "rendered": "2"
+      },
+      {
+       "placeholder": "{{E2.records[7].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[7].sponsor_name",
+       "value": "Cipla USA Inc",
+       "rendered": "Cipla USA Inc"
+      },
+      {
+       "placeholder": "{{E2.records[7].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[7].tentative_count",
+       "value": "2",
+       "rendered": "2"
+      },
+      {
+       "placeholder": "{{E2.records[8].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[8].sponsor_name",
+       "value": "Lupin Limited",
+       "rendered": "Lupin Limited"
+      },
+      {
+       "placeholder": "{{E2.records[8].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[8].tentative_count",
+       "value": "1",
+       "rendered": "1"
+      },
+      {
+       "placeholder": "{{E2.records[9].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[9].sponsor_name",
+       "value": "Mylan Pharmaceuticals Inc",
+       "rendered": "Mylan Pharmaceuticals Inc"
+      },
+      {
+       "placeholder": "{{E2.records[9].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[9].tentative_count",
+       "value": "1",
+       "rendered": "1"
+      },
+      {
+       "placeholder": "{{E2.records[10].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[10].sponsor_name",
+       "value": "Teva Pharmaceuticals USA Inc",
+       "rendered": "Teva Pharmaceuticals USA Inc"
+      },
+      {
+       "placeholder": "{{E2.records[10].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[10].tentative_count",
+       "value": "1",
+       "rendered": "1"
+      },
+      {
+       "placeholder": "{{E1.row_count}}",
+       "evidence": "E1",
+       "path": ".row_count",
+       "value": 26,
+       "rendered": "26"
+      },
+      {
+       "placeholder": "{{E2.records[0].sponsor_name}}",
+       "evidence": "E2",
+       "path": ".records[0].sponsor_name",
+       "value": "Hikma Pharmaceuticals LLC",
+       "rendered": "Hikma Pharmaceuticals LLC"
+      },
+      {
+       "placeholder": "{{E2.records[0].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[0].tentative_count",
+       "value": "4",
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E2.records[1].tentative_count}}",
+       "evidence": "E2",
+       "path": ".records[1].tentative_count",
+       "value": "3",
+       "rendered": "3"
+      }
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 17,
+    "kind": "verify",
+    "title": "Verifier: fail — 23 claims, 3 flagged",
+    "started_at": "2026-11-08T00:49:21.845656+00:00",
+    "duration_ms": 24103,
+    "llm": {
+     "role": "verifier",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 9325,
+     "output_tokens": 2867,
+     "cache_read_tokens": 1220,
+     "cache_write_tokens": 0,
+     "latency_ms": 24103,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "claims": [
+      {
+       "text": "11 sponsors hold tentative approvals",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "E2 row_count 11"
+      },
+      {
+       "text": "Hikma Pharmaceuticals LLC holds the most, with 4",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ]
+      },
+      {
+       "text": "Five sponsors tied at 3 each",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "Amneal, Apotex, Baxter, Fresenius Kabi, Sandoz"
+      },
+      {
+       "text": "Evidence does not state an as-of date",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "Correctly says there is no as-of date"
+      },
+      {
+       "text": "Per-sponsor counts and ingredient lists (11 bullets)",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "All match E2 records"
+      },
+      {
+       "text": "Application count equals distinct-ingredient count for every sponsor",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "tentative_count = n_ingredients in every row"
+      },
+      {
+       "text": "Ampicillin-Sulbactam: Hikma, Fresenius Kabi, Mylan",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi and Sandoz",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Epinephrine: Baxter and Sandoz",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Aztreonam: Amneal and Teva",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Morphine Sulfate: Hikma and Aurobindo",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Amoxicillin: Hikma and Cipla",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Clindamycin Palmitate HCl: Apotex and Cipla",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "All 26 tentative-approval applications are ANDA",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Tentative approval = marketing_status exactly 'Tentative Approval'",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "Disclosed; evidence lists no alternate, so 'adding full approvals' is the writer's own alternate"
+      },
+      {
+       "text": "Sponsor = application holder, not facility operator",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "Disclosed and matches E2's interpretation note"
+      },
+      {
+       "text": "Figures come from unreviewed SQL, not a certified tool",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "TIER2_DERIVED warning"
+      },
+      {
+       "text": "SQL candidates disagree; result is contested",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "High-severity SQL_CANDIDATES_DISAGREE warning is surfaced"
+      },
+      {
+       "text": "Difference appears to be column layout/formatting, not filter or grouping",
+       "verdict": "unsupported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "The writer's own guess; it plays down a high warning that says to treat the result as contested"
+      },
+      {
+       "text": "Ranking query lacks line numbers, so it cannot be traced to rows",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "High-severity SQL_NO_ROW_CITATIONS warning is surfaced"
+      },
+      {
+       "text": "The line-numbered listing's sponsor-ingredient pairings match the ranking",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "Cross-check holds"
+      },
+      {
+       "text": "Applications data has no dosage form/presentation column",
+       "verdict": "unsupported",
+       "evidence_ids": [
+        "E1"
+       ],
+       "note": "E1 shows only the selected columns; no schema evidence"
+      },
+      {
+       "text": "Reason for tentative status and conversion timing are not recorded",
+       "verdict": "unsupported",
+       "evidence_ids": [
+        "E1"
+       ],
+       "note": "No schema evidence for this"
+      }
+     ],
+     "interpretations_disclosed": true,
+     "high_warnings_surfaced": true,
+     "status_semantics_respected": true,
+     "no_country_asserted_for_unknown": true,
+     "overall": "fail",
+     "summary": "The core figures all match E1 and E2: sponsor counts, ingredient lists, shared ingredients, and the all-ANDA statement. Both interpretations are disclosed, and both high-severity warnings appear as caveats. Three claims fail. First, the caveat guessing that the candidate disagreement is only about formatting is not in the evidence and plays down a high warning. Second and third, the 'cannot be answered' statements about dosage form and why approvals are tentative claim fields are missing from the data, but no evidence item shows the table's columns. No status or country words are misused."
+    },
+    "status": "fail"
+   },
+   {
+    "seq": 18,
+    "kind": "narrate",
+    "title": "Narration revised after verifier (3 claim(s))",
+    "started_at": "2026-11-08T00:49:37.824022+00:00",
+    "duration_ms": 15808,
+    "llm": {
+     "role": "narrator",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 11374,
+     "output_tokens": 2650,
+     "cache_read_tokens": 1188,
+     "cache_write_tokens": 0,
+     "latency_ms": 15808,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "fixed": [
+      "Difference appears to be column layout/formatting, not filter or grouping",
+      "Applications data has no dosage form/presentation column",
+      "Reason for tentative status and conversion timing are not recorded"
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 19,
+    "kind": "verify",
+    "title": "Verifier: pass_with_notes — 24 claims, 0 flagged",
+    "started_at": "2026-11-08T00:49:59.182887+00:00",
+    "duration_ms": 21185,
+    "llm": {
+     "role": "verifier",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 9515,
+     "output_tokens": 2712,
+     "cache_read_tokens": 1220,
+     "cache_write_tokens": 0,
+     "latency_ms": 21185,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "claims": [
+      {
+       "text": "11 sponsors hold tentative approvals",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "E2 row_count 11"
+      },
+      {
+       "text": "Hikma Pharmaceuticals LLC holds the most, with 4",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ]
+      },
+      {
+       "text": "Amneal, Apotex, Baxter, Fresenius Kabi, Sandoz each hold 3",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ]
+      },
+      {
+       "text": "Evidence gives no as-of date",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "No as-of field in either item"
+      },
+      {
+       "text": "Per-sponsor ingredient lists (all 11 sponsors)",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "Every list matches the E2 ingredients"
+      },
+      {
+       "text": "Aurobindo and Cipla 2 each; Lupin, Mylan, Teva 1 each",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ]
+      },
+      {
+       "text": "Application count equals distinct-ingredient count for every sponsor",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "tentative_count = n_ingredients in all rows"
+      },
+      {
+       "text": "Ampicillin-Sulbactam: Hikma, Fresenius Kabi, Mylan",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Methotrexate Sodium and Penicillin V Potassium: Fresenius Kabi and Sandoz",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Epinephrine: Baxter and Sandoz",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Aztreonam: Amneal and Teva",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Morphine Sulfate: Hikma and Aurobindo",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Amoxicillin: Hikma and Cipla",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Clindamycin Palmitate HCl: Apotex and Cipla",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "All 26 tentative-approval applications are ANDA",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ]
+      },
+      {
+       "text": "Tentative approval = marketing_status exactly 'Tentative Approval'",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "Disclosed interpretation encoded in SQL"
+      },
+      {
+       "text": "Alternate reading 'adding full approvals' was not computed",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E1"
+       ],
+       "note": "Evidence lists no such alternate (alt: []); the specific alternate is answer-authored"
+      },
+      {
+       "text": "Sponsor = application holder, not facility operator",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ]
+      },
+      {
+       "text": "Figures come from LLM-authored SQL; review before testimony",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "TIER2_DERIVED"
+      },
+      {
+       "text": "High warning: SQL candidates disagree; treat as contested",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ]
+      },
+      {
+       "text": "Valid candidates' row counts matched",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ],
+       "note": "[26,26] and [11,11]"
+      },
+      {
+       "text": "Ranking query could not be traced to rows (no line_no)",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ],
+       "note": "SQL_NO_ROW_CITATIONS high warning surfaced"
+      },
+      {
+       "text": "E1 listing carries line numbers and is consistent with ranking",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ]
+      },
+      {
+       "text": "No dosage-form field and no reason/timing for tentative status in results",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1",
+        "E2"
+       ]
+      }
+     ],
+     "interpretations_disclosed": true,
+     "high_warnings_surfaced": true,
+     "status_semantics_respected": true,
+     "no_country_asserted_for_unknown": true,
+     "overall": "pass_with_notes",
+     "summary": "The answer passes, with notes. All counts, sponsor-ingredient pairings, ingredients shared across sponsors and the ANDA claim match E1 and E2, and they come from the applications table, which is correct. Both high-severity warnings appear as caveats: candidates disagree, and there are no row citations. No country or shortage-status claims are made. Note 1: the stated alternate reading ('adding full approvals') does not come from the evidence, which lists alt: [] for that interpretation. Note 2: the medium DQ05/DQ06 FEI warnings were left out, which is acceptable because the answer makes no FEI or country claims."
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 20,
+    "kind": "tier",
+    "title": "Tier 2 — Derived",
+    "started_at": "2026-11-08T00:49:59.183113+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "tier": 2,
+     "reasons": [
+      "answer depends on LLM-authored SQL (validated, executed, not certified)",
+      "part of the question cannot be answered from this data (disclosed)"
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 21,
+    "kind": "final",
+    "title": "Answer assembled",
+    "started_at": "2026-11-08T00:49:59.183187+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "rows_cited": 26,
+     "llm_calls": 14,
+     "input_tokens": 58465,
+     "output_tokens": 17588,
+     "cache_read_tokens": 28198,
+     "latency_ms_total": 136415,
+     "cost_usd": null,
+     "models_used": [
+      "claude-haiku-5-5",
+      "claude-opus-5-5",
+      "claude-sonnet-5-5"
+     ],
+     "tool_calls": 0
+    },
+    "status": "ok"
+   }
+  ]
+ },
+ "manual_lookups_replaced": 26
+}

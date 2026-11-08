@@ -1,0 +1,2474 @@
+{
+ "run_id": "0d25d9bd141b",
+ "question": "For amoxicillin oral suspension, what is the real supply picture — how many approved applications, how many are actively marketed, and what is currently in shortage?",
+ "tier": 1,
+ "tier_label": "Certified",
+ "tier_reasons": [
+  "1 ambiguous term(s) resolved by analyst pins: approved",
+  "part of the question cannot be answered from this data (disclosed)",
+  "all evidence from certified tools; interpretations disclosed; verifier passed",
+  "matches certified query 'cq_supply_picture' verified by N. Sahai (seed; validated against DECISIONS.md D4/D9 and tests)"
+ ],
+ "headline": "As of 2025-10-23, Amoxicillin has 4 fully approved applications across all dosage forms, 3 actively marketed, and 1 oral suspension shortage with Current status, which is a stale record.",
+ "markdown": "## Answer\n\nAs of 2025-10-23, Amoxicillin has 4 fully approved applications, and 3 of them are actively marketed (marketing status Prescription). These counts cover every Amoxicillin dosage form, not only oral suspension, so they are an upper bound for oral suspension. [E3]\n\n1 Amoxicillin oral suspension shortage is in Current status: DS-2023-0142, Oral Suspension 250mg/5mL. Its last revision is old, so confirm it before quoting it. [E3]\n\n## Detail\n\n**Applications (all Amoxicillin dosage forms)**\n- Total Amoxicillin applications: 6. Of these, 4 have full approval and 2 have Tentative Approval. [E3]\n- Marketed (Prescription): Sandoz Inc (ANDA065355), Aurobindo Pharma Limited (ANDA078201) and Lupin Limited (ANDA091234). [E3]\n- Approved but Discontinued: 1, held by Teva Pharmaceuticals USA Inc (ANDA065491). [E3]\n- Tentative Approval, listed separately: Hikma Pharmaceuticals LLC (ANDA082345) and Cipla USA Inc (ANDA095678). [E3]\n- The sponsors are application holders. They are not necessarily the companies that run the manufacturing sites. [E3]\n\n**Shortages (oral suspension, latest revision per shortage)**\n- DS-2023-0142, Oral Suspension 250mg/5mL, NDC 65162-0175-00: **Current**. It was first posted 2023-08-01 and last revised 2024-01-10. The reason category is Manufacturing Delay, and the related application is ANDA065355. [E3]\n- Status history for that shortage: **Resolved** on 2023-11-15, then back to **Current** on 2024-01-10. [E3]\n- DS-2022-0089, Oral Suspension 400mg/5mL: **Discontinued** as of 2023-01-20. The manufacturer has stopped or will stop producing it, and supply will not recover from that source. It is not Resolved and is not counted as Current. [E3]\n\n## Interpretation applied\n\n- **Approved:** The reading used is full approval only, which gives 4. The alternate also counts Tentative Approval, which gives 6 applications. Tentative approvals are not marketed. [E3]\n- **Currently in shortage:** The reading used is Current status only, taking the latest revision per shortage. Resolved and Discontinued are kept separate. The alternate that adds Discontinued was not computed. [E3]\n- **Actively marketed:** The reading used is marketing status Prescription. [E3]\n- **Oral suspension:** The presentation filter matches \"Oral Suspension%\". The matching presentations are Oral Suspension 200mg/5mL, Oral Suspension 250mg/5mL, Oral Suspension 40-200mg/5mL, Oral Suspension 400-57mg/5mL and Oral Suspension 400mg/5mL. [E2]\n- **Amoxicillin:** The reading used is the generic name Amoxicillin. Amoxicillin-Clavulanate is a separate generic and is excluded. [E1]\n\n## Caveats\n\n- Applications have no dosage-form field, so the application counts cannot be limited to oral suspension. They may overstate oral suspension supply. [E3]\n- DS-2023-0142 has conflicting status records, Resolved and then Current. The latest, Current, is used. [E3]\n- The Current status for DS-2023-0142 was last revised 2024-01-10. That is more than eighteen months before the as-of date, so it needs confirming. [E3]\n- Amoxicillin-Clavulanate shortage records link to ANDA078201, whose active ingredient is Amoxicillin. That link looks wrong, so application facts for those records are unreliable. They are excluded here. [E3]\n\n## Cannot be answered from this data\n\n- How many approved or marketed applications are specifically for oral suspension. [E3]\n- Whether DS-2023-0142 is still in shortage today. That needs confirming with Drug Shortage Staff. [E3]",
+ "markdown_template": "## Answer\n\nAs of {{E3.as_of}}, Amoxicillin has {{E3.applications.approved_per_chosen_scope}} fully approved applications, and {{E3.applications.actively_marketed}} of them are actively marketed (marketing status Prescription). These counts cover every Amoxicillin dosage form, not only oral suspension, so they are an upper bound for oral suspension. [E3]\n\n{{E3.currently_in_shortage_count}} Amoxicillin oral suspension shortage is in Current status: {{E3.currently_in_shortage[0].shortage_id}}, {{E3.currently_in_shortage[0].presentation}}. Its last revision is old, so confirm it before quoting it. [E3]\n\n## Detail\n\n**Applications (all Amoxicillin dosage forms)**\n- Total Amoxicillin applications: {{E3.applications.total_applications}}. Of these, {{E3.applications.approved_full}} have full approval and {{E3.applications.tentative_approval}} have Tentative Approval. [E3]\n- Marketed (Prescription): {{E3.application_records[0].sponsor_name}} ({{E3.application_records[0].application_number}}), {{E3.application_records[2].sponsor_name}} ({{E3.application_records[2].application_number}}) and {{E3.application_records[4].sponsor_name}} ({{E3.application_records[4].application_number}}). [E3]\n- Approved but Discontinued: {{E3.applications.approved_but_discontinued}}, held by {{E3.application_records[1].sponsor_name}} ({{E3.application_records[1].application_number}}). [E3]\n- Tentative Approval, listed separately: {{E3.application_records[3].sponsor_name}} ({{E3.application_records[3].application_number}}) and {{E3.application_records[5].sponsor_name}} ({{E3.application_records[5].application_number}}). [E3]\n- The sponsors are application holders. They are not necessarily the companies that run the manufacturing sites. [E3]\n\n**Shortages (oral suspension, latest revision per shortage)**\n- {{E3.currently_in_shortage[0].shortage_id}}, {{E3.currently_in_shortage[0].presentation}}, NDC {{E3.currently_in_shortage[0].ndc}}: **{{E3.currently_in_shortage[0].shortage_status}}**. It was first posted {{E3.currently_in_shortage[0].initial_posting_date}} and last revised {{E3.currently_in_shortage[0].revision_date}}. The reason category is {{E3.currently_in_shortage[0].reason_category}}, and the related application is {{E3.currently_in_shortage[0].related_application}}. [E3]\n- Status history for that shortage: **{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].status}}** on {{E3.status_timelines[\"DS-2023-0142\"].timeline[0].revision_date}}, then back to **{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].status}}** on {{E3.status_timelines[\"DS-2023-0142\"].timeline[1].revision_date}}. [E3]\n- DS-2022-0089, {{E3.status_timelines[\"DS-2022-0089\"].presentation}}: **{{E3.status_timelines[\"DS-2022-0089\"].latest_status}}** as of {{E3.status_timelines[\"DS-2022-0089\"].timeline[0].revision_date}}. The manufacturer has stopped or will stop producing it, and supply will not recover from that source. It is not Resolved and is not counted as Current. [E3]\n\n## Interpretation applied\n\n- **Approved:** The reading used is full approval only, which gives {{E3.applications.approved_per_chosen_scope}}. The alternate also counts Tentative Approval, which gives {{E3.applications.total_applications}} applications. Tentative approvals are not marketed. [E3]\n- **Currently in shortage:** The reading used is Current status only, taking the latest revision per shortage. Resolved and Discontinued are kept separate. The alternate that adds Discontinued was not computed. [E3]\n- **Actively marketed:** The reading used is marketing status Prescription. [E3]\n- **Oral suspension:** The presentation filter matches \"{{E2.resolved[0]}}\". The matching presentations are {{E2.candidates.substring|and}}. [E2]\n- **Amoxicillin:** The reading used is the generic name Amoxicillin. Amoxicillin-Clavulanate is a separate generic and is excluded. [E1]\n\n## Caveats\n\n- Applications have no dosage-form field, so the application counts cannot be limited to oral suspension. They may overstate oral suspension supply. [E3]\n- {{E3.currently_in_shortage[0].shortage_id}} has conflicting status records, Resolved and then Current. The latest, Current, is used. [E3]\n- The Current status for {{E3.currently_in_shortage[0].shortage_id}} was last revised {{E3.currently_in_shortage[0].revision_date}}. That is more than eighteen months before the as-of date, so it needs confirming. [E3]\n- Amoxicillin-Clavulanate shortage records link to ANDA078201, whose active ingredient is Amoxicillin. That link looks wrong, so application facts for those records are unreliable. They are excluded here. [E3]\n\n## Cannot be answered from this data\n\n- How many approved or marketed applications are specifically for oral suspension. [E3]\n- Whether {{E3.currently_in_shortage[0].shortage_id}} is still in shortage today. That needs confirming with Drug Shortage Staff. [E3]",
+ "gate": {
+  "category": "in_scope_not_in_data",
+  "reason": "Question mixes answerable and non-answerable parts. Approved application count and marketed count can be computed from Application (approval_date / marketing_status), but the \"approved\" term is ambiguous (full vs include_tentative). \"Currently in shortage\" is answerable from Shortage with latest-revision dedupe, but Shortage.related_application resolves for only 21/150 rows, and the Amoxicillin-Clavulanate defect means ingredient-level linkage is unreliable. Dosage form is not a field on Application (only Shortage.presentation carries it), so filtering approved applications to 'oral suspension' is not possible at the application level. The phrase \"real supply picture\" implies a judgment the data cannot fully establish: Discontinued and Resolved must be kept separate, and coverage must be disclosed.",
+  "ambiguous_terms": [
+   "approved",
+   "currently",
+   "in shortage",
+   "how many drugs",
+   "manufacturer"
+  ],
+  "literals_to_resolve": [
+   {
+    "text": "amoxicillin",
+    "kind": "generic_name"
+   },
+   {
+    "text": "oral suspension",
+    "kind": "presentation"
+   }
+  ],
+  "category_raw": "partially_answerable"
+ },
+ "interpretations_declared": [
+  {
+   "term": "approved",
+   "default_reading": "full (excludes Tentative Approval)",
+   "alternates": [
+    "include_tentative"
+   ],
+   "decision_ref": "D9",
+   "will_compute_alternate": false
+  },
+  {
+   "term": "currently / in shortage",
+   "default_reading": "Current status only as of data max, latest revision per shortage_id; Resolved and Discontinued kept separate",
+   "alternates": [
+    "current_or_discontinued"
+   ],
+   "decision_ref": "D4",
+   "will_compute_alternate": false
+  },
+  {
+   "term": "how many drugs",
+   "default_reading": "generic_name level, with record and presentation counts disclosed",
+   "alternates": [
+    "shortage_id",
+    "presentation"
+   ],
+   "decision_ref": "D4",
+   "will_compute_alternate": false
+  }
+ ],
+ "interpretations_applied": [
+  {
+   "term": "amoxicillin",
+   "chosen": "Amoxicillin",
+   "alternatives": [
+    "Amoxicillin-Clavulanate"
+   ],
+   "decision_ref": "D6",
+   "note": "Amoxicillin and Amoxicillin-Clavulanate are different products; not combined unless asked."
+  },
+  {
+   "term": "approved applications",
+   "chosen": "full",
+   "alternatives": [
+    "include_tentative"
+   ],
+   "decision_ref": "D9",
+   "note": "full=4 (Prescription+Discontinued); include_tentative=6"
+  },
+  {
+   "term": "actively marketed",
+   "chosen": "marketing_status = Prescription",
+   "alternatives": [],
+   "decision_ref": "D9",
+   "note": null
+  },
+  {
+   "term": "currently",
+   "chosen": "as_of=2025-10-23",
+   "alternatives": [
+    "user-specified date"
+   ],
+   "decision_ref": "D1",
+   "note": null
+  },
+  {
+   "term": "how many drugs",
+   "chosen": "distinct generic_name",
+   "alternatives": [
+    "shortage_id (records)",
+    "generic_name+presentation"
+   ],
+   "decision_ref": "D6",
+   "note": null
+  },
+  {
+   "term": "resolved",
+   "chosen": "Resolved per FDA: market covered",
+   "alternatives": [
+    "Discontinued ≠ Resolved"
+   ],
+   "decision_ref": "D4",
+   "note": "Never equate Discontinued with Resolved."
+  }
+ ],
+ "divergent_interpretations": [
+  {
+   "term": "approved",
+   "differs_materially": true,
+   "how": "The analyst pinned 'approved' to full approval, so tentative approvals are left out of the approved count. E3 lists them separately so the narrator can say they cannot be marketed yet. This is disclosure only, not an open alternate.",
+   "evidence_a": "E3"
+  }
+ ],
+ "cannot_answer": [
+  "How many applications are specifically for oral suspension. applications.csv has no dosage-form column, so the approved and marketed counts in E3 cover every Amoxicillin dosage form (capsules, tablets and others) and may overstate oral-suspension supply.",
+  "Whether DS-2023-0142 is still in shortage today. Its last revision is more than 18 months before the as-of date, so the 'Current' status needs confirming with Drug Shortage Staff before it is stated as fact.",
+  "Amoxicillin-Clavulanate oral suspension is a separate generic and is not included here. Its shortage records also link to an application whose ingredient does not match (DQ03), so application facts for those records are unreliable."
+ ],
+ "warnings": [
+  {
+   "code": "DQ12_missing_dosage_form",
+   "severity": "high",
+   "message": "The question asks about 'Oral Suspension' but applications.csv has no dosage-form column. These application counts cover ALL Amoxicillin products (any dosage form) and may overstate the number of Oral Suspension applications.",
+   "rows": []
+  },
+  {
+   "code": "DQ03_ingredient_mismatch",
+   "severity": "high",
+   "message": "7 shortage record(s) for 'Amoxicillin-Clavulanate' link to ANDA078201, whose active ingredient is 'Amoxicillin'. Possible mislink; application-level facts for these shortages are unreliable.",
+   "rows": [
+    {
+     "table": "drug_shortages",
+     "line": 17,
+     "key": "DS-2024-0401@2024-12-07"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 39,
+     "key": "DS-2024-0423@2025-01-19"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 61,
+     "key": "DS-2023-0445@2023-11-03"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 83,
+     "key": "DS-2022-0467@2024-01-16"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 105,
+     "key": "DS-2024-0489@2025-02-27"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 127,
+     "key": "DS-2023-0511@2023-10-25"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 149,
+     "key": "DS-2024-0533@2024-12-23"
+    },
+    {
+     "table": "applications",
+     "line": 4,
+     "key": "ANDA078201"
+    }
+   ]
+  },
+  {
+   "code": "DQ01_status_conflict",
+   "severity": "high",
+   "message": "Shortage DS-2023-0142 has conflicting status records: Resolved (rev 2023-11-15); Current (rev 2024-01-10). Latest revision is 'Current' and is used; the earlier 'Resolved' record is NOT ignored — it is disclosed.",
+   "rows": [
+    {
+     "table": "drug_shortages",
+     "line": 3,
+     "key": "DS-2023-0142@2023-11-15"
+    },
+    {
+     "table": "drug_shortages",
+     "line": 2,
+     "key": "DS-2023-0142@2024-01-10"
+    }
+   ]
+  },
+  {
+   "code": "DQ08_stale_current",
+   "severity": "medium",
+   "message": "Shortage DS-2023-0142 (Amoxicillin) is recorded as Current but was last revised 2024-01-10, more than 18 months before the as-of date 2025-10-23. Confirm status before quoting.",
+   "rows": [
+    {
+     "table": "drug_shortages",
+     "line": 2,
+     "key": "DS-2023-0142@2024-01-10 00:00:00"
+    }
+   ]
+  }
+ ],
+ "claims": [
+  {
+   "text": "As of 2025-10-23, Amoxicillin has 4 fully approved applications",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "3 applications are actively marketed (Prescription)",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "Application counts cover all dosage forms; they are an upper bound for oral suspension",
+   "verdict": "interpretation",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "Based on DQ12 warning; disclosed"
+  },
+  {
+   "text": "1 oral suspension shortage is Current: DS-2023-0142, 250mg/5mL",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "drug_shortages",
+   "note": null
+  },
+  {
+   "text": "Total Amoxicillin applications: 6, made up of 4 full and 2 tentative",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "Marketed: Sandoz ANDA065355, Aurobindo ANDA078201, Lupin ANDA091234",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "Approved but Discontinued: 1, Teva ANDA065491",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "Tentative Approval: Hikma ANDA082345, Cipla ANDA095678",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "applications",
+   "note": null
+  },
+  {
+   "text": "Sponsors are application holders, not necessarily site operators",
+   "verdict": "interpretation",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "Cautionary framing, not stated in evidence; harmless"
+  },
+  {
+   "text": "DS-2023-0142 NDC 65162-0175-00, posted 2023-08-01, revised 2024-01-10, Manufacturing Delay, ANDA065355",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "drug_shortages",
+   "note": null
+  },
+  {
+   "text": "DS-2023-0142 was Resolved 2023-11-15, then Current 2024-01-10",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "drug_shortages",
+   "note": null
+  },
+  {
+   "text": "DS-2022-0089 400mg/5mL Discontinued as of 2023-01-20",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": "drug_shortages",
+   "note": null
+  },
+  {
+   "text": "Discontinued means production has stopped or will stop and supply will not recover; it is not Resolved",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "status_semantics"
+  },
+  {
+   "text": "Approved means full only (4); the alternate including tentative gives 6",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "Disclosed interpretation D9"
+  },
+  {
+   "text": "Tentative approvals are not marketed",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "marketing_status is Tentative Approval, not Prescription"
+  },
+  {
+   "text": "Currently in shortage means Current status at the latest revision",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "Disclosed"
+  },
+  {
+   "text": "Oral suspension filter is 'Oral Suspension%' with five matching presentations",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E2"
+   ],
+   "expected_source_table": null,
+   "note": null
+  },
+  {
+   "text": "Amoxicillin-Clavulanate is a separate generic and is excluded",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E1"
+   ],
+   "expected_source_table": null,
+   "note": "Disclosed alt D6"
+  },
+  {
+   "text": "Amox-Clav shortage records link to ANDA078201 (Amoxicillin); the link is unreliable",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "DQ03; the count of 7 is omitted"
+  },
+  {
+   "text": "Current status is more than 18 months stale and needs confirming",
+   "verdict": "supported",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "DQ08"
+  },
+  {
+   "text": "Confirm with Drug Shortage Staff",
+   "verdict": "interpretation",
+   "evidence_ids": [
+    "E3"
+   ],
+   "expected_source_table": null,
+   "note": "Evidence says confirm but does not name who"
+  }
+ ],
+ "verification": {
+  "claims": [
+   {
+    "text": "As of 2025-10-23, Amoxicillin has 4 fully approved applications",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "3 applications are actively marketed (Prescription)",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "Application counts cover all dosage forms; they are an upper bound for oral suspension",
+    "verdict": "interpretation",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "Based on DQ12 warning; disclosed"
+   },
+   {
+    "text": "1 oral suspension shortage is Current: DS-2023-0142, 250mg/5mL",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "drug_shortages"
+   },
+   {
+    "text": "Total Amoxicillin applications: 6, made up of 4 full and 2 tentative",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "Marketed: Sandoz ANDA065355, Aurobindo ANDA078201, Lupin ANDA091234",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "Approved but Discontinued: 1, Teva ANDA065491",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "Tentative Approval: Hikma ANDA082345, Cipla ANDA095678",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "applications"
+   },
+   {
+    "text": "Sponsors are application holders, not necessarily site operators",
+    "verdict": "interpretation",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "Cautionary framing, not stated in evidence; harmless"
+   },
+   {
+    "text": "DS-2023-0142 NDC 65162-0175-00, posted 2023-08-01, revised 2024-01-10, Manufacturing Delay, ANDA065355",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "drug_shortages"
+   },
+   {
+    "text": "DS-2023-0142 was Resolved 2023-11-15, then Current 2024-01-10",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "drug_shortages"
+   },
+   {
+    "text": "DS-2022-0089 400mg/5mL Discontinued as of 2023-01-20",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "expected_source_table": "drug_shortages"
+   },
+   {
+    "text": "Discontinued means production has stopped or will stop and supply will not recover; it is not Resolved",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "status_semantics"
+   },
+   {
+    "text": "Approved means full only (4); the alternate including tentative gives 6",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "Disclosed interpretation D9"
+   },
+   {
+    "text": "Tentative approvals are not marketed",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "marketing_status is Tentative Approval, not Prescription"
+   },
+   {
+    "text": "Currently in shortage means Current status at the latest revision",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "Disclosed"
+   },
+   {
+    "text": "Oral suspension filter is 'Oral Suspension%' with five matching presentations",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E2"
+    ]
+   },
+   {
+    "text": "Amoxicillin-Clavulanate is a separate generic and is excluded",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E1"
+    ],
+    "note": "Disclosed alt D6"
+   },
+   {
+    "text": "Amox-Clav shortage records link to ANDA078201 (Amoxicillin); the link is unreliable",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "DQ03; the count of 7 is omitted"
+   },
+   {
+    "text": "Current status is more than 18 months stale and needs confirming",
+    "verdict": "supported",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "DQ08"
+   },
+   {
+    "text": "Confirm with Drug Shortage Staff",
+    "verdict": "interpretation",
+    "evidence_ids": [
+     "E3"
+    ],
+    "note": "Evidence says confirm but does not name who"
+   }
+  ],
+  "interpretations_disclosed": true,
+  "high_warnings_surfaced": true,
+  "status_semantics_respected": true,
+  "no_country_asserted_for_unknown": true,
+  "overall": "pass_with_notes",
+  "summary": "All factual claims trace to E1, E2 and E3, and each comes from the right table. The three high warnings (DQ12, DQ03, DQ01) and the medium DQ08 warning all appear as caveats. Discontinued is kept separate from Resolved. Notes: (1) The 'how many drugs' interpretation (D6) is not disclosed, but it has no effect here. (2) The sponsor/site caution and the mention of Drug Shortage Staff are framing, not evidence. (3) The answer omits the count of 7 mislinked records."
+ },
+ "evidence": [
+  {
+   "id": "E1",
+   "tool": "resolve_entity",
+   "args": {
+    "text": "amoxicillin",
+    "kind": "generic_name"
+   },
+   "certified": true,
+   "rows": [],
+   "source_tables": [
+    "drug_shortages",
+    "applications",
+    "inspections"
+   ],
+   "value": {
+    "query": "amoxicillin",
+    "kind": "generic_name",
+    "resolved": [
+     "Amoxicillin"
+    ],
+    "method": "exact",
+    "candidates": {
+     "exact": [
+      "Amoxicillin"
+     ],
+     "synonym": "Amoxicillin",
+     "substring": [
+      "Amoxicillin-Clavulanate"
+     ],
+     "fuzzy": []
+    }
+   },
+   "warnings": [],
+   "interpretations": [
+    {
+     "term": "amoxicillin",
+     "chosen": "Amoxicillin",
+     "alternatives": [
+      "Amoxicillin-Clavulanate"
+     ],
+     "decision_ref": "D6",
+     "note": "Amoxicillin and Amoxicillin-Clavulanate are different products; not combined unless asked."
+    }
+   ]
+  },
+  {
+   "id": "E2",
+   "tool": "resolve_entity",
+   "args": {
+    "text": "oral suspension",
+    "kind": "presentation"
+   },
+   "certified": true,
+   "rows": [],
+   "source_tables": [
+    "drug_shortages",
+    "applications",
+    "inspections"
+   ],
+   "value": {
+    "query": "oral suspension",
+    "kind": "presentation",
+    "resolved": [
+     "Oral Suspension%"
+    ],
+    "method": "ontology_synonym",
+    "candidates": {
+     "exact": [],
+     "synonym": "Oral Suspension%",
+     "substring": [
+      "Oral Suspension 200mg/5mL",
+      "Oral Suspension 250mg/5mL",
+      "Oral Suspension 40-200mg/5mL",
+      "Oral Suspension 400-57mg/5mL",
+      "Oral Suspension 400mg/5mL"
+     ],
+     "fuzzy": []
+    }
+   },
+   "warnings": [],
+   "interpretations": []
+  },
+  {
+   "id": "E3",
+   "tool": "cq_supply_picture",
+   "args": {
+    "generic_name": "Amoxicillin",
+    "presentation_like": "Oral Suspension%",
+    "approved_scope": "full"
+   },
+   "certified": true,
+   "rows": [
+    "applications#L2",
+    "applications#L3",
+    "applications#L4",
+    "applications#L5",
+    "applications#L6",
+    "applications#L7",
+    "drug_shortages#L2",
+    "drug_shortages#L4",
+    "drug_shortages#L3"
+   ],
+   "source_tables": [
+    "applications",
+    "drug_shortages"
+   ],
+   "value": {
+    "question": "Q2",
+    "as_of": "2025-10-23",
+    "drug": "Amoxicillin",
+    "presentation_filter": "Oral Suspension%",
+    "applications": {
+     "total_applications": 6,
+     "approved_full": 4,
+     "tentative_approval": 2,
+     "actively_marketed": 3,
+     "approved_but_discontinued": 1,
+     "approved_per_chosen_scope": 4
+    },
+    "application_records": [
+     {
+      "application_number": "ANDA065355",
+      "app_type": "ANDA",
+      "sponsor_name": "Sandoz Inc",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2001-03-15",
+      "marketing_status": "Prescription",
+      "manufacturing_fei": "3001234567",
+      "row_id": "applications#L2"
+     },
+     {
+      "application_number": "ANDA065491",
+      "app_type": "ANDA",
+      "sponsor_name": "Teva Pharmaceuticals USA Inc",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2003-07-22",
+      "marketing_status": "Discontinued",
+      "manufacturing_fei": "3002891456",
+      "row_id": "applications#L3"
+     },
+     {
+      "application_number": "ANDA078201",
+      "app_type": "ANDA",
+      "sponsor_name": "Aurobindo Pharma Limited",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2008-11-10",
+      "marketing_status": "Prescription",
+      "manufacturing_fei": "3010234567",
+      "row_id": "applications#L4"
+     },
+     {
+      "application_number": "ANDA082345",
+      "app_type": "ANDA",
+      "sponsor_name": "Hikma Pharmaceuticals LLC",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2011-05-18",
+      "marketing_status": "Tentative Approval",
+      "manufacturing_fei": "3014678901",
+      "row_id": "applications#L5"
+     },
+     {
+      "application_number": "ANDA091234",
+      "app_type": "ANDA",
+      "sponsor_name": "Lupin Limited",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2014-02-28",
+      "marketing_status": "Prescription",
+      "manufacturing_fei": "3013567890",
+      "row_id": "applications#L6"
+     },
+     {
+      "application_number": "ANDA095678",
+      "app_type": "ANDA",
+      "sponsor_name": "Cipla USA Inc",
+      "active_ingredient": "Amoxicillin",
+      "approval_date": "2016-09-01",
+      "marketing_status": "Tentative Approval",
+      "manufacturing_fei": "3012456789",
+      "row_id": "applications#L7"
+     }
+    ],
+    "applications_filterable_by_dosage_form": false,
+    "shortage_latest_status_by_record": {
+     "DS-2023-0142": "Current",
+     "DS-2022-0089": "Discontinued"
+    },
+    "currently_in_shortage": [
+     {
+      "shortage_id": "DS-2023-0142",
+      "generic_name": "Amoxicillin",
+      "presentation": "Oral Suspension 250mg/5mL",
+      "ndc": "65162-0175-00",
+      "shortage_status": "Current",
+      "initial_posting_date": "2023-08-01",
+      "revision_date": "2024-01-10",
+      "reason_category": "Manufacturing Delay",
+      "related_application": "ANDA065355",
+      "row_id": "drug_shortages#L2"
+     }
+    ],
+    "currently_in_shortage_count": 1,
+    "status_timelines": {
+     "DS-2022-0089": {
+      "generic_name": "Amoxicillin",
+      "presentation": "Oral Suspension 400mg/5mL",
+      "timeline": [
+       {
+        "status": "Discontinued",
+        "revision_date": "2023-01-20",
+        "row_id": "drug_shortages#L4"
+       }
+      ],
+      "latest_status": "Discontinued",
+      "status_changed": false
+     },
+     "DS-2023-0142": {
+      "generic_name": "Amoxicillin",
+      "presentation": "Oral Suspension 250mg/5mL",
+      "timeline": [
+       {
+        "status": "Resolved",
+        "revision_date": "2023-11-15",
+        "row_id": "drug_shortages#L3"
+       },
+       {
+        "status": "Current",
+        "revision_date": "2024-01-10",
+        "row_id": "drug_shortages#L2"
+       }
+      ],
+      "latest_status": "Current",
+      "status_changed": true
+     }
+    },
+    "status_semantics": {
+     "Current": "Total supply of all clinically interchangeable versions is inadequate to meet current or projected demand.",
+     "Resolved": "Drug Shortage Staff determined the market is covered, based on information from all manufacturers. Supply recovered.",
+     "Discontinued": "Manufacturer has stopped or will stop producing the product. Supply will NOT recover from this source."
+    }
+   },
+   "warnings": [
+    {
+     "code": "DQ12_missing_dosage_form",
+     "severity": "high",
+     "message": "The question asks about 'Oral Suspension' but applications.csv has no dosage-form column. These application counts cover ALL Amoxicillin products (any dosage form) and may overstate the number of Oral Suspension applications.",
+     "rows": []
+    },
+    {
+     "code": "DQ03_ingredient_mismatch",
+     "severity": "high",
+     "message": "7 shortage record(s) for 'Amoxicillin-Clavulanate' link to ANDA078201, whose active ingredient is 'Amoxicillin'. Possible mislink; application-level facts for these shortages are unreliable.",
+     "rows": [
+      {
+       "table": "drug_shortages",
+       "line": 17,
+       "key": "DS-2024-0401@2024-12-07"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 39,
+       "key": "DS-2024-0423@2025-01-19"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 61,
+       "key": "DS-2023-0445@2023-11-03"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 83,
+       "key": "DS-2022-0467@2024-01-16"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 105,
+       "key": "DS-2024-0489@2025-02-27"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 127,
+       "key": "DS-2023-0511@2023-10-25"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 149,
+       "key": "DS-2024-0533@2024-12-23"
+      },
+      {
+       "table": "applications",
+       "line": 4,
+       "key": "ANDA078201"
+      }
+     ]
+    },
+    {
+     "code": "DQ01_status_conflict",
+     "severity": "high",
+     "message": "Shortage DS-2023-0142 has conflicting status records: Resolved (rev 2023-11-15); Current (rev 2024-01-10). Latest revision is 'Current' and is used; the earlier 'Resolved' record is NOT ignored — it is disclosed.",
+     "rows": [
+      {
+       "table": "drug_shortages",
+       "line": 3,
+       "key": "DS-2023-0142@2023-11-15"
+      },
+      {
+       "table": "drug_shortages",
+       "line": 2,
+       "key": "DS-2023-0142@2024-01-10"
+      }
+     ]
+    },
+    {
+     "code": "DQ08_stale_current",
+     "severity": "medium",
+     "message": "Shortage DS-2023-0142 (Amoxicillin) is recorded as Current but was last revised 2024-01-10, more than 18 months before the as-of date 2025-10-23. Confirm status before quoting.",
+     "rows": [
+      {
+       "table": "drug_shortages",
+       "line": 2,
+       "key": "DS-2023-0142@2024-01-10 00:00:00"
+      }
+     ]
+    }
+   ],
+   "interpretations": [
+    {
+     "term": "approved applications",
+     "chosen": "full",
+     "alternatives": [
+      "include_tentative"
+     ],
+     "decision_ref": "D9",
+     "note": "full=4 (Prescription+Discontinued); include_tentative=6"
+    },
+    {
+     "term": "actively marketed",
+     "chosen": "marketing_status = Prescription",
+     "alternatives": [],
+     "decision_ref": "D9",
+     "note": null
+    },
+    {
+     "term": "currently",
+     "chosen": "as_of=2025-10-23",
+     "alternatives": [
+      "user-specified date"
+     ],
+     "decision_ref": "D1",
+     "note": null
+    },
+    {
+     "term": "how many drugs",
+     "chosen": "distinct generic_name",
+     "alternatives": [
+      "shortage_id (records)",
+      "generic_name+presentation"
+     ],
+     "decision_ref": "D6",
+     "note": null
+    },
+    {
+     "term": "resolved",
+     "chosen": "Resolved per FDA: market covered",
+     "alternatives": [
+      "Discontinued ≠ Resolved"
+     ],
+     "decision_ref": "D4",
+     "note": "Never equate Discontinued with Resolved."
+    }
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "table": "applications",
+   "line": 2,
+   "key": "ANDA065355"
+  },
+  {
+   "table": "applications",
+   "line": 3,
+   "key": "ANDA065491"
+  },
+  {
+   "table": "applications",
+   "line": 4,
+   "key": "ANDA078201"
+  },
+  {
+   "table": "applications",
+   "line": 5,
+   "key": "ANDA082345"
+  },
+  {
+   "table": "applications",
+   "line": 6,
+   "key": "ANDA091234"
+  },
+  {
+   "table": "applications",
+   "line": 7,
+   "key": "ANDA095678"
+  },
+  {
+   "table": "drug_shortages",
+   "line": 2,
+   "key": "DS-2023-0142@2024-01-10 00:00:00"
+  },
+  {
+   "table": "drug_shortages",
+   "line": 4,
+   "key": "DS-2022-0089@2023-01-20 00:00:00"
+  },
+  {
+   "table": "drug_shortages",
+   "line": 3,
+   "key": "DS-2023-0142@2023-11-15 00:00:00"
+  }
+ ],
+ "substitutions": [
+  {
+   "placeholder": "{{E3.as_of}}",
+   "evidence": "E3",
+   "path": ".as_of",
+   "value": "2025-10-23",
+   "rendered": "2025-10-23"
+  },
+  {
+   "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+   "evidence": "E3",
+   "path": ".applications.approved_per_chosen_scope",
+   "value": 4,
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E3.applications.actively_marketed}}",
+   "evidence": "E3",
+   "path": ".applications.actively_marketed",
+   "value": 3,
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage_count}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage_count",
+   "value": 1,
+   "rendered": "1"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_id",
+   "value": "DS-2023-0142",
+   "rendered": "DS-2023-0142"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].presentation}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].presentation",
+   "value": "Oral Suspension 250mg/5mL",
+   "rendered": "Oral Suspension 250mg/5mL"
+  },
+  {
+   "placeholder": "{{E3.applications.total_applications}}",
+   "evidence": "E3",
+   "path": ".applications.total_applications",
+   "value": 6,
+   "rendered": "6"
+  },
+  {
+   "placeholder": "{{E3.applications.approved_full}}",
+   "evidence": "E3",
+   "path": ".applications.approved_full",
+   "value": 4,
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E3.applications.tentative_approval}}",
+   "evidence": "E3",
+   "path": ".applications.tentative_approval",
+   "value": 2,
+   "rendered": "2"
+  },
+  {
+   "placeholder": "{{E3.application_records[0].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[0].sponsor_name",
+   "value": "Sandoz Inc",
+   "rendered": "Sandoz Inc"
+  },
+  {
+   "placeholder": "{{E3.application_records[0].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[0].application_number",
+   "value": "ANDA065355",
+   "rendered": "ANDA065355"
+  },
+  {
+   "placeholder": "{{E3.application_records[2].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[2].sponsor_name",
+   "value": "Aurobindo Pharma Limited",
+   "rendered": "Aurobindo Pharma Limited"
+  },
+  {
+   "placeholder": "{{E3.application_records[2].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[2].application_number",
+   "value": "ANDA078201",
+   "rendered": "ANDA078201"
+  },
+  {
+   "placeholder": "{{E3.application_records[4].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[4].sponsor_name",
+   "value": "Lupin Limited",
+   "rendered": "Lupin Limited"
+  },
+  {
+   "placeholder": "{{E3.application_records[4].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[4].application_number",
+   "value": "ANDA091234",
+   "rendered": "ANDA091234"
+  },
+  {
+   "placeholder": "{{E3.applications.approved_but_discontinued}}",
+   "evidence": "E3",
+   "path": ".applications.approved_but_discontinued",
+   "value": 1,
+   "rendered": "1"
+  },
+  {
+   "placeholder": "{{E3.application_records[1].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[1].sponsor_name",
+   "value": "Teva Pharmaceuticals USA Inc",
+   "rendered": "Teva Pharmaceuticals USA Inc"
+  },
+  {
+   "placeholder": "{{E3.application_records[1].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[1].application_number",
+   "value": "ANDA065491",
+   "rendered": "ANDA065491"
+  },
+  {
+   "placeholder": "{{E3.application_records[3].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[3].sponsor_name",
+   "value": "Hikma Pharmaceuticals LLC",
+   "rendered": "Hikma Pharmaceuticals LLC"
+  },
+  {
+   "placeholder": "{{E3.application_records[3].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[3].application_number",
+   "value": "ANDA082345",
+   "rendered": "ANDA082345"
+  },
+  {
+   "placeholder": "{{E3.application_records[5].sponsor_name}}",
+   "evidence": "E3",
+   "path": ".application_records[5].sponsor_name",
+   "value": "Cipla USA Inc",
+   "rendered": "Cipla USA Inc"
+  },
+  {
+   "placeholder": "{{E3.application_records[5].application_number}}",
+   "evidence": "E3",
+   "path": ".application_records[5].application_number",
+   "value": "ANDA095678",
+   "rendered": "ANDA095678"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_id",
+   "value": "DS-2023-0142",
+   "rendered": "DS-2023-0142"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].presentation}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].presentation",
+   "value": "Oral Suspension 250mg/5mL",
+   "rendered": "Oral Suspension 250mg/5mL"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].ndc}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].ndc",
+   "value": "65162-0175-00",
+   "rendered": "65162-0175-00"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_status}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_status",
+   "value": "Current",
+   "rendered": "Current"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].initial_posting_date}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].initial_posting_date",
+   "value": "2023-08-01",
+   "rendered": "2023-08-01"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].revision_date}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].revision_date",
+   "value": "2024-01-10",
+   "rendered": "2024-01-10"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].reason_category}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].reason_category",
+   "value": "Manufacturing Delay",
+   "rendered": "Manufacturing Delay"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].related_application}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].related_application",
+   "value": "ANDA065355",
+   "rendered": "ANDA065355"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].status}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2023-0142\"].timeline[0].status",
+   "value": "Resolved",
+   "rendered": "Resolved"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].revision_date}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2023-0142\"].timeline[0].revision_date",
+   "value": "2023-11-15",
+   "rendered": "2023-11-15"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].status}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2023-0142\"].timeline[1].status",
+   "value": "Current",
+   "rendered": "Current"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].revision_date}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2023-0142\"].timeline[1].revision_date",
+   "value": "2024-01-10",
+   "rendered": "2024-01-10"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].presentation}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2022-0089\"].presentation",
+   "value": "Oral Suspension 400mg/5mL",
+   "rendered": "Oral Suspension 400mg/5mL"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].latest_status}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2022-0089\"].latest_status",
+   "value": "Discontinued",
+   "rendered": "Discontinued"
+  },
+  {
+   "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].timeline[0].revision_date}}",
+   "evidence": "E3",
+   "path": ".status_timelines[\"DS-2022-0089\"].timeline[0].revision_date",
+   "value": "2023-01-20",
+   "rendered": "2023-01-20"
+  },
+  {
+   "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+   "evidence": "E3",
+   "path": ".applications.approved_per_chosen_scope",
+   "value": 4,
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E3.applications.total_applications}}",
+   "evidence": "E3",
+   "path": ".applications.total_applications",
+   "value": 6,
+   "rendered": "6"
+  },
+  {
+   "placeholder": "{{E2.resolved[0]}}",
+   "evidence": "E2",
+   "path": ".resolved[0]",
+   "value": "Oral Suspension%",
+   "rendered": "Oral Suspension%"
+  },
+  {
+   "placeholder": "{{E2.candidates.substring|and}}",
+   "evidence": "E2",
+   "path": ".candidates.substring",
+   "value": [
+    "Oral Suspension 200mg/5mL",
+    "Oral Suspension 250mg/5mL",
+    "Oral Suspension 40-200mg/5mL",
+    "Oral Suspension 400-57mg/5mL",
+    "Oral Suspension 400mg/5mL"
+   ],
+   "rendered": "Oral Suspension 200mg/5mL, Oral Suspension 250mg/5mL, Oral Suspension 40-200mg/5mL, Oral Suspension 400-57mg/5mL and Oral Suspension 400mg/5mL"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_id",
+   "value": "DS-2023-0142",
+   "rendered": "DS-2023-0142"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_id",
+   "value": "DS-2023-0142",
+   "rendered": "DS-2023-0142"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].revision_date}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].revision_date",
+   "value": "2024-01-10",
+   "rendered": "2024-01-10"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage[0].shortage_id",
+   "value": "DS-2023-0142",
+   "rendered": "DS-2023-0142"
+  },
+  {
+   "literal": "DS-2022-0089",
+   "verified_in_evidence": true
+  },
+  {
+   "literal": "ANDA078201",
+   "verified_in_evidence": true
+  },
+  {
+   "placeholder": "{{E3.as_of}}",
+   "evidence": "E3",
+   "path": ".as_of",
+   "value": "2025-10-23",
+   "rendered": "2025-10-23"
+  },
+  {
+   "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+   "evidence": "E3",
+   "path": ".applications.approved_per_chosen_scope",
+   "value": 4,
+   "rendered": "4"
+  },
+  {
+   "placeholder": "{{E3.applications.actively_marketed}}",
+   "evidence": "E3",
+   "path": ".applications.actively_marketed",
+   "value": 3,
+   "rendered": "3"
+  },
+  {
+   "placeholder": "{{E3.currently_in_shortage_count}}",
+   "evidence": "E3",
+   "path": ".currently_in_shortage_count",
+   "value": 1,
+   "rendered": "1"
+  }
+ ],
+ "certified_query_match": {
+  "name": "q2_amoxicillin_oral_suspension_supply",
+  "tool": "cq_supply_picture",
+  "args": {
+   "generic_name": "Amoxicillin",
+   "presentation_like": "Oral Suspension%",
+   "approved_scope": "full"
+  },
+  "pins": {
+   "approved": "full"
+  },
+  "verified_by": "N. Sahai (seed; validated against DECISIONS.md D4/D9 and tests)",
+  "verified_at": "2026-11-08T00:47:47.598166+00:00",
+  "version": 1,
+  "score": 1.0
+ },
+ "pins": {
+  "approved": "full"
+ },
+ "escalation": {
+  "escalate": true,
+  "reasons": [
+   "question is in scope but the data may not support it; needs careful partial answer"
+  ]
+ },
+ "trace": {
+  "run_id": "0d25d9bd141b",
+  "question": "For amoxicillin oral suspension, what is the real supply picture — how many approved applications, how many are actively marketed, and what is currently in shortage?",
+  "started_at": "2026-11-08T00:47:46.639259+00:00",
+  "steps": [
+   {
+    "seq": 1,
+    "kind": "info",
+    "title": "Certified query match: q2_amoxicillin_oral_suspension_supply (score 1.0)",
+    "started_at": "2026-11-08T00:47:47.602612+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "name": "q2_amoxicillin_oral_suspension_supply",
+     "tool": "cq_supply_picture",
+     "args": {
+      "generic_name": "Amoxicillin",
+      "presentation_like": "Oral Suspension%",
+      "approved_scope": "full"
+     },
+     "pins": {
+      "approved": "full"
+     },
+     "verified_by": "N. Sahai (seed; validated against DECISIONS.md D4/D9 and tests)",
+     "verified_at": "2026-11-08T00:47:47.598166+00:00",
+     "version": 1,
+     "score": 1.0
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 2,
+    "kind": "info",
+    "title": "Interpretations pinned: 1",
+    "started_at": "2026-11-08T00:47:47.602664+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "approved": "full"
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 3,
+    "kind": "gate",
+    "title": "Answerability: in_scope_not_in_data",
+    "started_at": "2026-11-08T00:47:51.871246+00:00",
+    "duration_ms": 4253,
+    "llm": {
+     "role": "gate",
+     "model": "claude-haiku-5-5",
+     "provider": "anthropic",
+     "input_tokens": 250,
+     "output_tokens": 800,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 3379,
+     "latency_ms": 4253,
+     "cost_usd": null
+    },
+    "input": "For amoxicillin oral suspension, what is the real supply picture — how many approved applications, how many are actively marketed, and what is currently in shortage?",
+    "output": {
+     "category": "in_scope_not_in_data",
+     "reason": "Question mixes answerable and non-answerable parts. Approved application count and marketed count can be computed from Application (approval_date / marketing_status), but the \"approved\" term is ambiguous (full vs include_tentative). \"Currently in shortage\" is answerable from Shortage with latest-revision dedupe, but Shortage.related_application resolves for only 21/150 rows, and the Amoxicillin-Clavulanate defect means ingredient-level linkage is unreliable. Dosage form is not a field on Application (only Shortage.presentation carries it), so filtering approved applications to 'oral suspension' is not possible at the application level. The phrase \"real supply picture\" implies a judgment the data cannot fully establish: Discontinued and Resolved must be kept separate, and coverage must be disclosed.",
+     "ambiguous_terms": [
+      "approved",
+      "currently",
+      "in shortage",
+      "how many drugs",
+      "manufacturer"
+     ],
+     "literals_to_resolve": [
+      {
+       "text": "amoxicillin",
+       "kind": "generic_name"
+      },
+      {
+       "text": "oral suspension",
+       "kind": "presentation"
+      }
+     ],
+     "category_raw": "partially_answerable"
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 4,
+    "kind": "plan",
+    "title": "Interpretations declared",
+    "started_at": "2026-11-08T00:47:55.902087+00:00",
+    "duration_ms": 3850,
+    "llm": {
+     "role": "planner",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 325,
+     "output_tokens": 604,
+     "cache_read_tokens": 9635,
+     "cache_write_tokens": 0,
+     "latency_ms": 3850,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "restated_question": "For active ingredient Amoxicillin, presentation Oral Suspension: count approved applications (full, excluding tentative), those actively marketed (Prescription), and shortage records currently in Current status (latest revision per shortage_id), with status history.",
+     "interpretations": [
+      {
+       "term": "approved",
+       "default_reading": "full (excludes Tentative Approval)",
+       "alternates": [
+        "include_tentative"
+       ],
+       "decision_ref": "D9",
+       "will_compute_alternate": false
+      },
+      {
+       "term": "currently / in shortage",
+       "default_reading": "Current status only as of data max, latest revision per shortage_id; Resolved and Discontinued kept separate",
+       "alternates": [
+        "current_or_discontinued"
+       ],
+       "decision_ref": "D4",
+       "will_compute_alternate": false
+      },
+      {
+       "term": "how many drugs",
+       "default_reading": "generic_name level, with record and presentation counts disclosed",
+       "alternates": [
+        "shortage_id",
+        "presentation"
+       ],
+       "decision_ref": "D4",
+       "will_compute_alternate": false
+      }
+     ],
+     "plan": [
+      "resolve_entity amoxicillin generic_name",
+      "resolve_entity oral suspension presentation",
+      "cq_supply_picture with certified args"
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 5,
+    "kind": "escalation",
+    "title": "Planner model: Opus (escalated)",
+    "started_at": "2026-11-08T00:47:55.902176+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "escalate": true,
+     "reasons": [
+      "question is in scope but the data may not support it; needs careful partial answer"
+     ]
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 6,
+    "kind": "tool_call",
+    "title": "resolve_entity → E1",
+    "started_at": "2026-11-08T00:47:55.950777+00:00",
+    "duration_ms": 48,
+    "llm": null,
+    "input": {
+     "text": "amoxicillin",
+     "kind": "generic_name"
+    },
+    "output": {
+     "evidence_id": "E1",
+     "rows_cited": 0,
+     "warnings": [],
+     "value_preview": {
+      "query": "amoxicillin",
+      "kind": "generic_name",
+      "resolved": [
+       "Amoxicillin"
+      ],
+      "method": "exact",
+      "candidates": {
+       "exact": [
+        "Amoxicillin"
+       ],
+       "synonym": "Amoxicillin",
+       "substring": [
+        "Amoxicillin-Clavulanate"
+       ],
+       "fuzzy": []
+      }
+     }
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 7,
+    "kind": "tool_call",
+    "title": "resolve_entity → E2",
+    "started_at": "2026-11-08T00:47:55.951044+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": {
+     "text": "oral suspension",
+     "kind": "presentation"
+    },
+    "output": {
+     "evidence_id": "E2",
+     "rows_cited": 0,
+     "warnings": [],
+     "value_preview": {
+      "query": "oral suspension",
+      "kind": "presentation",
+      "resolved": [
+       "Oral Suspension%"
+      ],
+      "method": "ontology_synonym",
+      "candidates": {
+       "exact": [],
+       "synonym": "Oral Suspension%",
+       "substring": [
+        "Oral Suspension 200mg/5mL",
+        "Oral Suspension 250mg/5mL",
+        "Oral Suspension 40-200mg/5mL",
+        "Oral Suspension 400-57mg/5mL",
+        "Oral Suspension 400mg/5mL"
+       ],
+       "fuzzy": []
+      }
+     }
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 8,
+    "kind": "tool_call",
+    "title": "cq_supply_picture → E3",
+    "started_at": "2026-11-08T00:47:57.666224+00:00",
+    "duration_ms": 140,
+    "llm": {
+     "role": "planner_escalated",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 1492,
+     "output_tokens": 118,
+     "cache_read_tokens": 9635,
+     "cache_write_tokens": 0,
+     "latency_ms": 1574,
+     "cost_usd": null
+    },
+    "input": {
+     "generic_name": "Amoxicillin",
+     "presentation_like": "Oral Suspension%",
+     "approved_scope": "full"
+    },
+    "output": {
+     "evidence_id": "E3",
+     "rows_cited": 9,
+     "warnings": [
+      "DQ12_missing_dosage_form",
+      "DQ03_ingredient_mismatch",
+      "DQ01_status_conflict",
+      "DQ08_stale_current"
+     ],
+     "value_preview": {
+      "question": "Q2",
+      "as_of": "2025-10-23",
+      "drug": "Amoxicillin",
+      "presentation_filter": "Oral Suspension%",
+      "applications": {
+       "total_applications": 6,
+       "approved_full": 4,
+       "tentative_approval": 2,
+       "actively_marketed": 3,
+       "approved_but_discontinued": 1,
+       "approved_per_chosen_scope": 4
+      },
+      "application_records": [
+       {
+        "application_number": "ANDA065355",
+        "app_type": "ANDA",
+        "sponsor_name": "Sandoz Inc",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2001-03-15",
+        "marketing_status": "Prescription",
+        "manufacturing_fei": "3001234567",
+        "row_id": "applications#L2"
+       },
+       {
+        "application_number": "ANDA065491",
+        "app_type": "ANDA",
+        "sponsor_name": "Teva Pharmaceuticals USA Inc",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2003-07-22",
+        "marketing_status": "Discontinued",
+        "manufacturing_fei": "3002891456",
+        "row_id": "applications#L3"
+       },
+       {
+        "application_number": "ANDA078201",
+        "app_type": "ANDA",
+        "sponsor_name": "Aurobindo Pharma Limited",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2008-11-10",
+        "marketing_status": "Prescription",
+        "manufacturing_fei": "3010234567",
+        "row_id": "applications#L4"
+       },
+       {
+        "application_number": "ANDA082345",
+        "app_type": "ANDA",
+        "sponsor_name": "Hikma Pharmaceuticals LLC",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2011-05-18",
+        "marketing_status": "Tentative Approval",
+        "manufacturing_fei": "3014678901",
+        "row_id": "applications#L5"
+       },
+       {
+        "application_number": "ANDA091234",
+        "app_type": "ANDA",
+        "sponsor_name": "Lupin Limited",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2014-02-28",
+        "marketing_status": "Prescription",
+        "manufacturing_fei": "3013567890",
+        "row_id": "applications#L6"
+       },
+       {
+        "application_number": "ANDA095678",
+        "app_type": "ANDA",
+        "sponsor_name": "Cipla USA Inc",
+        "active_ingredient": "Amoxicillin",
+        "approval_date": "2016-09-01",
+        "marketing_status": "Tentative Approval",
+        "manufacturing_fei": "3012456789",
+        "row_id": "applications#L7"
+       }
+      ],
+      "applications_filterable_by_dosage_form": false,
+      "shortage_latest_status_by_record": {
+       "DS-2023-0142": "Current",
+       "DS-2022-0089": "Discontinued"
+      },
+      "currently_in_shortage": [
+       {
+        "shortage_id": "DS-2023-0142",
+        "generic_name": "Amoxicillin",
+        "presentation": "Oral Suspension 250mg/5mL",
+        "ndc": "65162-0175-00",
+        "shortage_status": "Current",
+        "initial_posting_date": "2023-08-01",
+        "revision_date": "2024-01-10",
+        "reason_category": "Manufacturing Delay",
+        "related_application": "ANDA065355",
+        "row_id": "drug_shortages#L2"
+       }
+      ],
+      "currently_in_shortage_count": 1,
+      "status_timelines": {
+       "DS-2022-0089": {
+        "generic_name": "Amoxicillin",
+        "presentation": "Oral Suspension 400mg/5mL",
+        "timeline": [
+         {
+          "status": "Discontinued",
+          "revision_date": "2023-01-20",
+          "row_id": "drug_shortages#L4"
+         }
+        ],
+        "latest_status": "Discontinued",
+        "status_changed": false
+       },
+       "DS-2023-0142": {
+        "generic_name": "Amoxicillin",
+        "presentation": "Oral Suspension 250mg/5mL",
+        "timeline": [
+         {
+          "status": "Resolved",
+          "revision_date": "2023-11-15",
+          "row_id": "drug_shortages#L3"
+         },
+         {
+          "status": "Current",
+          "revision_date": "2024-01-10",
+          "row_id": "drug_shortages#L2"
+         }
+        ],
+        "latest_status": "Current",
+        "status_changed": true
+       }
+      },
+      "status_semantics": {
+       "Current": "Total supply of all clinically interchangeable versions is inadequate to meet current or projected demand.",
+       "Resolved": "Drug Shortage Staff determined the market is covered, based on information from all manufacturers. Supply recovered.",
+       "Discontinued": "Manufacturer has stopped or will stop producing the product. Supply will NOT recover from this source."
+      }
+     }
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 9,
+    "kind": "plan",
+    "title": "Planner finished",
+    "started_at": "2026-11-08T00:48:06.990234+00:00",
+    "duration_ms": 9323,
+    "llm": {
+     "role": "planner_escalated",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 3774,
+     "output_tokens": 931,
+     "cache_read_tokens": 9635,
+     "cache_write_tokens": 0,
+     "latency_ms": 9323,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "evidence_used": [
+      "E1",
+      "E2",
+      "E3"
+     ],
+     "divergent_interpretations": [
+      {
+       "term": "approved",
+       "differs_materially": true,
+       "how": "The analyst pinned 'approved' to full approval, so tentative approvals are left out of the approved count. E3 lists them separately so the narrator can say they cannot be marketed yet. This is disclosure only, not an open alternate.",
+       "evidence_a": "E3"
+      }
+     ],
+     "used_sql": false,
+     "cannot_answer": [
+      "How many applications are specifically for oral suspension. applications.csv has no dosage-form column, so the approved and marketed counts in E3 cover every Amoxicillin dosage form (capsules, tablets and others) and may overstate oral-suspension supply.",
+      "Whether DS-2023-0142 is still in shortage today. Its last revision is more than 18 months before the as-of date, so the 'Current' status needs confirming with Drug Shortage Staff before it is stated as fact.",
+      "Amoxicillin-Clavulanate oral suspension is a separate generic and is not included here. Its shortage records also link to an application whose ingredient does not match (DQ03), so application facts for those records are unreliable."
+     ],
+     "analyst_notes": "Lead with the three numbers from E3: approved under full scope, actively marketed (Prescription), and currently in shortage. Say straight away that the application counts cannot be limited to oral suspension. They cover all Amoxicillin applications, so present them as an upper bound. Explain the shortage records carefully. DS-2023-0142 (250mg/5mL) was marked Resolved in Nov 2023 and then went back to Current in Jan 2024. Its latest status, Current, is the one used, but the reversal should be mentioned, along with the warning that the record is stale. Its stated reason is Manufacturing Delay, not cGMP. DS-2022-0089 (400mg/5mL) is Discontinued, NOT Resolved: that manufacturer has stopped producing it, so supply will not come back from that source. Never describe it as resolved. Of the approved applications, one is approved but Discontinued; give it alongside the marketed count. Tentative approvals are listed separately and cannot be marketed. The sponsors named are application holders, not necessarily the companies that run the manufacturing sites. Data as of 2025-10-23."
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 10,
+    "kind": "narrate",
+    "title": "Narration draft 1",
+    "started_at": "2026-11-08T00:48:25.149234+00:00",
+    "duration_ms": 17988,
+    "llm": {
+     "role": "narrator",
+     "model": "claude-sonnet-5-5",
+     "provider": "anthropic",
+     "input_tokens": 4785,
+     "output_tokens": 2960,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 1188,
+     "latency_ms": 17988,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "markdown_template": "## Answer\n\nAs of {{E3.as_of}}, Amoxicillin has {{E3.applications.approved_per_chosen_scope}} fully approved applications, and {{E3.applications.actively_marketed}} of them are actively marketed (marketing status Prescription). These counts cover every Amoxicillin dosage form, not only oral suspension, so they are an upper bound for oral suspension. [E3]\n\n{{E3.currently_in_shortage_count}} Amoxicillin oral suspension shortage is in Current status: {{E3.currently_in_shortage[0].shortage_id}}, {{E3.currently_in_shortage[0].presentation}}. Its last revision is old, so confirm it before quoting it. [E3]\n\n## Detail\n\n**Applications (all Amoxicillin dosage forms)**\n- Total Amoxicillin applications: {{E3.applications.total_applications}}. Of these, {{E3.applications.approved_full}} have full approval and {{E3.applications.tentative_approval}} have Tentative Approval. [E3]\n- Marketed (Prescription): {{E3.application_records[0].sponsor_name}} ({{E3.application_records[0].application_number}}), {{E3.application_records[2].sponsor_name}} ({{E3.application_records[2].application_number}}) and {{E3.application_records[4].sponsor_name}} ({{E3.application_records[4].application_number}}). [E3]\n- Approved but Discontinued: {{E3.applications.approved_but_discontinued}}, held by {{E3.application_records[1].sponsor_name}} ({{E3.application_records[1].application_number}}). [E3]\n- Tentative Approval, listed separately: {{E3.application_records[3].sponsor_name}} ({{E3.application_records[3].application_number}}) and {{E3.application_records[5].sponsor_name}} ({{E3.application_records[5].application_number}}). [E3]\n- The sponsors are application holders. They are not necessarily the companies that run the manufacturing sites. [E3]\n\n**Shortages (oral suspension, latest revision per shortage)**\n- {{E3.currently_in_shortage[0].shortage_id}}, {{E3.currently_in_shortage[0].presentation}}, NDC {{E3.currently_in_shortage[0].ndc}}: **{{E3.currently_in_shortage[0].shortage_status}}**. It was first posted {{E3.currently_in_shortage[0].initial_posting_date}} and last revised {{E3.currently_in_shortage[0].revision_date}}. The reason category is {{E3.currently_in_shortage[0].reason_category}}, and the related application is {{E3.currently_in_shortage[0].related_application}}. [E3]\n- Status history for that shortage: **{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].status}}** on {{E3.status_timelines[\"DS-2023-0142\"].timeline[0].revision_date}}, then back to **{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].status}}** on {{E3.status_timelines[\"DS-2023-0142\"].timeline[1].revision_date}}. [E3]\n- DS-2022-0089, {{E3.status_timelines[\"DS-2022-0089\"].presentation}}: **{{E3.status_timelines[\"DS-2022-0089\"].latest_status}}** as of {{E3.status_timelines[\"DS-2022-0089\"].timeline[0].revision_date}}. The manufacturer has stopped or will stop producing it, and supply will not recover from that source. It is not Resolved and is not counted as Current. [E3]\n\n## Interpretation applied\n\n- **Approved:** The reading used is full approval only, which gives {{E3.applications.approved_per_chosen_scope}}. The alternate also counts Tentative Approval, which gives {{E3.applications.total_applications}} applications. Tentative approvals are not marketed. [E3]\n- **Currently in shortage:** The reading used is Current status only, taking the latest revision per shortage. Resolved and Discontinued are kept separate. The alternate that adds Discontinued was not computed. [E3]\n- **Actively marketed:** The reading used is marketing status Prescription. [E3]\n- **Oral suspension:** The presentation filter matches \"{{E2.resolved[0]}}\". The matching presentations are {{E2.candidates.substring|and}}. [E2]\n- **Amoxicillin:** The reading used is the generic name Amoxicillin. Amoxicillin-Clavulanate is a separate generic and is excluded. [E1]\n\n## Caveats\n\n- Applications have no dosage-form field, so the application counts cannot be limited to oral suspension. They may overstate oral suspension supply. [E3]\n- {{E3.currently_in_shortage[0].shortage_id}} has conflicting status records, Resolved and then Current. The latest, Current, is used. [E3]\n- The Current status for {{E3.currently_in_shortage[0].shortage_id}} was last revised {{E3.currently_in_shortage[0].revision_date}}. That is more than eighteen months before the as-of date, so it needs confirming. [E3]\n- Amoxicillin-Clavulanate shortage records link to ANDA078201, whose active ingredient is Amoxicillin. That link looks wrong, so application facts for those records are unreliable. They are excluded here. [E3]\n\n## Cannot be answered from this data\n\n- How many approved or marketed applications are specifically for oral suspension. [E3]\n- Whether {{E3.currently_in_shortage[0].shortage_id}} is still in shortage today. That needs confirming with Drug Shortage Staff. [E3]",
+     "headline_template": "As of {{E3.as_of}}, Amoxicillin has {{E3.applications.approved_per_chosen_scope}} fully approved applications across all dosage forms, {{E3.applications.actively_marketed}} actively marketed, and {{E3.currently_in_shortage_count}} oral suspension shortage with Current status, which is a stale record."
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 11,
+    "kind": "render",
+    "title": "Rendered 51 placeholders; no literal digits",
+    "started_at": "2026-11-08T00:48:25.151228+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "substitutions": [
+      {
+       "placeholder": "{{E3.as_of}}",
+       "evidence": "E3",
+       "path": ".as_of",
+       "value": "2025-10-23",
+       "rendered": "2025-10-23"
+      },
+      {
+       "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+       "evidence": "E3",
+       "path": ".applications.approved_per_chosen_scope",
+       "value": 4,
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E3.applications.actively_marketed}}",
+       "evidence": "E3",
+       "path": ".applications.actively_marketed",
+       "value": 3,
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage_count}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage_count",
+       "value": 1,
+       "rendered": "1"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_id",
+       "value": "DS-2023-0142",
+       "rendered": "DS-2023-0142"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].presentation}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].presentation",
+       "value": "Oral Suspension 250mg/5mL",
+       "rendered": "Oral Suspension 250mg/5mL"
+      },
+      {
+       "placeholder": "{{E3.applications.total_applications}}",
+       "evidence": "E3",
+       "path": ".applications.total_applications",
+       "value": 6,
+       "rendered": "6"
+      },
+      {
+       "placeholder": "{{E3.applications.approved_full}}",
+       "evidence": "E3",
+       "path": ".applications.approved_full",
+       "value": 4,
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E3.applications.tentative_approval}}",
+       "evidence": "E3",
+       "path": ".applications.tentative_approval",
+       "value": 2,
+       "rendered": "2"
+      },
+      {
+       "placeholder": "{{E3.application_records[0].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[0].sponsor_name",
+       "value": "Sandoz Inc",
+       "rendered": "Sandoz Inc"
+      },
+      {
+       "placeholder": "{{E3.application_records[0].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[0].application_number",
+       "value": "ANDA065355",
+       "rendered": "ANDA065355"
+      },
+      {
+       "placeholder": "{{E3.application_records[2].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[2].sponsor_name",
+       "value": "Aurobindo Pharma Limited",
+       "rendered": "Aurobindo Pharma Limited"
+      },
+      {
+       "placeholder": "{{E3.application_records[2].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[2].application_number",
+       "value": "ANDA078201",
+       "rendered": "ANDA078201"
+      },
+      {
+       "placeholder": "{{E3.application_records[4].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[4].sponsor_name",
+       "value": "Lupin Limited",
+       "rendered": "Lupin Limited"
+      },
+      {
+       "placeholder": "{{E3.application_records[4].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[4].application_number",
+       "value": "ANDA091234",
+       "rendered": "ANDA091234"
+      },
+      {
+       "placeholder": "{{E3.applications.approved_but_discontinued}}",
+       "evidence": "E3",
+       "path": ".applications.approved_but_discontinued",
+       "value": 1,
+       "rendered": "1"
+      },
+      {
+       "placeholder": "{{E3.application_records[1].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[1].sponsor_name",
+       "value": "Teva Pharmaceuticals USA Inc",
+       "rendered": "Teva Pharmaceuticals USA Inc"
+      },
+      {
+       "placeholder": "{{E3.application_records[1].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[1].application_number",
+       "value": "ANDA065491",
+       "rendered": "ANDA065491"
+      },
+      {
+       "placeholder": "{{E3.application_records[3].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[3].sponsor_name",
+       "value": "Hikma Pharmaceuticals LLC",
+       "rendered": "Hikma Pharmaceuticals LLC"
+      },
+      {
+       "placeholder": "{{E3.application_records[3].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[3].application_number",
+       "value": "ANDA082345",
+       "rendered": "ANDA082345"
+      },
+      {
+       "placeholder": "{{E3.application_records[5].sponsor_name}}",
+       "evidence": "E3",
+       "path": ".application_records[5].sponsor_name",
+       "value": "Cipla USA Inc",
+       "rendered": "Cipla USA Inc"
+      },
+      {
+       "placeholder": "{{E3.application_records[5].application_number}}",
+       "evidence": "E3",
+       "path": ".application_records[5].application_number",
+       "value": "ANDA095678",
+       "rendered": "ANDA095678"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_id",
+       "value": "DS-2023-0142",
+       "rendered": "DS-2023-0142"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].presentation}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].presentation",
+       "value": "Oral Suspension 250mg/5mL",
+       "rendered": "Oral Suspension 250mg/5mL"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].ndc}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].ndc",
+       "value": "65162-0175-00",
+       "rendered": "65162-0175-00"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_status}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_status",
+       "value": "Current",
+       "rendered": "Current"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].initial_posting_date}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].initial_posting_date",
+       "value": "2023-08-01",
+       "rendered": "2023-08-01"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].revision_date}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].revision_date",
+       "value": "2024-01-10",
+       "rendered": "2024-01-10"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].reason_category}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].reason_category",
+       "value": "Manufacturing Delay",
+       "rendered": "Manufacturing Delay"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].related_application}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].related_application",
+       "value": "ANDA065355",
+       "rendered": "ANDA065355"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].status}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2023-0142\"].timeline[0].status",
+       "value": "Resolved",
+       "rendered": "Resolved"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[0].revision_date}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2023-0142\"].timeline[0].revision_date",
+       "value": "2023-11-15",
+       "rendered": "2023-11-15"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].status}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2023-0142\"].timeline[1].status",
+       "value": "Current",
+       "rendered": "Current"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2023-0142\"].timeline[1].revision_date}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2023-0142\"].timeline[1].revision_date",
+       "value": "2024-01-10",
+       "rendered": "2024-01-10"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].presentation}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2022-0089\"].presentation",
+       "value": "Oral Suspension 400mg/5mL",
+       "rendered": "Oral Suspension 400mg/5mL"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].latest_status}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2022-0089\"].latest_status",
+       "value": "Discontinued",
+       "rendered": "Discontinued"
+      },
+      {
+       "placeholder": "{{E3.status_timelines[\"DS-2022-0089\"].timeline[0].revision_date}}",
+       "evidence": "E3",
+       "path": ".status_timelines[\"DS-2022-0089\"].timeline[0].revision_date",
+       "value": "2023-01-20",
+       "rendered": "2023-01-20"
+      },
+      {
+       "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+       "evidence": "E3",
+       "path": ".applications.approved_per_chosen_scope",
+       "value": 4,
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E3.applications.total_applications}}",
+       "evidence": "E3",
+       "path": ".applications.total_applications",
+       "value": 6,
+       "rendered": "6"
+      },
+      {
+       "placeholder": "{{E2.resolved[0]}}",
+       "evidence": "E2",
+       "path": ".resolved[0]",
+       "value": "Oral Suspension%",
+       "rendered": "Oral Suspension%"
+      },
+      {
+       "placeholder": "{{E2.candidates.substring|and}}",
+       "evidence": "E2",
+       "path": ".candidates.substring",
+       "value": [
+        "Oral Suspension 200mg/5mL",
+        "Oral Suspension 250mg/5mL",
+        "Oral Suspension 40-200mg/5mL",
+        "Oral Suspension 400-57mg/5mL",
+        "Oral Suspension 400mg/5mL"
+       ],
+       "rendered": "Oral Suspension 200mg/5mL, Oral Suspension 250mg/5mL, Oral Suspension 40-200mg/5mL, Oral Suspension 400-57mg/5mL and Oral Suspension 400mg/5mL"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_id",
+       "value": "DS-2023-0142",
+       "rendered": "DS-2023-0142"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_id",
+       "value": "DS-2023-0142",
+       "rendered": "DS-2023-0142"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].revision_date}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].revision_date",
+       "value": "2024-01-10",
+       "rendered": "2024-01-10"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage[0].shortage_id}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage[0].shortage_id",
+       "value": "DS-2023-0142",
+       "rendered": "DS-2023-0142"
+      },
+      {
+       "literal": "DS-2022-0089",
+       "verified_in_evidence": true
+      },
+      {
+       "literal": "ANDA078201",
+       "verified_in_evidence": true
+      },
+      {
+       "placeholder": "{{E3.as_of}}",
+       "evidence": "E3",
+       "path": ".as_of",
+       "value": "2025-10-23",
+       "rendered": "2025-10-23"
+      },
+      {
+       "placeholder": "{{E3.applications.approved_per_chosen_scope}}",
+       "evidence": "E3",
+       "path": ".applications.approved_per_chosen_scope",
+       "value": 4,
+       "rendered": "4"
+      },
+      {
+       "placeholder": "{{E3.applications.actively_marketed}}",
+       "evidence": "E3",
+       "path": ".applications.actively_marketed",
+       "value": 3,
+       "rendered": "3"
+      },
+      {
+       "placeholder": "{{E3.currently_in_shortage_count}}",
+       "evidence": "E3",
+       "path": ".currently_in_shortage_count",
+       "value": 1,
+       "rendered": "1"
+      }
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 12,
+    "kind": "verify",
+    "title": "Verifier: pass_with_notes — 21 claims, 0 flagged",
+    "started_at": "2026-11-08T00:48:46.832121+00:00",
+    "duration_ms": 21216,
+    "llm": {
+     "role": "verifier",
+     "model": "claude-opus-5-5",
+     "provider": "anthropic",
+     "input_tokens": 4543,
+     "output_tokens": 2593,
+     "cache_read_tokens": 0,
+     "cache_write_tokens": 1220,
+     "latency_ms": 21216,
+     "cost_usd": null
+    },
+    "input": null,
+    "output": {
+     "claims": [
+      {
+       "text": "As of 2025-10-23, Amoxicillin has 4 fully approved applications",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "3 applications are actively marketed (Prescription)",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "Application counts cover all dosage forms; they are an upper bound for oral suspension",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "Based on DQ12 warning; disclosed"
+      },
+      {
+       "text": "1 oral suspension shortage is Current: DS-2023-0142, 250mg/5mL",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "drug_shortages"
+      },
+      {
+       "text": "Total Amoxicillin applications: 6, made up of 4 full and 2 tentative",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "Marketed: Sandoz ANDA065355, Aurobindo ANDA078201, Lupin ANDA091234",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "Approved but Discontinued: 1, Teva ANDA065491",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "Tentative Approval: Hikma ANDA082345, Cipla ANDA095678",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "applications"
+      },
+      {
+       "text": "Sponsors are application holders, not necessarily site operators",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "Cautionary framing, not stated in evidence; harmless"
+      },
+      {
+       "text": "DS-2023-0142 NDC 65162-0175-00, posted 2023-08-01, revised 2024-01-10, Manufacturing Delay, ANDA065355",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "drug_shortages"
+      },
+      {
+       "text": "DS-2023-0142 was Resolved 2023-11-15, then Current 2024-01-10",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "drug_shortages"
+      },
+      {
+       "text": "DS-2022-0089 400mg/5mL Discontinued as of 2023-01-20",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "expected_source_table": "drug_shortages"
+      },
+      {
+       "text": "Discontinued means production has stopped or will stop and supply will not recover; it is not Resolved",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "status_semantics"
+      },
+      {
+       "text": "Approved means full only (4); the alternate including tentative gives 6",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "Disclosed interpretation D9"
+      },
+      {
+       "text": "Tentative approvals are not marketed",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "marketing_status is Tentative Approval, not Prescription"
+      },
+      {
+       "text": "Currently in shortage means Current status at the latest revision",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "Disclosed"
+      },
+      {
+       "text": "Oral suspension filter is 'Oral Suspension%' with five matching presentations",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E2"
+       ]
+      },
+      {
+       "text": "Amoxicillin-Clavulanate is a separate generic and is excluded",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E1"
+       ],
+       "note": "Disclosed alt D6"
+      },
+      {
+       "text": "Amox-Clav shortage records link to ANDA078201 (Amoxicillin); the link is unreliable",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "DQ03; the count of 7 is omitted"
+      },
+      {
+       "text": "Current status is more than 18 months stale and needs confirming",
+       "verdict": "supported",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "DQ08"
+      },
+      {
+       "text": "Confirm with Drug Shortage Staff",
+       "verdict": "interpretation",
+       "evidence_ids": [
+        "E3"
+       ],
+       "note": "Evidence says confirm but does not name who"
+      }
+     ],
+     "interpretations_disclosed": true,
+     "high_warnings_surfaced": true,
+     "status_semantics_respected": true,
+     "no_country_asserted_for_unknown": true,
+     "overall": "pass_with_notes",
+     "summary": "All factual claims trace to E1, E2 and E3, and each comes from the right table. The three high warnings (DQ12, DQ03, DQ01) and the medium DQ08 warning all appear as caveats. Discontinued is kept separate from Resolved. Notes: (1) The 'how many drugs' interpretation (D6) is not disclosed, but it has no effect here. (2) The sponsor/site caution and the mention of Drug Shortage Staff are framing, not evidence. (3) The answer omits the count of 7 mislinked records."
+    },
+    "status": "warn"
+   },
+   {
+    "seq": 13,
+    "kind": "tier",
+    "title": "Tier 1 — Certified",
+    "started_at": "2026-11-08T00:48:46.832325+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "tier": 1,
+     "reasons": [
+      "1 ambiguous term(s) resolved by analyst pins: approved",
+      "part of the question cannot be answered from this data (disclosed)",
+      "all evidence from certified tools; interpretations disclosed; verifier passed",
+      "matches certified query 'cq_supply_picture' verified by N. Sahai (seed; validated against DECISIONS.md D4/D9 and tests)"
+     ]
+    },
+    "status": "ok"
+   },
+   {
+    "seq": 14,
+    "kind": "final",
+    "title": "Answer assembled",
+    "started_at": "2026-11-08T00:48:46.832384+00:00",
+    "duration_ms": 0,
+    "llm": null,
+    "input": null,
+    "output": {
+     "rows_cited": 9,
+     "llm_calls": 6,
+     "input_tokens": 15169,
+     "output_tokens": 8006,
+     "cache_read_tokens": 28905,
+     "latency_ms_total": 56818,
+     "cost_usd": null,
+     "models_used": [
+      "claude-haiku-5-5",
+      "claude-opus-5-5",
+      "claude-sonnet-5-5"
+     ],
+     "tool_calls": 3
+    },
+    "status": "ok"
+   }
+  ]
+ },
+ "manual_lookups_replaced": 9
+}
