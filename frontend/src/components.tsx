@@ -110,7 +110,7 @@ export function TracePanel({ steps, live, totals }: { steps: TraceStep[]; live: 
           <div>LLM calls <b>{llm.length}</b></div><div>Wall time <b>{fmtMs(ms)}</b></div>
           <div>Tokens in <b>{fmtTok(tokIn)}</b></div><div>Tokens out <b>{fmtTok(tokOut)}</b></div>
           <div style={{ gridColumn: '1 / -1' }}>Models <b>{models.join(', ') || '—'}</b></div>
-          <div style={{ gridColumn: '1 / -1' }}>Cost <b>{cost != null ? `$${cost.toFixed(4)}` : 'n/a (pricing table not configured)'}</b></div>
+          <div style={{ gridColumn: '1 / -1' }}>Cost <b>{cost != null ? `$${cost.toFixed(4)}` : '—'}</b></div>
         </div>)}
     </aside>
   )
