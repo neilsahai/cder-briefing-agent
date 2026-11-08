@@ -10,15 +10,24 @@ inspection data — and labels every answer with how much weight it can bear in 
 
 ## Measured, not claimed
 
-| Metric (from `evals/results/SCORECARD.md`) | Regression (9 cases) | Capability (24 off-script + adversarial) |
-|---|---|---|
-| Cases passing (pass^k) | 89% (8/9; the miss is a verifier framing nit on a correct answer → Tier 3) | 96% (23/24) |
-| Hallucinated-number rate — digits in an answer not present in evidence | **0.0%** | **0.0%** |
-| Claims verified / flagged after revision | 206 / 1 | 395 / 1 |
-| Runs where the independent verifier caught something on the first draft | 33% | 17% |
-| Adversarial cases (fake FEI, fake drug, fake year, root cause, blame, testimony language, prompt injection, out of scope…) | — | 10 / 10 |
-| Avg latency · LLM calls · rows cited per answer | 88 s · 6.6 · 26 | 65 s · 6.7 · 17 |
-| Cost per question (Anthropic list prices, Nov 2026) | $0.29 | $0.20 |
+| Metric (from `evals/results/SCORECARD.md`) | Regression (9 cases) | Capability (24 off-script + adversarial) | Rehearsal (20 panel-style) |
+|---|---|---|---|
+| Cases passing, latest complete single-trial run | **100%** (9/9) | **79%** (19/24) — range across 4 full runs of the current design: 79–96% | **100%** (20/20) |
+| Hallucinated-number rate — digits in an answer not present in evidence | **0.0%** | **0.0%** | **0.0%** |
+| Claims verified / flagged after revision | 221 / 0 | 393 / 0 | 403 / 3 |
+| Runs where the independent verifier caught something on the first draft | 22% | 25% | 20% |
+| Adversarial cases (fake FEI, fake drug, fake year, root cause, blame, testimony language, prompt injection, out of scope…) | — | 10 / 10 on every run | 3 / 3 |
+| Avg latency · LLM calls · rows cited per answer | 72 s · 6.4 · 25 | 67 s · 6.8 · 16 | 62 s · 7.1 · 14 |
+| Cost per question (Anthropic list prices, Nov 2026) | $0.26 | $0.22 | $0.24 |
+
+**On the capability range.** Every failure in every run has been a *model-judge* dimension (faithfulness,
+ambiguity_surfaced), never a code check: the hallucinated-number rate and citation checks have held at 0.0% /
+100% on all 300+ runs. Across runs the misses split into (a) judge variance or judge error — the same answer
+passes on the next run, or the judge returns no verdict; (b) one real narrator framing error the Opus verifier
+did not catch (a headline that read "7 under either basis" when the default basis gives 6 — the "correct
+number, wrong frame" failure described in `docs/TRUST_AND_HALLUCINATION.md`). That is why the harness supports
+`--trials 3` and reports pass^k; a 3-trial run of the final build was started and aborted at 23/72 trials
+(0 real failures, 3 judge flags) when the API credit ran out, and will be re-run.
 
 The red-team report (`docs/RED_TEAM_REPORT.md`) lists the 15 traps planted in the data — including the exact
 amoxicillin status conflict from the brief's backstory — with the naive result and this system's result for each.

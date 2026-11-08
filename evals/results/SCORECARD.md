@@ -1,6 +1,6 @@
 # Eval scorecard
 
-_Generated 2026-11-08 04:00 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
+_Generated 2026-11-08 04:15 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
 
 ## capability suite — 24 cases × 1 trial(s)
 
