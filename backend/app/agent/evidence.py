@@ -15,7 +15,8 @@ from pydantic import BaseModel, Field
 
 from ..models import ToolResult
 
-PLACEHOLDER = re.compile(r"\{\{\s*(E\d+)((?:\.[A-Za-z_][A-Za-z0-9_]*|\[\d+\])*)\s*(?:\|\s*(\w+))?\s*\}\}")
+PLACEHOLDER = re.compile(r"""\{\{\s*(E\d+)((?:\.[A-Za-z_][A-Za-z0-9_\-]*|\[\d+\]|\[\s*"[^"\]]+"\s*\]|\[\s*'[^'\]]+'\s*\])*)\s*(?:\|\s*(\w+))?\s*\}\}""")
+NUMBER_TOKEN = re.compile(r"[\w\-\./:%]*\d[\w\-\./:%]*")
 CITATION = re.compile(r"\[(E\d+(?:\s*,\s*E\d+)*)\]")
 DIGIT = re.compile(r"\d")
 
@@ -68,6 +69,18 @@ class EvidenceRegistry(BaseModel):
             parts.append("value:\n```json\n" + json.dumps(e.compact_value(), indent=1, default=str) + "\n```")
         return "\n".join(parts)
 
+    def evidence_text(self) -> str:
+        """Flat text of every evidence value; used to verify literal tokens in narration."""
+        return "\n".join(json.dumps(e.result.value, default=str) for e in self.items)
+
+    def evidence_tokens(self) -> set[str]:
+        """Every digit-bearing token that appears as a whole token in any evidence value (dates, ids, strengths, counts)."""
+        toks: set[str] = set()
+        for e in self.items:
+            for tok in NUMBER_TOKEN.findall(json.dumps(e.result.value, default=str)):
+                toks.add(tok.strip(".,;:)(-\""))
+        return toks
+
     def all_rows(self) -> list:
         seen, out = set(), []
         for e in self.items:
@@ -97,8 +110,9 @@ class RenderError(Exception):
 
 def _resolve_path(root: Any, path: str) -> Any:
     cur = root
-    for tok in re.findall(r"\.([A-Za-z_][A-Za-z0-9_]*)|\[(\d+)\]", path):
-        key, idx = tok
+    for tok in re.findall(r"""\.([A-Za-z_][A-Za-z0-9_\-]*)|\[(\d+)\]|\[\s*"([^"\]]+)"\s*\]|\[\s*'([^'\]]+)'\s*\]""", path):
+        key, idx, qkey, sqkey = tok
+        key = key or qkey or sqkey
         if key:
             if isinstance(cur, dict) and key in cur:
                 cur = cur[key]
@@ -130,13 +144,21 @@ def _format(v: Any, fmt: str | None) -> str:
 def render(template: str, registry: EvidenceRegistry) -> tuple[str, list[dict[str, Any]]]:
     """Substitute placeholders. Returns (rendered_text, substitutions). Raises RenderError on any failure
     or on any digit appearing outside a placeholder."""
-    # 1. digits outside placeholders are forbidden
-    stripped = PLACEHOLDER.sub("", template)
-    stripped = CITATION.sub("", stripped)
-    if DIGIT.search(stripped):
-        bad = DIGIT.search(stripped)
-        ctx = stripped[max(0, bad.start() - 30): bad.end() + 30]
-        raise RenderError(f"narration contains a literal digit outside a placeholder near: '...{ctx}...'")
+    # 1. digits outside placeholders: allowed ONLY if the whole token appears verbatim somewhere in the evidence
+    #    values (e.g. an identifier like DS-2023-0142 or a presentation like 'Oral Suspension 250mg/5mL').
+    #    Anything else containing a digit is rejected. Same guarantee as pure placeholders: no number that is
+    #    not in the evidence can reach the reader. [D12]
+    stripped = PLACEHOLDER.sub(" ", template)
+    stripped = CITATION.sub(" ", stripped)
+    allowed = registry.evidence_tokens()
+    literal_hits: list[dict[str, Any]] = []
+    for m in NUMBER_TOKEN.finditer(stripped):
+        tok = m.group(0).strip(".,;:)(-")
+        if tok and tok in allowed:
+            literal_hits.append({"literal": tok, "verified_in_evidence": True})
+            continue
+        ctx = stripped[max(0, m.start() - 40): m.end() + 40].replace("\n", " ")
+        raise RenderError(f"narration contains '{tok}', a value not present in any evidence, near: '...{ctx}...'")
 
     subs: list[dict[str, Any]] = []
 
@@ -154,6 +176,7 @@ def render(template: str, registry: EvidenceRegistry) -> tuple[str, list[dict[st
         return s
 
     out = PLACEHOLDER.sub(repl, template)
+    subs += literal_hits
     return out, subs
 
 

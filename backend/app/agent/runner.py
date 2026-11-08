@@ -10,17 +10,19 @@ from typing import Any, Callable
 
 from pydantic import BaseModel, Field
 
-from ..llm.provider import get_provider, text_of, tool_uses
+from ..llm.provider import get_provider, structured, text_of, tool_uses
 from ..llm.routing import planner_escalation
 from ..models import Interpretation, RowRef, Warning
 from ..tools import REGISTRY, anthropic_tool_specs, call_tool
 from . import prompts
 from .evidence import EvidenceRegistry, RenderError, citations_in, render
+from ..tools.warnings_util import group_warnings_by_code
 from .schemas import DECLARE_INTERPRETATIONS_TOOL, FINISH_TOOL, GATE_TOOL, NARRATE_TOOL, VERIFY_TOOL
 from .trace import Trace, Tracer, TraceStep
 
 MAX_TOOL_ITERATIONS = 12
 MAX_NARRATION_RETRIES = 2
+MAX_REVISIONS = 1
 
 TIER_LABELS = {1: "Certified", 2: "Derived", 3: "Qualified", 4: "Not answerable from this data"}
 
@@ -86,9 +88,13 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
         tracer.step("info", "Certified query match", output=cq_match)
 
     # ------------------------------------------------------------------ 1. gate
-    call = prov.messages("gate", system=prompts.gate_system(), messages=[{"role": "user", "content": question}],
-                         tools=[GATE_TOOL], tool_choice={"type": "tool", "name": "classify_question"}, max_tokens=800)
-    gate = tool_uses(call.response)[0].input
+    gate, call, _ = structured(prov, "gate", system=prompts.gate_system(), messages=[{"role": "user", "content": question}], tool=GATE_TOOL, max_tokens=800)
+    valid = {"answerable", "in_scope_not_in_data", "out_of_scope", "unsafe_or_policy"}
+    if gate.get("category") not in valid:
+        raw = gate.get("category")
+        # models sometimes invent 'partially_answerable'; a partially answerable question IS answerable with disclosure
+        gate["category"] = "answerable" if gate.get("answerable_part") else "in_scope_not_in_data"
+        gate["category_raw"] = raw
     tracer.step("gate", f"Answerability: {gate['category']}", llm=call, input=question, output=gate,
                 status="ok" if gate["category"] == "answerable" else "warn")
 
@@ -112,10 +118,8 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
     messages: list[dict[str, Any]] = [{"role": "user", "content": user_msg}]
 
     # first turn: force declare_interpretations
-    call = prov.messages("planner", system=prompts.planner_system(), messages=messages, tools=tools,
-                         tool_choice={"type": "tool", "name": "declare_interpretations"}, max_tokens=1500)
-    decl_use = tool_uses(call.response)[0]
-    declared = decl_use.input
+    declared, call, decl_use = structured(prov, "planner", system=prompts.planner_system(), messages=messages,
+                                          tool=DECLARE_INTERPRETATIONS_TOOL, extra_tools=anthropic_tool_specs() + [FINISH_TOOL], max_tokens=1500)
     tracer.step("plan", "Interpretations declared", llm=call, output=declared)
     messages.append({"role": "assistant", "content": call.response.content})
     messages.append({"role": "user", "content": [{"type": "tool_result", "tool_use_id": decl_use.id,
@@ -130,24 +134,20 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
 
     finish: dict[str, Any] | None = None
     used_sql = False
-    for _ in range(MAX_TOOL_ITERATIONS):
-        call = prov.messages(esc.role, system=prompts.planner_system(), messages=messages, tools=tools, max_tokens=2500)
-        uses = tool_uses(call.response)
-        messages.append({"role": "assistant", "content": call.response.content})
-        if not uses:
-            # model answered in prose instead of calling finish — nudge once
-            messages.append({"role": "user", "content": "Call `finish` with the evidence ids to use. Do not answer in prose."})
-            tracer.step("info", "Planner nudged to call finish", llm=call, output=text_of(call.response)[:500], status="warn")
-            continue
+
+    def process_uses(uses, call) -> list[dict[str, Any]]:
+        nonlocal finish, used_sql
         results_content = []
+        first_llm_attached = False
         for u in uses:
             if u.name == "finish":
                 finish = u.input
-                tracer.step("plan", "Planner finished", llm=call, output=finish)
+                tracer.step("plan", "Planner finished", llm=None if first_llm_attached else call, output=finish)
+                first_llm_attached = True
                 results_content.append({"type": "tool_result", "tool_use_id": u.id, "content": "ok"})
                 continue
             if u.name == "declare_interpretations":
-                results_content.append({"type": "tool_result", "tool_use_id": u.id, "content": "Already recorded."})
+                results_content.append({"type": "tool_result", "tool_use_id": u.id, "content": "Recorded. Proceed with tool calls; call finish when done."})
                 continue
             t = tracer.timer()
             try:
@@ -156,17 +156,32 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
                 if u.name == "sql_query":
                     used_sql = True
                 payload = _tool_result_payload(ev.id, res)
-                tracer.step("sql" if u.name == "sql_query" else "tool_call", f"{u.name} → {ev.id}", llm=call if u is uses[0] else None,
+                tracer.step("sql" if u.name == "sql_query" else "tool_call", f"{u.name} → {ev.id}", llm=None if first_llm_attached else call,
                             input=u.input, output={"evidence_id": ev.id, "rows_cited": len(res.rows), "warnings": [w.code for w in res.warnings],
                                                    "value_preview": json.loads(payload)["value"]}, duration_ms=t.ms(),
                             status="warn" if any(w.severity.value == "high" for w in res.warnings) else "ok")
+                first_llm_attached = True
                 results_content.append({"type": "tool_result", "tool_use_id": u.id, "content": payload})
             except Exception as ex:  # noqa: BLE001
                 tracer.step("error", f"{u.name} failed", input=u.input, output=str(ex), duration_ms=t.ms(), status="fail")
                 results_content.append({"type": "tool_result", "tool_use_id": u.id, "content": f"TOOL ERROR: {ex}", "is_error": True})
-        messages.append({"role": "user", "content": results_content})
+        return results_content
+
+    # the first (declaration) turn may also contain data tool calls — honor all of them
+    messages.pop()  # remove the single-result message added above; rebuild with results for every tool_use
+    messages.append({"role": "user", "content": process_uses(tool_uses(call.response), None)})
+
+    for _ in range(MAX_TOOL_ITERATIONS):
         if finish is not None:
             break
+        call = prov.messages(esc.role, system=prompts.planner_system(), messages=messages, tools=tools, max_tokens=2500)
+        uses = tool_uses(call.response)
+        messages.append({"role": "assistant", "content": call.response.content})
+        if not uses:
+            messages.append({"role": "user", "content": "Call `finish` with the evidence ids to use. Do not answer in prose."})
+            tracer.step("info", "Planner nudged to call finish", llm=call, output=text_of(call.response)[:500], status="warn")
+            continue
+        messages.append({"role": "user", "content": process_uses(uses, call)})
 
     if finish is None:
         finish = {"evidence_used": [e.id for e in registry.items], "divergent_interpretations": [], "used_sql": used_sql,
@@ -180,9 +195,11 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
     last_err = None
     for attempt in range(MAX_NARRATION_RETRIES + 1):
         msgs = [{"role": "user", "content": narr_user if attempt == 0 else narr_user + f"\n\nYOUR PREVIOUS DRAFT FAILED RENDERING: {last_err}\nFix it. Remember: no digits anywhere except inside placeholders."}]
-        call = prov.messages("narrator", system=prompts.NARRATOR_SYSTEM, messages=msgs, tools=[NARRATE_TOOL],
-                             tool_choice={"type": "tool", "name": "write_answer"}, max_tokens=3000)
-        out = tool_uses(call.response)[0].input
+        out, call, _ = structured(prov, "narrator", system=prompts.NARRATOR_SYSTEM, messages=msgs, tool=NARRATE_TOOL, max_tokens=4000)
+        if "markdown" not in out or "headline" not in out:
+            last_err = f"narrator returned keys {list(out)} (stop_reason={call.stop_reason}); expected markdown+headline"
+            tracer.step("narrate", "Narration malformed", llm=call, output={"raw": str(out)[:2000], "stop_reason": call.stop_reason}, status="fail")
+            continue
         template, headline_t = out["markdown"], out["headline"]
         tracer.step("narrate", f"Narration draft {attempt + 1}", llm=call, output={"markdown_template": template, "headline_template": headline_t})
         try:
@@ -200,26 +217,47 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
                     f"({last_err}). Evidence is available below; no numbers were generated by the model.")
         headline = "Answer withheld: unverifiable value in narration."
 
-    # ------------------------------------------------------------------ 4. verifier (independent model)
+    # ------------------------------------------------------------------ 4. verifier (independent model) + one revision loop
     verification: dict[str, Any] = {}
     claims: list[Claim] = []
-    if not last_err:
-        ver_user = f"RENDERED ANSWER:\n{rendered}\n\n# EVIDENCE REGISTRY\n{registry.for_prompt()}"
-        call = prov.messages("verifier", system=prompts.VERIFIER_SYSTEM, messages=[{"role": "user", "content": ver_user}],
-                             tools=[VERIFY_TOOL], tool_choice={"type": "tool", "name": "verification_report"}, max_tokens=4000)
-        verification = tool_uses(call.response)[0].input
-        claims = [Claim(**c) for c in verification.get("claims", [])]
-        bad = [c for c in claims if c.verdict in ("unsupported", "misattributed")]
-        tracer.step("verify", f"Verifier: {verification.get('overall')} — {len(claims)} claims, {len(bad)} flagged", llm=call,
-                    output=verification, status="ok" if verification.get("overall") == "pass" else ("warn" if verification.get("overall") == "pass_with_notes" else "fail"))
-        # deterministic cross-check: every citation in the text must exist
-        missing = [c for c in citations_in(rendered) if registry.get(c) is None]
+    revisions = 0
+
+    def _verify(text: str) -> tuple[dict[str, Any], list[Claim]]:
+        ver_user = f"RENDERED ANSWER:\n{text}\n\n# EVIDENCE REGISTRY\n{registry.for_prompt()}"
+        v, vcall, _ = structured(prov, "verifier", system=prompts.VERIFIER_SYSTEM, messages=[{"role": "user", "content": ver_user}], tool=VERIFY_TOOL, max_tokens=4000)
+        cl = [Claim(**c) for c in v.get("claims", [])]
+        bad = [c for c in cl if c.verdict in ("unsupported", "misattributed")]
+        tracer.step("verify", f"Verifier: {v.get('overall')} — {len(cl)} claims, {len(bad)} flagged", llm=vcall, output=v,
+                    status="ok" if v.get("overall") == "pass" and not bad else ("warn" if v.get("overall") == "pass_with_notes" else "fail"))
+        missing = [c for c in citations_in(text) if registry.get(c) is None]
         if missing:
             tracer.step("verify", "Dangling citations", output=missing, status="fail")
-            claims.append(Claim(text=f"Citations {missing} do not exist in evidence", verdict="unsupported"))
+            cl.append(Claim(text=f"Citations {missing} do not exist in evidence", verdict="unsupported"))
+        return v, cl
+
+    if not last_err:
+        verification, claims = _verify(rendered)
+        flagged = [c for c in claims if c.verdict in ("unsupported", "misattributed")]
+        if flagged and revisions < MAX_REVISIONS:
+            revisions += 1
+            fix_msg = (narr_user + "\n\nYOUR PREVIOUS DRAFT WAS CHECKED BY AN INDEPENDENT VERIFIER. These claims were flagged — reword or remove each one so it is exactly what the evidence supports (no overstatement, correct citation, correct source):\n"
+                       + "\n".join(f"- [{c.verdict}] \"{c.text}\" — {c.note or ''}" for c in flagged)
+                       + "\n\nPREVIOUS DRAFT (template):\n" + template + "\n\nReturn the full corrected answer. No digits outside placeholders.")
+            out, call, _ = structured(prov, "narrator", system=prompts.NARRATOR_SYSTEM, messages=[{"role": "user", "content": fix_msg}], tool=NARRATE_TOOL, max_tokens=4000)
+            if "markdown" in out and "headline" in out:
+                try:
+                    r2, s2 = render(out["markdown"], registry)
+                    h2, hs2 = render(out["headline"], registry)
+                    template, headline_t, rendered, headline, subs = out["markdown"], out["headline"], r2, h2, s2 + hs2
+                    tracer.step("narrate", f"Narration revised after verifier ({len(flagged)} claim(s))", llm=call, output={"fixed": [c.text for c in flagged]})
+                    verification, claims = _verify(rendered)
+                except RenderError as ex:
+                    tracer.step("render", "Revision failed to render; keeping verified-with-notes draft", llm=call, output=str(ex), status="warn")
+            else:
+                tracer.step("narrate", "Revision malformed; keeping original draft", llm=call, status="warn")
 
     # ------------------------------------------------------------------ 5. trust tier
-    warnings = registry.all_warnings()
+    warnings = group_warnings_by_code(registry.all_warnings())
     interps = registry.all_interpretations()
     divergent = [d for d in finish.get("divergent_interpretations", []) if d.get("differs_materially")]
     reasons: list[str] = []

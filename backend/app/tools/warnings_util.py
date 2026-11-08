@@ -63,3 +63,19 @@ def consolidate(warnings: list[Warning]) -> list[Warning]:
     sev_rank = {"high": 0, "medium": 1, "low": 2, "info": 3}
     out.sort(key=lambda w: sev_rank[w.severity.value])
     return out
+
+
+def group_warnings_by_code(warnings: list[Warning]) -> list[Warning]:
+    """Answer-level view: exactly one warning per code, union of rows, the most informative (longest) message."""
+    by: dict[str, Warning] = {}
+    for w in warnings:
+        if w.code not in by:
+            by[w.code] = Warning(code=w.code, severity=w.severity, message=w.message, rows=list(w.rows))
+        else:
+            cur = by[w.code]
+            seen = {r.id for r in cur.rows}
+            cur.rows += [r for r in w.rows if r.id not in seen]
+            if len(w.message) > len(cur.message):
+                cur.message = w.message
+    sev_rank = {"high": 0, "medium": 1, "low": 2, "info": 3}
+    return sorted(by.values(), key=lambda w: sev_rank[w.severity.value])

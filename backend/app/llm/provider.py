@@ -54,7 +54,8 @@ class Provider:
     def messages(self, role: str, *, system: str, messages: list[dict], tools: list[dict] | None = None,
                  max_tokens: int = 2048, temperature: float = 0.0, tool_choice: dict | None = None) -> LLMCall:
         model = self.model_id(role)
-        kwargs: dict[str, Any] = dict(model=model, max_tokens=max_tokens, temperature=temperature, messages=messages,
+        # Note: this SDK generation has no `temperature`; determinism comes from tool-forced structured outputs.
+        kwargs: dict[str, Any] = dict(model=model, max_tokens=max_tokens, messages=messages,
                                       system=[{"type": "text", "text": system, "cache_control": {"type": "ephemeral"}}])
         if tools:
             kwargs["tools"] = tools
@@ -88,3 +89,28 @@ def text_of(resp: Any) -> str:
 
 def tool_uses(resp: Any) -> list[Any]:
     return [b for b in resp.content if getattr(b, "type", "") == "tool_use"]
+
+
+class StructuredOutputError(Exception):
+    pass
+
+
+def structured(prov: "Provider", role: str, *, system: str, messages: list[dict], tool: dict, max_tokens: int = 2000,
+               extra_tools: list[dict] | None = None) -> tuple[dict, LLMCall, Any]:
+    """Get a single tool_use for `tool`. Tries forced tool_choice; if the model rejects forced choice,
+    falls back to auto + instruction, validating the result and retrying once. Returns (input, call, tool_use_block)."""
+    tools = (extra_tools or []) + [tool]
+    try:
+        call = prov.messages(role, system=system, messages=messages, tools=tools, tool_choice={"type": "tool", "name": tool["name"]}, max_tokens=max_tokens)
+    except Exception as ex:  # noqa: BLE001
+        if "tool_choice" not in str(ex):
+            raise
+        call = prov.messages(role, system=system, messages=messages, tools=tools, max_tokens=max_tokens)
+    for attempt in range(2):
+        uses = [u for u in tool_uses(call.response) if u.name == tool["name"]]
+        if uses:
+            return uses[0].input, call, uses[0]
+        nudge = messages + [{"role": "assistant", "content": call.response.content},
+                            {"role": "user", "content": f"You must respond by calling the `{tool['name']}` tool now. Do not answer in prose."}]
+        call = prov.messages(role, system=system, messages=nudge, tools=tools, max_tokens=max_tokens)
+    raise StructuredOutputError(f"model did not call {tool['name']} after retry (role={role})")

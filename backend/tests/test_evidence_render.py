@@ -27,11 +27,28 @@ def test_render_list_formats(reg):
     assert out == "4 sites; FY2024–FY2025."
 
 
-def test_render_rejects_literal_digits(reg):
-    with pytest.raises(RenderError, match="literal digit"):
-        render("There are 6 drugs in shortage [E1].", reg)
-    with pytest.raises(RenderError, match="literal digit"):
-        render("FEI 3001234567 received an OAI [E1].", reg)
+def test_render_rejects_numbers_not_in_evidence(reg):
+    # '7' is not a value anywhere in the evidence → rejected
+    with pytest.raises(RenderError, match="not present in any evidence"):
+        render("There are 7 drugs in shortage [E1].", reg)
+    # an invented FEI → rejected
+    with pytest.raises(RenderError, match="not present in any evidence"):
+        render("FEI 3009999999 received an OAI [E1].", reg)
+    # a made-up fiscal year → rejected
+    with pytest.raises(RenderError, match="not present in any evidence"):
+        render("in FY2019 [E1].", reg)
+
+
+def test_render_allows_literals_that_exist_verbatim_in_evidence(reg):
+    out, subs = render("FEI 3001234567 (Baxter) received an OAI; see drug DS-2023-0200 [E1].", reg)
+    assert out.startswith("FEI 3001234567")
+    assert {s["literal"] for s in subs if "literal" in s} == {"3001234567", "DS-2023-0200"}
+
+
+def test_render_bracket_keys(reg):
+    reg.add("cq_supply_picture", {}, call_tool("cq_supply_picture", {}))
+    out, _ = render('{{E3.status_timelines["DS-2023-0142"].latest_status}} / {{E3.status_timelines[\'DS-2023-0142\'].timeline|count}} revisions', reg)
+    assert out == "Current / 2 revisions"
 
 
 def test_render_rejects_unknown_evidence_or_path(reg):
