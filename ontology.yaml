@@ -35,7 +35,7 @@ entities:
       presentation:        {type: string, desc: "Dosage form + strength, e.g. 'Oral Suspension 250mg/5mL'. Only place dosage form exists in the dataset."}
       ndc:                 {type: string, desc: "National Drug Code of the affected product."}
       shortage_status:     {type: enum, values: [Current, Resolved, Discontinued], desc: "See status_semantics. Never collapse Resolved and Discontinued."}
-      initial_posting_date:{type: date}
+      initial_posting_date: {type: date, desc: "Date the shortage was first posted."}
       revision_date:       {type: date, desc: "Date this row was last revised. Used to pick the authoritative row per shortage_id."}
       reason_category:     {type: enum, values: ["Manufacturing Delay", "API Shortage", "Demand Increase", "Discontinuation of Manufacture", "Quality: cGMP Issue"]}
       related_application: {type: string, desc: "Application number (ANDA/NDA/BLA). FK → Application.application_number. Only 21/150 rows resolve."}
