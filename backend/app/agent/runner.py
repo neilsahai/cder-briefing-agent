@@ -277,8 +277,9 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     # ------------------------------------------------------------------ 3. narrator + render (retry on render failure)
     computed_alts = [{"evidence": e.id, "term": i.term, "chosen": i.chosen, "alternatives": i.alternatives, "alternate_result": i.alternate_result, "differs": i.differs}
                      for e in registry.items for i in e.result.interpretations if i.alternate_result is not None]
-    alt_block = ("# COMPUTED ALTERNATE READINGS (tools computed these; state each one's result in 'Interpretation applied' — "
-                 "never say an alternate was not computed when it appears here)\n" + json.dumps(computed_alts, default=str) + "\n\n") if computed_alts else ""
+    alt_block = ("# COMPUTED ALTERNATE READINGS (tools computed these; in 'Interpretation applied' state each alternate's result "
+                 "with a placeholder, e.g. 'under the alternate reading: {{E1.alternate_readings[\"in shortage\"].result.distinct_drugs}}'. "
+                 "Do NOT write sentences characterizing whether alternates differ or agree, and never say an alternate was not computed)\n" + json.dumps(computed_alts, default=str) + "\n\n") if computed_alts else ""
     narr_user = (f"QUESTION: {question}\n\nGATE: {json.dumps(gate)}\n\nINTERPRETATIONS DECLARED (planner, before tools ran — superseded by computed readings below where they overlap): {json.dumps(declared)}\n\n{alt_block}"
                  f"PLANNER FINISH: {json.dumps(finish)}\n\n# VALID PLACEHOLDER PATHS (use these exactly; for list items use [i])\n{registry.path_index()}\n\n# EVIDENCE\n{registry.for_prompt()}")
     template, headline_t, rendered, headline, subs = "", "", "", "", []
