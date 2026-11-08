@@ -66,6 +66,29 @@ class EvidenceRegistry(BaseModel):
     def get(self, eid: str) -> Evidence | None:
         return next((e for e in self.items if e.id == eid), None)
 
+    def path_index(self, max_paths_per_item: int = 400) -> str:
+        """Every valid placeholder path per evidence item (lists shown as [0] with their length), so the narrator
+        never has to guess a key name."""
+        out = []
+        for e in self.items:
+            paths: list[str] = []
+            def walk(v: Any, prefix: str) -> None:
+                if len(paths) >= max_paths_per_item:
+                    return
+                if isinstance(v, dict):
+                    for k, x in v.items():
+                        key = f".{k}" if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", k) else f'["{k}"]'
+                        walk(x, prefix + key)
+                elif isinstance(v, list):
+                    paths.append(f"{prefix}|count  (list of {len(v)})")
+                    if v:
+                        walk(v[0], prefix + "[0]")
+                else:
+                    paths.append(f"{prefix} = {json.dumps(v, default=str)[:60]}")
+            walk(e.result.value, e.id)
+            out.append(f"{e.id} ({e.tool}):\n  " + "\n  ".join("{{" + p.split(" = ")[0].split("|count")[0] + "}}" + (" |count" if "|count" in p else "") + ((" = " + p.split(" = ", 1)[1]) if " = " in p else "") for p in paths))
+        return "\n".join(out)
+
     def for_prompt(self) -> str:
         parts = []
         for e in self.items:

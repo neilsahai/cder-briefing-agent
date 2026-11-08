@@ -78,5 +78,28 @@ reviewed every phase; Claude wrote most of the code and all first drafts.
    the Q1 certified query wasn't returning the shortage records themselves; fixed the data, kept the
    renderer strict.
 
+### Nov 7–8 — Phase 3 (registry, pins, multi-candidate SQL, eval harness)
+- Built the eval harness first as a tool for finding bugs, then as a scorecard. First regression run: 56%.
+  First capability run: 42%. Both numbers were useful precisely because they were low.
+- Fixes the harness forced, in order: (1) certified matching matched "since FY2024" to the FY2021
+  certified query on word overlap — now numeric tokens must agree and certified credit requires the
+  certified args to have actually been used; (2) the planner sometimes ignored the certified-plan hint
+  and composed primitives — the runner now executes the certified plan itself before planning;
+  (3) the trust tier depended on whether the planner *chose* to compute an alternate reading — certified
+  queries now compute alternates deterministically and report `differs`; (4) the narrator made true
+  methodological claims ("FY basis matches FDA's Data Dashboard", "this tool is certified") that no
+  evidence item contained — the ontology/DECISIONS context is now a citable `SYS` evidence item;
+  (5) the narrator guessed key names (`foreign_sites_not_inspected` vs `..._since`) and the renderer
+  withheld the whole answer — the narrator now receives an explicit index of every valid placeholder
+  path; (6) DuckDB and SQLite connections were not thread-safe under the eval runner's concurrency.
+- Capability suite after fixes: 42% → 75% → 96%. Hallucinated-number rate: 0.0% on every run after
+  the renderer/grader token rule was aligned. All 10 adversarial cases (fake FEI, fake drug, fake
+  fiscal year, root cause, patient impact, blame, testimony language, prompt injection, out-of-scope,
+  never-inspected-foreign) pass.
+- Regression at 8/9–9/9 across runs. The recurring miss is the Opus verifier flagging a *framing*
+  nit on an otherwise-correct answer, which demotes it to Tier 3 Qualified. That is the intended
+  failure direction (caution), and pass^k exists to make that variance visible rather than hide it.
+- Judge robustness: Sonnet occasionally emitted malformed tool JSON as a grader; added a retry.
+
 ## Things Neil overruled or redirected
 - (to be filled as they happen)

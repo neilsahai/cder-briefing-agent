@@ -24,8 +24,8 @@ from .schemas import DECLARE_INTERPRETATIONS_TOOL, FINISH_TOOL, GATE_TOOL, NARRA
 from .trace import Trace, Tracer, TraceStep
 
 MAX_TOOL_ITERATIONS = 12
-MAX_NARRATION_RETRIES = 2
-MAX_REVISIONS = 1
+MAX_NARRATION_RETRIES = 3
+MAX_REVISIONS = 2
 
 TIER_LABELS = {1: "Certified", 2: "Derived", 3: "Qualified", 4: "Not answerable from this data"}
 
@@ -275,7 +275,7 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
 
     # ------------------------------------------------------------------ 3. narrator + render (retry on render failure)
     narr_user = (f"QUESTION: {question}\n\nGATE: {json.dumps(gate)}\n\nINTERPRETATIONS DECLARED: {json.dumps(declared)}\n\n"
-                 f"PLANNER FINISH: {json.dumps(finish)}\n\n# EVIDENCE\n{registry.for_prompt()}")
+                 f"PLANNER FINISH: {json.dumps(finish)}\n\n# VALID PLACEHOLDER PATHS (use these exactly; for list items use [i])\n{registry.path_index()}\n\n# EVIDENCE\n{registry.for_prompt()}")
     template, headline_t, rendered, headline, subs = "", "", "", "", []
     last_err = None
     for attempt in range(MAX_NARRATION_RETRIES + 1):

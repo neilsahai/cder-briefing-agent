@@ -146,7 +146,17 @@ def judge(answer: dict[str, Any], dimension: str, question: str) -> dict[str, An
                 f"not show alternates for them): {json.dumps(pins)}\n") if pins else ""
     user = (f"DIMENSION: {dimension}\nCRITERION: {JUDGE_DIMENSIONS[dimension]}\n{pin_note}\nQUESTION: {question}\n\nANSWER (tier {answer['tier']} — {answer['tier_label']}):\n"
             f"{answer.get('headline','')}\n\n{answer.get('markdown','')}\n\nEVIDENCE (long lists truncated with a count; treat a stated count as present):\n{json.dumps(ev, default=str)[:150000]}")
-    out, call, _ = structured(prov, "judge", system=system, messages=[{"role": "user", "content": user}], tool=JUDGE_TOOL, max_tokens=1200)
+    last = None
+    for attempt in range(2):
+        try:
+            out, call, _ = structured(prov, "judge", system=system, messages=[{"role": "user", "content": user}], tool=JUDGE_TOOL, max_tokens=1200)
+            float(out.get("score", 1.0 if out.get("pass") else 0.0))  # malformed tool JSON surfaces here
+            break
+        except Exception as ex:  # noqa: BLE001
+            last = ex
+            out = None
+    if out is None:
+        raise RuntimeError(f"judge failed twice: {last}")
     if "pass" not in out:
         out["pass"] = float(out.get("score", 0)) >= 0.5
         out["rationale"] = (out.get("rationale") or "") + " [judge omitted pass; derived from score]"

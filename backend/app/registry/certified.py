@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import re
 import sqlite3
+import threading
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Any
@@ -77,6 +78,7 @@ class CertifiedRegistry:
     def __init__(self, path=DB_PATH) -> None:
         self.con = sqlite3.connect(str(path), check_same_thread=False)
         self.con.row_factory = sqlite3.Row
+        self._lock = threading.RLock()
         self.con.executescript(
             """
             CREATE TABLE IF NOT EXISTS certified_queries (
@@ -102,12 +104,12 @@ class CertifiedRegistry:
         self._seed()
 
     def _seed(self) -> None:
-        n = self.con.execute("SELECT COUNT(*) FROM certified_queries").fetchone()[0]
+        n = self._exec("SELECT COUNT(*) FROM certified_queries").fetchone()[0]
         if n:
             return
         now = datetime.now(timezone.utc).isoformat()
         for s in SEED:
-            self.con.execute(
+            self._exec(
                 "INSERT INTO certified_queries(name, question, tool, args, pins, verified_by, verified_at, notes) VALUES (?,?,?,?,?,?,?,?)",
                 (s["name"], s["question"], s["tool"], json.dumps(s["args"]), json.dumps(s["pins"]), s["verified_by"], now, s["notes"]),
             )
@@ -117,10 +119,10 @@ class CertifiedRegistry:
     # ------------------------------------------------------------------ read
     def list(self, include_revoked: bool = False) -> list[dict[str, Any]]:
         q = "SELECT * FROM certified_queries" + ("" if include_revoked else " WHERE status='active'") + " ORDER BY id"
-        return [self._row(r) for r in self.con.execute(q)]
+        return [self._row(r) for r in self._exec(q)]
 
     def get(self, name: str) -> dict[str, Any] | None:
-        r = self.con.execute("SELECT * FROM certified_queries WHERE name=?", (name,)).fetchone()
+        r = self._exec("SELECT * FROM certified_queries WHERE name=?", (name,)).fetchone()
         return self._row(r) if r else None
 
     def match(self, question: str) -> dict[str, Any] | None:
@@ -142,12 +144,12 @@ class CertifiedRegistry:
         now = datetime.now(timezone.utc).isoformat()
         existing = self.get(name)
         if existing:
-            self.con.execute(
+            self._exec(
                 "UPDATE certified_queries SET question=?, tool=?, args=?, pins=?, verified_by=?, verified_at=?, version=version+1, status='active', source_run_id=?, notes=? WHERE name=?",
                 (question, tool, json.dumps(args), json.dumps(pins), verified_by, now, source_run_id, notes, name))
             action = "recertify"
         else:
-            self.con.execute(
+            self._exec(
                 "INSERT INTO certified_queries(name, question, tool, args, pins, verified_by, verified_at, source_run_id, notes) VALUES (?,?,?,?,?,?,?,?,?)",
                 (name, question, tool, json.dumps(args), json.dumps(pins), verified_by, now, source_run_id, notes))
             action = "promote"
@@ -156,17 +158,21 @@ class CertifiedRegistry:
         return self.get(name)  # type: ignore[return-value]
 
     def revoke(self, name: str, actor: str, reason: str) -> None:
-        self.con.execute("UPDATE certified_queries SET status='revoked' WHERE name=?", (name,))
+        self._exec("UPDATE certified_queries SET status='revoked' WHERE name=?", (name,))
         self.log(actor, "revoke", name, {"reason": reason})
         self.con.commit()
 
     def log(self, actor: str, action: str, target: str | None, details: dict[str, Any] | None = None) -> None:
-        self.con.execute("INSERT INTO audit_log(at, actor, action, target, details) VALUES (?,?,?,?,?)",
+        self._exec("INSERT INTO audit_log(at, actor, action, target, details) VALUES (?,?,?,?,?)",
                          (datetime.now(timezone.utc).isoformat(), actor, action, target, json.dumps(details or {}, default=str)))
         self.con.commit()
 
     def audit(self, limit: int = 200) -> list[dict[str, Any]]:
-        return [dict(r) for r in self.con.execute("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,))]
+        return [dict(r) for r in self._exec("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,))]
+
+    def _exec(self, sql: str, params: tuple = ()):
+        with self._lock:
+            return self.con.execute(sql, params)
 
     @staticmethod
     def _row(r: sqlite3.Row) -> dict[str, Any]:

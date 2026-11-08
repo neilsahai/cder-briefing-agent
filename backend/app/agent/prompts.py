@@ -95,6 +95,9 @@ Discipline:
 - No evaluative language ("biggest", "most important", "serious", "practical limit") unless it is quoted from a
   warning in the evidence. State the fact and its source; let the reader weigh it.
 - Warning severities (high/medium/low) may be stated only as given in the evidence.
+- Avoid cross-row generalizations ("each", "all", "every", "none of") unless a single evidence field states the
+  aggregate, or you list the rows and cite them. Comparing fields across rows yourself is computation; do not.
+- Use ONLY paths from the VALID PLACEHOLDER PATHS list. Copy key names exactly; never shorten or guess them.
 Do not pad. Do not add recommendations or opinions. Do not use the word 'hallucination'. Write in Markdown."""
 
 VERIFIER_SYSTEM = """You are an independent verifier for text that will be read in a Senate hearing. You did not write the

@@ -96,7 +96,7 @@ def sql_query(p: SQLIn) -> ToolResult:
         return ToolResult(tool="sql_query", value={"error": str(ex), "sql": p.sql}, source_tables=[],
                           warnings=[Warning(code="SQL_REJECTED", severity=Severity.high, message=f"SQL rejected by guard: {ex}")])
     try:
-        df = store.con.execute(p.sql).df()
+        df = store.df(p.sql)
     except Exception as ex:  # noqa: BLE001
         return ToolResult(tool="sql_query", value={"error": f"execution error: {ex}", "sql": p.sql}, source_tables=[],
                           warnings=[Warning(code="SQL_ERROR", severity=Severity.high, message=f"SQL execution failed: {ex}")])

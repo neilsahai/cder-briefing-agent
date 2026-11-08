@@ -96,7 +96,7 @@ class DataStore:
         )
 
     def _compute_data_max(self) -> date:
-        r = self.con.execute(
+        r = self.con.cursor().execute(
             """
             SELECT GREATEST(
               (SELECT MAX(revision_date) FROM drug_shortages),
@@ -109,7 +109,15 @@ class DataStore:
 
     # ------------------------------------------------------------------ helpers
     def df(self, sql: str, params: list[Any] | None = None) -> pd.DataFrame:
-        return self.con.execute(sql, params or []).df()
+        # DuckDB connections are not safe for concurrent use; a cursor per call is (shares the catalog).
+        cur = self.con.cursor()
+        try:
+            return cur.execute(sql, params or []).df()
+        finally:
+            cur.close()
+
+    def execute_df(self, sql: str) -> pd.DataFrame:
+        return self.df(sql)
 
     def rowref(self, table: str, row: pd.Series | dict) -> RowRef:
         key = "@".join(str(row[c]) for c in KEY_COLS[table])
