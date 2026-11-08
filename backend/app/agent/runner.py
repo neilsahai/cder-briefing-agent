@@ -108,6 +108,19 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
             tracer.step("info", f"Certified query match: {cand['name']} (score {cand['score']})", output=cq_match)
     if pins:
         tracer.step("info", f"Interpretations pinned: {len(pins)}", output=pins)
+    pre_evidence: str | None = None
+    if cq_match:
+        # Execute the certified plan deterministically BEFORE the planner runs, so certified evidence is always present.
+        t = tracer.timer()
+        args = dict(cq_match["args"])
+        if as_of and "as_of" in REGISTRY[cq_match["tool"]].input_model.model_fields:
+            args["as_of"] = as_of
+        res = call_tool(cq_match["tool"], args)
+        ev = registry.add(cq_match["tool"], args, res, certified=REGISTRY[cq_match["tool"]].certified)
+        tracer.step("tool_call", f"{cq_match['tool']} → {ev.id} (certified plan, executed by runner)", input=args,
+                    output={"evidence_id": ev.id, "rows_cited": len(res.rows), "warnings": [w.code for w in res.warnings]}, duration_ms=t.ms(),
+                    status="warn" if any(w.severity.value == "high" for w in res.warnings) else "ok")
+        pre_evidence = _tool_result_payload(ev.id, res)
 
     # ------------------------------------------------------------------ 1. gate
     gate, call, _ = structured(prov, "gate", system=prompts.gate_system(), messages=[{"role": "user", "content": question}], tool=GATE_TOOL, max_tokens=800)
@@ -139,10 +152,9 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     tools = anthropic_tool_specs() + [DECLARE_INTERPRETATIONS_TOOL, FINISH_TOOL]
     user_msg = question if not as_of else f"{question}\n\n(as_of date to use: {as_of})"
     if cq_match:
-        user_msg += (f"\n\nCERTIFIED PLAN AVAILABLE: tool `{cq_match['tool']}` with args {json.dumps(cq_match.get('args', {}))} was verified by "
-                     f"{cq_match['verified_by']} for this question. Call it with exactly these args as your primary evidence. "
-                     f"If the question actually differs from the certified one (a different year, drug, or scope), adapt the args — "
-                     f"the answer will then not carry certified status, which is correct.")
+        user_msg += (f"\n\nCERTIFIED PLAN ALREADY EXECUTED: tool `{cq_match['tool']}` (verified by {cq_match['verified_by']}) has been run for you; "
+                     f"its result is evidence E1 below. Use E1 as the primary evidence. Only call additional tools if the question asks for "
+                     f"something E1 does not contain. If the question differs from the certified one (different year, drug, scope), say so and compute what is asked.\n\nE1 RESULT:\n{pre_evidence}")
     if pins:
         user_msg += ("\n\nINTERPRETATIONS PINNED BY THE ANALYST (treat as resolved; do not present alternates as open): "
                      + "; ".join(f"'{k}' = {v}" for k, v in pins.items()))

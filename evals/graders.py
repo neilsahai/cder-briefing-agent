@@ -97,6 +97,9 @@ def unverified_numbers(answer: dict[str, Any]) -> list[str]:
         blob += " " + " ".join(e.get("rows", []))
         for tok in NUMBER_TOKEN.findall(blob):
             allowed.add(tok.strip(".,;:)(-\""))
+    for sub in answer.get("substitutions", []):
+        for tok in NUMBER_TOKEN.findall(str(sub.get("rendered", "")) + " " + json.dumps(sub.get("value"), default=str)):
+            allowed.add(tok.strip(".,;:)(-\""))
     text = (answer.get("markdown") or "") + " " + (answer.get("headline") or "")
     text = re.sub(r"\[E\d+(?:\s*,\s*E\d+)*\]", " ", text)
     bad = []
