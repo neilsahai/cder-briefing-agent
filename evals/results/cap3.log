@@ -1,0 +1,12 @@
+24 cases × 3 trial(s) = 72 runs, concurrency 6
+[PASS] cap_api_shortage_count t3 tier=1 53570ms  
+[PASS] cap_api_shortage_count t1 tier=1 56441ms  
+[PASS] cap_api_shortage_count t2 tier=1 59329ms  
+[PASS] cap_oai_fy2025 t1 tier=3 84553ms  
+[PASS] cap_oai_fy2025 t2 tier=3 95844ms  
+[PASS] cap_oai_fy2025 t3 tier=3 133107ms  
+[PASS] cap_hospira_sponsor_vs_operator t3 tier=2 85322ms  
+[PASS] cap_pediatric_antibiotics t2 tier=3 76578ms  
+[PASS] cap_hospira_sponsor_vs_operator t1 tier=2 132549ms  
+[PASS] cap_hospira_sponsor_vs_operator t2 tier=2 135149ms  
+[FAIL] cap_pediatric_antibiotics t1 tier=3 112656ms claims_flagged_max 

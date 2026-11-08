@@ -42,7 +42,7 @@ tb(s, 'Same record. Two statuses. 56 days apart.', { x: M, y: 4.75, w: 6, h: 0.4
 // right: naive vs system
 card(s, 7.2, 1.5, 5.5, 2.1, 'FBE9E9'); tb(s, 'A row scan that finds a Resolved row', { x: 7.45, y: 1.65, w: 5.1, h: 0.35, fontSize: 13, color: THEME.colors.dk2 }); tb(s, '"Yes."', { x: 7.45, y: 2.05, w: 5, h: 0.7, fontSize: 32, bold: true, color: THEME.colors.accent4 }); tb(s, 'Reached a draft of Senate testimony. Correction letter followed.', { x: 7.45, y: 2.8, w: 5.1, h: 0.6, fontSize: 13 });
 card(s, 7.2, 3.85, 5.5, 2.6, 'E7F2EB'); tb(s, 'This system', { x: 7.45, y: 4.0, w: 5.1, h: 0.35, fontSize: 13, color: THEME.colors.dk2 }); tb(s, '"No."', { x: 7.45, y: 4.4, w: 5, h: 0.7, fontSize: 32, bold: true, color: THEME.colors.accent1 });
-tb(s, 'Latest revision is Current. The earlier Resolved record is disclosed, not ignored. Tier 1 Certified. Every value cites its row. The conflict warning attached itself — nobody asked for it.', { x: 7.45, y: 5.15, w: 5.1, h: 1.2, fontSize: 13 });
+tb(s, 'Latest revision is Current. The earlier Resolved record is disclosed, not ignored. The trust tier is on the card (1 Certified, or 3 Qualified when a reading like Resolved-vs-Discontinued is shown side by side). Every value cites its row. The conflict warning attached itself — nobody asked for it.', { x: 7.45, y: 5.12, w: 5.1, h: 1.28, fontSize: 12 });
 tb(s, 'That conflict is in the file you sent. So are fourteen other traps — docs/RED_TEAM_REPORT.md.', { x: M, y: 6.2, w: 12, h: 0.4, fontSize: 13, color: THEME.colors.dk2 });
 s.addNotes('Run it live. Click [E2], then the row chips: line 3 then line 2. Two rows, same record, different status. Then: that conflict is in the file you sent, so are fourteen others.');
 

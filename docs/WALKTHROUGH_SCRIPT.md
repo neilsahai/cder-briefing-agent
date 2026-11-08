@@ -10,7 +10,7 @@ Open the Ask page. Type: **"Is the amoxicillin shortage resolved?"**
 While it runs (trace streams on the right): "This is the question that produced the correction letter. The
 old tool said yes. Watch what happens."
 
-Answer lands: **No — latest status Current, not Resolved**, Tier 1, the earlier Resolved record disclosed.
+Answer lands: **No — latest status Current, not Resolved**, the earlier Resolved record disclosed. It may land Tier 1 or Tier 3 — Tier 3 when the planner shows the Resolved-vs-Discontinued reading side by side (the answer is the same under both; the strict rule labels it anyway). If it is Tier 3, say so: "this is the strict rule Neil chose — same answer under both readings, but it says so rather than deciding for you."
 Click `[E2]` → the evidence → click `drug_shortages#L3` → the actual Resolved row, then `#L2`, the Current
 row. "Two rows, same record, different status, 56 days apart. The system picked the latest revision — and
 told you it did."
