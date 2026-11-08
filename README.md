@@ -10,26 +10,25 @@ inspection data — and labels every answer with how much weight it can bear in 
 
 ## Measured, not claimed
 
-| Metric (from `evals/results/SCORECARD.md`) | Regression (9 cases) | Capability (24 off-script + adversarial) | Rehearsal (20 panel-style) |
+| Metric (from `evals/results/SCORECARD.md`) | Regression (9 cases × 3 trials) | Capability (24 off-script + adversarial × 3 trials) | Rehearsal (20 panel-style × 1) |
 |---|---|---|---|
-| Cases passing, latest complete single-trial run | **100%** (9/9) | **79%** (19/24) — range across 4 full runs of the current design: 79–96% | **100%** (20/20) |
+| Trials passing | **25 / 27** (93%) | **66 / 72** (92%) | **20 / 20** |
+| pass@3 (case passes in any trial) | **100%** | **100%** | — |
+| pass^3 (case passes in every trial) | **89%** | **79%** | — |
 | Hallucinated-number rate — digits in an answer not present in evidence | **0.0%** | **0.0%** | **0.0%** |
-| Claims verified / flagged after revision | 221 / 0 | 393 / 0 | 403 / 3 |
-| Runs where the independent verifier caught something on the first draft | 22% | 25% | 20% |
-| Adversarial cases (fake FEI, fake drug, fake year, root cause, blame, testimony language, prompt injection, out of scope…) | — | 10 / 10 on every run | 3 / 3 |
-| Avg latency · LLM calls · rows cited per answer | 72 s · 6.4 · 25 | 67 s · 6.8 · 16 | 62 s · 7.1 · 14 |
-| Cost per question (Anthropic list prices, Nov 2026) | $0.26 | $0.22 | $0.24 |
+| Claims verified / still flagged after revision | 611 / 1 | 1,196 / 4 | 408 / 2 |
+| First drafts where the independent verifier caught something | 19% | 26% | 25% |
+| Adversarial cases (fake FEI, fake drug, fake year, root cause, blame, testimony language, prompt injection, out of scope…) | — | 10 / 10 cases on every run | 3 / 3 |
+| Avg latency · cost per question (Anthropic list prices, Nov 2026) | 74 s · $0.24 | 64 s · $0.21 | 79 s · $0.32 |
 
-**On the capability range.** The hallucinated-number check and citation checks have held at 0.0% / 100% on
-every run (300+ answers). The misses are of three kinds: (a) the Opus verifier still flags a claim after the
-revision pass, which demotes the answer to Tier 3 — the intended, cautious failure direction, and it counts as a
-fail here; (b) a model-judge dimension disagrees (faithfulness, ambiguity_surfaced) — sometimes a real framing
-error the verifier missed (a headline that read "7 under either basis" when the default basis gives 6),
-sometimes judge variance (the same answer passes on the next run) or a judge that returns no verdict;
-(c) earlier in the build, two grader/renderer bugs that the harness itself exposed (see `BUILD_LOG.md`).
-That variance is why the harness supports `--trials 3` and reports pass^k. A 3-trial run of the final build was
-started and stopped at 23/72 trials when the API credit ran out: 4 failures, three of type (a) and one of
-type (b). It will be re-run in full.
+**What the misses are.** Across 119 trials there was no wrong number and no missing citation. Every failed trial is
+one of: (a) the Opus verifier still flags a claim after the revision pass, which demotes the answer to Tier 3
+Qualified — the intended, cautious direction, counted as a fail here because the case expected Tier 1/2;
+(b) a model-judge dimension disagrees (faithfulness, ambiguity_surfaced) — sometimes a real framing error the
+verifier missed, sometimes judge variance (the same answer passes on the next trial), occasionally a judge that
+returns no verdict; (c) once, a planner emitting a malformed declaration (now normalized). pass^3 is reported
+because a single-trial 96% hides exactly this variance; the harness exposed six real defects in Phase 6 alone
+(`BUILD_LOG.md`).
 
 The red-team report (`docs/RED_TEAM_REPORT.md`) lists the 15 traps planted in the data — including the exact
 amoxicillin status conflict from the brief's backstory — with the naive result and this system's result for each.

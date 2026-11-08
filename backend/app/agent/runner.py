@@ -202,7 +202,14 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     declared, call, decl_use = structured(prov, "planner", system=prompts.planner_system(), messages=messages,
                                           tool=DECLARE_INTERPRETATIONS_TOOL, extra_tools=anthropic_tool_specs() + [FINISH_TOOL], max_tokens=1500)
     tracer.step("plan", "Interpretations declared", llm=call, output=declared)
-    sys_ctx["planner_declared_interpretations"] = declared.get("interpretations", [])
+    # The planner occasionally emits interpretations as bare strings; normalize so nothing downstream assumes dicts.
+    _norm = []
+    for i in declared.get("interpretations", []) or []:
+        _norm.append(i if isinstance(i, dict) else {"term": str(i), "chosen": "", "alternatives": [], "will_compute_alternate": False})
+    declared["interpretations"] = _norm
+    if not isinstance(declared.get("plan"), list):
+        declared["plan"] = [str(declared.get("plan"))] if declared.get("plan") else []
+    sys_ctx["planner_declared_interpretations"] = declared["interpretations"]
     sys_ctx["planner_restated_question"] = declared.get("restated_question")
     messages.append({"role": "assistant", "content": call.response.content})
     messages.append({"role": "user", "content": [{"type": "tool_result", "tool_use_id": decl_use.id,

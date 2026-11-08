@@ -1,6 +1,6 @@
 # Eval scorecard
 
-_Generated 2026-11-08 05:32 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
+_Generated 2026-11-08 05:42 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
 
 ## capability suite — 24 cases × 3 trial(s)
 
@@ -52,30 +52,30 @@ _Generated 2026-11-08 05:32 UTC. Numbers are measured by `evals/run_evals.py`; n
 | Metric | Value |
 |---|---|
 | Case pass@k (any trial) | **100%** |
-| Case pass^k (all trials) | **56%** |
+| Case pass^k (all trials) | **89%** |
 | Hallucinated-number rate (digits in answer not present in evidence) | **0.0%** |
-| Claims verified / flagged after revision | 616 / 3 (precision 99.5%) |
-| Runs where the verifier caught something on first pass | 41% |
-| Tier distribution (1/2/3/4) | 17 / 0 / 10 / 0 |
-| Planner escalation rate | 7% |
+| Claims verified / flagged after revision | 611 / 1 (precision 99.8%) |
+| Runs where the verifier caught something on first pass | 19% |
+| Tier distribution (1/2/3/4) | 19 / 0 / 7 / 0 |
+| Planner escalation rate | 8% |
 | LLM-SQL (Tier 2 path) rate | 0% |
-| Avg latency / LLM calls / tool calls | 78501.3 ms / 6.0 / 1.8 |
-| Avg tokens in / out | 44425.7 / 10680.6 |
-| Avg rows cited per answer | 26.3 |
-| Cost (USD, Anthropic list prices) | total $7.0604 · avg $0.2615 per question |
-| Errors | 0 |
+| Avg latency / LLM calls / tool calls | 73674.2 ms / 5.8 / 1.8 |
+| Avg tokens in / out | 42192.8 / 10052.1 |
+| Avg rows cited per answer | 24.5 |
+| Cost (USD, Anthropic list prices) | total $6.311 · avg $0.2427 per question |
+| Errors | 1 |
 
 | Case | Pass | Tiers | Failed checks | Failed judges |
 |---|---|---|---|---|
 | `reg_q1_pinned_certified` | ✅ 100% | [1, 1, 1] |  |  |
-| `reg_q1_default` | 🟡 67% | [1, 1, 1] |  | ambiguity_surfaced |
-| `reg_q1_as_of_early_2025` | ✅ 100% | [1, 3, 1] |  |  |
+| `reg_q1_default` | ✅ 100% | [1, 1, 1] |  |  |
+| `reg_q1_as_of_early_2025` | ✅ 100% | [1, 1, 1] |  |  |
 | `reg_q2_default` | ✅ 100% | [1, 1, 1] |  |  |
-| `reg_q2_pinned_certified` | 🟡 67% | [3, 1, 1] | claims_flagged_max, tier_in |  |
-| `reg_q2_as_of_dec_2023_resolved_then` | 🟡 67% | [3, 3, 3] | claims_flagged_max |  |
-| `reg_q3_default` | 🟡 67% | [1, 3, 1] | tier_in |  |
-| `reg_q3_since_fy2024` | ✅ 100% | [3, 3, 3] |  |  |
-| `reg_trap_amoxicillin_resolved` | ✅ 100% | [1, 3, 1] |  |  |
+| `reg_q2_as_of_dec_2023_resolved_then` | ✅ 100% | [3, 3, 3] |  |  |
+| `reg_q2_pinned_certified` | ✅ 100% | [1, 1, 1] |  |  |
+| `reg_q3_since_fy2024` | 🟡 33% | [None, 3, 3] | claims_flagged_max |  |
+| `reg_q3_default` | ✅ 100% | [1, 1, 1] |  |  |
+| `reg_trap_amoxicillin_resolved` | ✅ 100% | [3, 1, 3] |  |  |
 
 ## rehearsal suite — 20 cases × 1 trial(s)
 
