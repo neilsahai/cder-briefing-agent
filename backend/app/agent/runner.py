@@ -65,6 +65,37 @@ class Answer(BaseModel):
     manual_lookups_replaced: int
 
 
+def build_system_context(*, as_of: str | None, pins: dict[str, str]) -> dict[str, Any]:
+    from ..data.store import get_store
+    from .. import ontology
+    o = ontology.load()
+    store = get_store()
+    return {
+        "as_of_resolved": store.resolve_as_of(as_of).isoformat(),
+        "as_of_rule": "Default as-of = latest record date in the dataset (D1). The assignment brief describes the snapshot as 'early 2025'.",
+        "data_snapshot_note": o["data_snapshot_note"].strip(),
+        "defaults": o["defaults"],
+        "fiscal_year_rule": "FDA FY runs Oct 1 – Sep 30. Default FY basis is inspection_end_date, matching how FDA's public Inspection Classification Database / Data Dashboard reports inspections (D2). Alternate: classification_date.",
+        "status_semantics": {k: v["meaning"] for k, v in o["status_semantics"].items()},
+        "trust_tiers": {
+            "1 Certified": "answered via certified tools or a certified query; verifier passed; interpretations disclosed or pinned",
+            "2 Derived": "depends on LLM-authored SQL that was validated and executed; not certified",
+            "3 Qualified": "material ambiguity (interpretations shown side by side) or verifier concerns",
+            "4 Not answerable from this data": "the question is out of scope or the data lacks the field",
+        },
+        "certified_tools": sorted(n for n, t in REGISTRY.items() if t.certified),
+        "non_certified_tools": sorted(n for n, t in REGISTRY.items() if not t.certified),
+        "ambiguous_terms": {t: {"interpretations": m.get("interpretations", []), "note": m.get("note")} for t, m in o["ambiguous_terms"].items()},
+        "data_limitations": [
+            "applications.csv has no dosage-form column; application counts cannot be restricted to a presentation (D9/DQ12)",
+            "only 21 of 150 shortage rows link to an application present in applications.csv; sites are unknowable for the rest (D7/DQ02)",
+            "country is known only through inspections.csv; a never-inspected FEI has UNKNOWN country (D10/DQ06)",
+            "the dataset has no pediatric flag; oral suspension/solution presentations are a labeled proxy",
+            "the dataset has no root-cause narrative; reason_category is the only causal field",
+        ],
+    }
+
+
 def _tool_result_payload(ev_id: str, result) -> str:
     """What the planner sees after a tool call: compact value + warnings + interpretations, keyed by evidence id."""
     v = result.value
@@ -86,6 +117,8 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     prov = get_provider()
     registry = EvidenceRegistry()
     pins = dict(pins or {})
+    sys_ctx = build_system_context(as_of=as_of, pins=pins)
+    registry.add_system_context(sys_ctx)
 
     # ------------------------------------------------------------------ 0. certified registry match
     cq_match = None
@@ -108,6 +141,8 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
             tracer.step("info", f"Certified query match: {cand['name']} (score {cand['score']})", output=cq_match)
     if pins:
         tracer.step("info", f"Interpretations pinned: {len(pins)}", output=pins)
+    sys_ctx["pins"] = pins
+    sys_ctx["certified_query_match"] = {k: v for k, v in (cq_match or {}).items() if k in ("name", "tool", "args", "verified_by", "verified_at", "version")} or None
     pre_evidence: str | None = None
     if cq_match:
         # Execute the certified plan deterministically BEFORE the planner runs, so certified evidence is always present.
@@ -133,8 +168,9 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     tracer.step("gate", f"Answerability: {gate['category']}", llm=call, input=question, output=gate,
                 status="ok" if gate["category"] == "answerable" else "warn")
 
+    sys_ctx["gate"] = gate
     if gate["category"] in ("out_of_scope", "unsafe_or_policy"):
-        md = (f"**Not answerable from this data.** {gate['reason']}\n\n"
+        md = (f"**Not answerable from this data.** {gate['reason']} [SYS]\n\n"
               + (f"What this tool can answer: {gate.get('answerable_part')}" if gate.get("answerable_part") else
                  "This tool answers questions about drug shortage records, drug applications, and establishment inspections in the provided FDA snapshot."))
         tracer.step("tier", "Tier 4", output={"tier": 4})
@@ -142,7 +178,8 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
                     tier_reasons=[gate["reason"]], headline="Not answerable from this data.", markdown=md, markdown_template=md,
                     gate=gate, interpretations_declared=[], interpretations_applied=[], divergent_interpretations=[],
                     cannot_answer=[gate.get("unanswerable_part") or gate["reason"]], warnings=[], claims=[], verification={},
-                    evidence=[], rows=[], substitutions=[], pins=pins, escalation={"escalate": False, "reasons": []}, trace=tracer.trace,
+                    evidence=[{"id": "SYS", "tool": "system_context", "args": {}, "certified": True, "rows": [], "source_tables": ["ontology.yaml", "DECISIONS.md"],
+                               "value": sys_ctx, "warnings": [], "interpretations": []}], rows=[], substitutions=[], pins=pins, escalation={"escalate": False, "reasons": []}, trace=tracer.trace,
                     manual_lookups_replaced=0)
         if persist:
             save_run(json.loads(a4.model_dump_json()))
@@ -164,6 +201,8 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
     declared, call, decl_use = structured(prov, "planner", system=prompts.planner_system(), messages=messages,
                                           tool=DECLARE_INTERPRETATIONS_TOOL, extra_tools=anthropic_tool_specs() + [FINISH_TOOL], max_tokens=1500)
     tracer.step("plan", "Interpretations declared", llm=call, output=declared)
+    sys_ctx["planner_declared_interpretations"] = declared.get("interpretations", [])
+    sys_ctx["planner_restated_question"] = declared.get("restated_question")
     messages.append({"role": "assistant", "content": call.response.content})
     messages.append({"role": "user", "content": [{"type": "tool_result", "tool_use_id": decl_use.id,
                                                   "content": "Recorded. Proceed with tool calls; call finish when done."}]})
@@ -227,6 +266,8 @@ def run(question: str, *, as_of: str | None = None, pins: dict[str, str] | None 
             continue
         messages.append({"role": "user", "content": process_uses(uses, call)})
 
+    if finish is not None:
+        sys_ctx["planner_finish"] = {k: finish.get(k) for k in ("divergent_interpretations", "used_sql", "cannot_answer", "analyst_notes")}
     if finish is None:
         finish = {"evidence_used": [e.id for e in registry.items], "divergent_interpretations": [], "used_sql": used_sql,
                   "cannot_answer": ["Planner did not finish within the step budget."], "analyst_notes": ""}

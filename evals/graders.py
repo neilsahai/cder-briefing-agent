@@ -81,14 +81,14 @@ def code_grade(answer: dict[str, Any], expect: dict[str, Any]) -> list[dict[str,
 
     # universal invariants
     add("verified_numbers_only", unverified_numbers(answer) == [], f"unverified: {unverified_numbers(answer)[:5]}")
-    add("citations_resolve", all(any(e["id"] == c for e in answer.get("evidence", [])) for c in re.findall(r"\[(E\d+)", md)) or answer["tier"] == 4)
+    add("citations_resolve", all(any(e["id"] == c for e in answer.get("evidence", [])) for c in re.findall(r"\[((?:E\d+|SYS))", md)) or answer["tier"] == 4)
     return checks
 
 
 def unverified_numbers(answer: dict[str, Any]) -> list[str]:
     """Re-derive the hallucinated-number metric independently of the renderer: every digit-bearing token in
     the final text must appear in some evidence value/warning/interpretation/row id."""
-    if answer["tier"] == 4 and not answer.get("evidence"):
+    if answer["tier"] == 4 and not [e for e in answer.get("evidence", []) if e["id"] != "SYS"]:
         return []
     allowed: set[str] = set()
     for e in answer.get("evidence", []):
@@ -105,7 +105,7 @@ def unverified_numbers(answer: dict[str, Any]) -> list[str]:
     bad = []
     for tok in NUMBER_TOKEN.findall(text):
         t = tok.strip(".,;:)(-")
-        if re.fullmatch(r"E\d+", t) or not t:
+        if re.fullmatch(r"E\d+|SYS", t) or not t:
             continue
         if not token_allowed(t, allowed):
             bad.append(t)
@@ -133,18 +133,23 @@ JUDGE_TOOL = {
 
 def judge(answer: dict[str, Any], dimension: str, question: str) -> dict[str, Any]:
     prov = get_provider()
+    from app.agent.evidence import _truncate
     ev = []
     for e in answer.get("evidence", []):
-        ev.append({"id": e["id"], "tool": e["tool"], "value": e["value"], "warnings": [w["message"] for w in e.get("warnings", [])],
-                   "interpretations": [f"{i['term']} → {i['chosen']} (alt {i['alternatives']})" for i in e.get("interpretations", [])]})
+        ev.append({"id": e["id"], "tool": e["tool"], "certified_tool": e.get("certified"), "source_tables": e.get("source_tables"),
+                   "value": _truncate(e["value"]), "warnings": [f"[{w['severity']}] {w['code']}: {w['message']}" for w in e.get("warnings", [])],
+                   "interpretations": [f"{i['term']} → {i['chosen']} (alt {i['alternatives']}) note={i.get('note')} differs={i.get('differs')}" for i in e.get("interpretations", [])]})
     system = ("You are a strict, independent grader for an FDA briefing tool whose output may be read in a Senate hearing. "
               "Grade ONLY the dimension described. Quote the exact answer text that drives your verdict. Be unforgiving of overstatement.")
     pins = answer.get("pins") or {}
     pin_note = ("\nPINNED INTERPRETATIONS (resolved in advance by the analyst or a certified query; the answer need only STATE these, "
                 f"not show alternates for them): {json.dumps(pins)}\n") if pins else ""
     user = (f"DIMENSION: {dimension}\nCRITERION: {JUDGE_DIMENSIONS[dimension]}\n{pin_note}\nQUESTION: {question}\n\nANSWER (tier {answer['tier']} — {answer['tier_label']}):\n"
-            f"{answer.get('headline','')}\n\n{answer.get('markdown','')}\n\nEVIDENCE:\n{json.dumps(ev, default=str)[:60000]}")
+            f"{answer.get('headline','')}\n\n{answer.get('markdown','')}\n\nEVIDENCE (long lists truncated with a count; treat a stated count as present):\n{json.dumps(ev, default=str)[:150000]}")
     out, call, _ = structured(prov, "judge", system=system, messages=[{"role": "user", "content": user}], tool=JUDGE_TOOL, max_tokens=1200)
+    if "pass" not in out:
+        out["pass"] = float(out.get("score", 0)) >= 0.5
+        out["rationale"] = (out.get("rationale") or "") + " [judge omitted pass; derived from score]"
     return {"dimension": dimension, "pass": bool(out["pass"]), "score": float(out.get("score", 1.0 if out["pass"] else 0.0)),
             "rationale": out.get("rationale", ""), "quotes": out.get("quotes", []), "model": call.model,
             "tokens": call.input_tokens + call.output_tokens}

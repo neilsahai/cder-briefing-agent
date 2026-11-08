@@ -15,9 +15,9 @@ from pydantic import BaseModel, Field
 
 from ..models import ToolResult
 
-PLACEHOLDER = re.compile(r"""\{\{\s*(E\d+)((?:\.[A-Za-z_][A-Za-z0-9_\-]*|\[\d+\]|\[\s*"[^"\]]+"\s*\]|\[\s*'[^'\]]+'\s*\])*)\s*(?:\|\s*(\w+))?\s*\}\}""")
+PLACEHOLDER = re.compile(r"""\{\{\s*(E\d+|SYS)((?:\.[A-Za-z_][A-Za-z0-9_\-]*|\[\d+\]|\[\s*"[^"\]]+"\s*\]|\[\s*'[^'\]]+'\s*\])*)\s*(?:\|\s*(\w+))?\s*\}\}""")
 NUMBER_TOKEN = re.compile(r"[\w\-\./:%]*\d[\w\-\./:%]*")
-CITATION = re.compile(r"\[(E\d+(?:\s*,\s*E\d+)*)\]")
+CITATION = re.compile(r"\[((?:E\d+|SYS)(?:\s*,\s*(?:E\d+|SYS))*)\]")
 DIGIT = re.compile(r"\d")
 
 # Words the narrator may use that contain digits in normal English (none). Fiscal years must be placeholders.
@@ -50,8 +50,17 @@ class EvidenceRegistry(BaseModel):
     items: list[Evidence] = Field(default_factory=list)
 
     def add(self, tool: str, args: dict[str, Any], result: ToolResult, certified: bool = True) -> Evidence:
-        e = Evidence(id=f"E{len(self.items) + 1}", tool=tool, args=args, result=result, certified=certified)
+        n = len([x for x in self.items if x.id != "SYS"]) + 1
+        e = Evidence(id=f"E{n}", tool=tool, args=args, result=result, certified=certified)
         self.items.append(e)
+        return e
+
+    def add_system_context(self, value: dict[str, Any]) -> Evidence:
+        """SYS: the ontology/DECISIONS context as citable evidence for definitional and methodological claims
+        (as-of default, tier definitions, which tools are certified, pins, status semantics, FY basis rationale)."""
+        from ..models import ToolResult as _TR
+        e = Evidence(id="SYS", tool="system_context", args={}, result=_TR(tool="system_context", value=value, source_tables=["ontology.yaml", "DECISIONS.md"]), certified=True)
+        self.items.insert(0, e)
         return e
 
     def get(self, eid: str) -> Evidence | None:
@@ -113,6 +122,7 @@ def token_allowed(tok: str, allowed: set[str]) -> bool:
     if tok in allowed:
         return True
     core = re.sub(r"^[A-Za-z]+", "", tok)
+    core = re.sub(r"-[A-Za-z]+$", "", core)  # '6-site', '18-month'
     return bool(core) and core in allowed
 
 
@@ -167,7 +177,7 @@ def render(template: str, registry: EvidenceRegistry) -> tuple[str, list[dict[st
     literal_hits: list[dict[str, Any]] = []
     for m in NUMBER_TOKEN.finditer(stripped):
         tok = m.group(0).strip(".,;:)(-")
-        if re.fullmatch(r"E\d+", tok):  # evidence ids in prose are fine
+        if re.fullmatch(r"E\d+|SYS", tok):  # evidence ids in prose are fine
             continue
         if tok and token_allowed(tok, allowed):
             literal_hits.append({"literal": tok, "verified_in_evidence": True})
