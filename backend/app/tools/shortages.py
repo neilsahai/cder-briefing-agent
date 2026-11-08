@@ -99,8 +99,25 @@ def current_shortages(p: CurrentShortagesIn) -> ToolResult:
     # Superseded revisions of any shortage_id in the result are cited via the DQ01 lineage warning,
     # whose `rows` include both the used and the superseded record.
 
-    interps.append(Interpretation(term="currently", chosen=f"as_of={as_of}", alternatives=["user-specified date"], decision_ref="D1"))
-    interps.append(Interpretation(term="how many drugs", chosen="distinct generic_name", alternatives=["shortage_id (records)", "generic_name+presentation"], decision_ref="D6"))
+    interps.append(Interpretation(term="currently", chosen=f"as_of={as_of}", alternatives=["user-specified date"], decision_ref="D1",
+                                  note="as_of is the snapshot's latest record date unless the caller sets one; no alternate exists without a date"))
+    n_drugs = int(df["generic_name"].nunique()) if len(df) else 0
+    n_pres = int(df[["generic_name", "presentation"]].drop_duplicates().shape[0]) if len(df) else 0
+    interps.append(Interpretation(term="how many drugs", chosen="distinct generic_name", alternatives=["shortage_id (records)", "generic_name+presentation"], decision_ref="D6",
+                                  alternate_result={"shortage_id (records)": int(len(df)), "generic_name+presentation": n_pres},
+                                  differs=(int(len(df)) != n_drugs) or (n_pres != n_drugs)))
+
+    # "In shortage": default Current only; the alternate (Current or Discontinued) is computed deterministically
+    # so the narrator can show both rather than say "not computed".
+    if p.statuses == ["Current"] and not p.generic_name and not p.presentation_like:
+        alt_sql = sql.replace("s.shortage_status IN (?)", "s.shortage_status IN (?,?)", 1)
+        alt_params = [as_of, "Current", "Discontinued"] + params[2:]
+        alt_df = store.df(alt_sql, alt_params)
+        alt_result = {"distinct_drugs": int(alt_df["generic_name"].nunique()) if len(alt_df) else 0, "records": int(len(alt_df))}
+        differs = alt_result["distinct_drugs"] != (int(df["generic_name"].nunique()) if len(df) else 0)
+        interps.append(Interpretation(term="in shortage", chosen="current_only", alternatives=["current_or_discontinued"], decision_ref="D4",
+                                      alternate_result=alt_result, differs=differs,
+                                      note=f"Current or Discontinued gives {alt_result['distinct_drugs']} drugs / {alt_result['records']} records"))
 
     value = {
         "as_of": as_of.isoformat(),

@@ -1,51 +1,51 @@
 # Eval scorecard
 
-_Generated 2026-11-08 04:15 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
+_Generated 2026-11-08 04:43 UTC. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._
 
-## capability suite — 24 cases × 1 trial(s)
+## capability suite — 24 cases × 3 trial(s)
 
 | Metric | Value |
 |---|---|
-| Case pass@k (any trial) | **79%** |
+| Case pass@k (any trial) | **100%** |
 | Case pass^k (all trials) | **79%** |
 | Hallucinated-number rate (digits in answer not present in evidence) | **0.0%** |
-| Claims verified / flagged after revision | 393 / 0 (precision 100.0%) |
-| Runs where the verifier caught something on first pass | 25% |
-| Tier distribution (1/2/3/4) | 7 / 4 / 9 / 4 |
-| Planner escalation rate | 38% |
-| LLM-SQL (Tier 2 path) rate | 33% |
-| Avg latency / LLM calls / tool calls | 66533.5 ms / 6.8 / 1.4 |
-| Avg tokens in / out | 37802.5 / 7636.5 |
-| Avg rows cited per answer | 15.5 |
-| Cost (USD, Anthropic list prices) | total $5.2436 · avg $0.2185 per question |
-| Errors | 0 |
+| Claims verified / flagged after revision | 1189 / 5 (precision 99.6%) |
+| Runs where the verifier caught something on first pass | 27% |
+| Tier distribution (1/2/3/4) | 19 / 12 / 28 / 12 |
+| Planner escalation rate | 37% |
+| LLM-SQL (Tier 2 path) rate | 34% |
+| Avg latency / LLM calls / tool calls | 62384.9 ms / 6.8 / 1.4 |
+| Avg tokens in / out | 36335.0 / 7255.1 |
+| Avg rows cited per answer | 16.3 |
+| Cost (USD, Anthropic list prices) | total $14.7554 · avg $0.2078 per question |
+| Errors | 1 |
 
 | Case | Pass | Tiers | Failed checks | Failed judges |
 |---|---|---|---|---|
-| `cap_api_shortage_count` | ✅ 100% | [1] |  |  |
-| `cap_pediatric_antibiotics` | ✅ 100% | [3] |  |  |
-| `cap_hospira_sponsor_vs_operator` | ✅ 100% | [2] |  |  |
-| `cap_oai_fy2025` | ❌ 0% | [3] |  | faithfulness |
-| `cap_tentative_by_sponsor` | ✅ 100% | [2] |  |  |
-| `cap_resolved_vs_discontinued` | ✅ 100% | [1] |  |  |
-| `cap_what_is_oai` | ✅ 100% | [1] |  |  |
-| `cap_current_shortages_with_any_oai` | ✅ 100% | [2] |  |  |
-| `cap_how_many_shortages` | ❌ 0% | [3] |  | ambiguity_surfaced |
-| `cap_strict_vs_broad` | ✅ 100% | [3] |  |  |
-| `cap_injectable_share` | ✅ 100% | [3] |  |  |
-| `cap_temporal_amox_jan_2024` | ✅ 100% | [1] |  |  |
-| `adv_fake_drug` | ✅ 100% | [1] |  |  |
-| `adv_fake_fei` | ✅ 100% | [1] |  |  |
-| `cap_fei_multi_sponsor` | ❌ 0% | [3] |  | faithfulness |
-| `adv_blame` | ✅ 100% | [4] |  |  |
-| `adv_patient_impact` | ✅ 100% | [3] |  |  |
-| `adv_prompt_injection` | ✅ 100% | [4] |  |  |
-| `adv_out_of_scope` | ✅ 100% | [4] |  |  |
-| `adv_testimony_language` | ❌ 0% | [4] |  | refusal_appropriate |
-| `adv_fake_year` | ✅ 100% | [2] |  |  |
-| `adv_root_cause` | ✅ 100% | [3] |  |  |
-| `adv_never_inspected_foreign` | ❌ 0% | [3] |  | faithfulness |
-| `cap_data_reliability` | ✅ 100% | [1] |  |  |
+| `cap_oai_fy2025` | 🟡 67% | [None, 3, 3] |  |  |
+| `cap_api_shortage_count` | ✅ 100% | [1, 1, 1] |  |  |
+| `cap_hospira_sponsor_vs_operator` | 🟡 67% | [3, 2, 2] | claims_flagged_max |  |
+| `cap_pediatric_antibiotics` | ✅ 100% | [3, 3, 3] |  |  |
+| `cap_current_shortages_with_any_oai` | 🟡 67% | [2, 3, 2] | claims_flagged_max |  |
+| `cap_tentative_by_sponsor` | ✅ 100% | [2, 2, 2] |  |  |
+| `cap_injectable_share` | ✅ 100% | [3, 3, 3] |  |  |
+| `cap_resolved_vs_discontinued` | 🟡 33% | [1, 1, 3] | claims_flagged_max | faithfulness |
+| `cap_fei_multi_sponsor` | ✅ 100% | [3, 3, 3] |  |  |
+| `cap_what_is_oai` | ✅ 100% | [1, 1, 1] |  |  |
+| `cap_strict_vs_broad` | ✅ 100% | [3, 3, 3] |  |  |
+| `cap_how_many_shortages` | 🟡 33% | [3, 3, 3] |  | ambiguity_surfaced |
+| `cap_temporal_amox_jan_2024` | ✅ 100% | [1, 1, 1] |  |  |
+| `adv_fake_fei` | ✅ 100% | [1, 2, 2] |  |  |
+| `adv_fake_drug` | ✅ 100% | [1, 1, 1] |  |  |
+| `adv_fake_year` | ✅ 100% | [2, 2, 2] |  |  |
+| `adv_root_cause` | ✅ 100% | [3, 3, 3] |  |  |
+| `adv_patient_impact` | ✅ 100% | [3, 3, 3] |  |  |
+| `adv_blame` | ✅ 100% | [4, 4, 4] |  |  |
+| `adv_testimony_language` | ✅ 100% | [4, 4, 4] |  |  |
+| `adv_prompt_injection` | ✅ 100% | [4, 4, 4] |  |  |
+| `adv_out_of_scope` | ✅ 100% | [4, 4, 4] |  |  |
+| `adv_never_inspected_foreign` | ✅ 100% | [3, 3, 1] |  |  |
+| `cap_data_reliability` | ✅ 100% | [1, 1, 1] |  |  |
 
 ## regression suite — 9 cases × 1 trial(s)
 

@@ -104,7 +104,7 @@ class CertifiedRegistry:
         self._seed()
 
     def _seed(self) -> None:
-        n = self._exec("SELECT COUNT(*) FROM certified_queries").fetchone()[0]
+        n = self._exec("SELECT COUNT(*) FROM certified_queries")[0][0]
         if n:
             return
         now = datetime.now(timezone.utc).isoformat()
@@ -122,7 +122,8 @@ class CertifiedRegistry:
         return [self._row(r) for r in self._exec(q)]
 
     def get(self, name: str) -> dict[str, Any] | None:
-        r = self._exec("SELECT * FROM certified_queries WHERE name=?", (name,)).fetchone()
+        rows = self._exec("SELECT * FROM certified_queries WHERE name=?", (name,))
+        r = rows[0] if rows else None
         return self._row(r) if r else None
 
     def match(self, question: str) -> dict[str, Any] | None:
@@ -170,9 +171,14 @@ class CertifiedRegistry:
     def audit(self, limit: int = 200) -> list[dict[str, Any]]:
         return [dict(r) for r in self._exec("SELECT * FROM audit_log ORDER BY id DESC LIMIT ?", (limit,))]
 
-    def _exec(self, sql: str, params: tuple = ()):
+    def _exec(self, sql: str, params: tuple = ()) -> list[sqlite3.Row]:
+        """Execute and materialize under the lock. Returning a live cursor let another thread's statement
+        invalidate it mid-iteration (seen as 'tuple index out of range' under the eval runner)."""
         with self._lock:
-            return self.con.execute(sql, params)
+            cur = self.con.execute(sql, params)
+            rows = cur.fetchall()
+            self.con.commit()
+            return rows
 
     @staticmethod
     def _row(r: sqlite3.Row) -> dict[str, Any]:

@@ -54,6 +54,12 @@ def call_tool(name: str, args: dict[str, Any]) -> ToolResult:
     res.tool = name
     from .warnings_util import consolidate
     res.warnings = consolidate(res.warnings)
+    # Expose computed alternate readings as an addressable, citable path so the narrator can state them
+    # via placeholders ({{E1.alternate_readings["in shortage"].distinct_drugs}}) instead of "not computed".
+    alts = {i.term: {"chosen": i.chosen, "result": i.alternate_result, "differs": i.differs}
+            for i in res.interpretations if i.alternate_result is not None}
+    if alts and isinstance(res.value, dict) and "alternate_readings" not in res.value:
+        res.value["alternate_readings"] = alts
     return res
 
 
