@@ -37,7 +37,7 @@ RESULTS.mkdir(exist_ok=True, parents=True)
 
 
 def load_cases(suite: str) -> list[dict]:
-    files = {"regression": ["regression.yaml"], "capability": ["capability.yaml"], "all": ["regression.yaml", "capability.yaml"]}[suite]
+    files = {"regression": ["regression.yaml"], "capability": ["capability.yaml"], "rehearsal": ["rehearsal.yaml"], "all": ["regression.yaml", "capability.yaml"]}[suite]
     cases = []
     for f in files:
         d = yaml.safe_load((ROOT / "evals" / "cases" / f).read_text())
@@ -130,6 +130,8 @@ def summarize(records: list[dict], suite: str) -> dict:
 def write_scorecard(summaries: dict[str, dict]) -> None:
     lines = ["# Eval scorecard", "", f"_Generated {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}. Numbers are measured by `evals/run_evals.py`; nothing here is estimated._", ""]
     for suite, s in summaries.items():
+        td = {int(k): v for k, v in s["tier_distribution"].items()}
+        s = dict(s, tier_distribution={t: td.get(t, 0) for t in (1, 2, 3, 4)})
         lines += [f"## {suite} suite — {s['n_cases']} cases × {s['n_trials'] // max(1, s['n_cases'])} trial(s)", "",
                   "| Metric | Value |", "|---|---|",
                   f"| Case pass@k (any trial) | **{s['case_pass_at_k']:.0%}** |" if s["case_pass_at_k"] is not None else "| Case pass@k | n/a |",
@@ -155,7 +157,7 @@ def write_scorecard(summaries: dict[str, dict]) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--suite", choices=["regression", "capability", "all"], default="regression")
+    ap.add_argument("--suite", choices=["regression", "capability", "rehearsal", "all"], default="regression")
     ap.add_argument("--trials", type=int, default=1)
     ap.add_argument("--concurrency", type=int, default=3)
     ap.add_argument("--only", default=None, help="comma-separated case ids")
@@ -183,12 +185,13 @@ def main() -> None:
         s = summarize(recs, suite)
         summaries[suite] = s
         (RESULTS / f"{suite}_{ts}.json").write_text(json.dumps({"summary": s, "records": recs}, indent=1, default=str))
-        (RESULTS / f"latest_{suite}.json").write_text(json.dumps({"summary": s, "records": recs}, indent=1, default=str))
+        if not a.only:  # a partial run must not replace the suite's headline numbers
+            (RESULTS / f"latest_{suite}.json").write_text(json.dumps({"summary": s, "records": recs}, indent=1, default=str))
         print(f"\n== {suite}: pass@k {s['case_pass_at_k']}, pass^k {s['case_pass_pow_k']}, hallucinated-number rate {s['hallucinated_number_rate']}, "
               f"claims {s['claims_total']} flagged {s['claims_flagged_final']}, tiers {s['tier_distribution']}", file=sys.stderr)
     # merge with any existing latest for the other suite so the scorecard shows both
-    for other in ("regression", "capability"):
-        if other not in summaries and (RESULTS / f"latest_{other}.json").exists():
+    for other in ("regression", "capability", "rehearsal"):
+        if (other not in summaries or a.only) and (RESULTS / f"latest_{other}.json").exists():
             summaries[other] = json.loads((RESULTS / f"latest_{other}.json").read_text())["summary"]
     write_scorecard(dict(sorted(summaries.items())))
     print(f"scorecard → {RESULTS / 'SCORECARD.md'}", file=sys.stderr)

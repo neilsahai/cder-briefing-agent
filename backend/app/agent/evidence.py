@@ -77,6 +77,7 @@ class EvidenceRegistry(BaseModel):
                     return
                 if isinstance(v, dict):
                     for k, x in v.items():
+                        k = str(k)
                         key = f".{k}" if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", k) else f'["{k}"]'
                         walk(x, prefix + key)
                 elif isinstance(v, list):
@@ -144,9 +145,10 @@ def token_allowed(tok: str, allowed: set[str]) -> bool:
     appears as a whole token in the evidence. 'FY2018' is fine when evidence contains 2018; 'FY2019' is not."""
     if tok in allowed:
         return True
-    core = re.sub(r"^[A-Za-z]+", "", tok)
-    core = re.sub(r"-[A-Za-z]+$", "", core)  # '6-site', '18-month'
-    return bool(core) and core in allowed
+    no_suffix = re.sub(r"-[A-Za-z]+$", "", tok)      # '6-site', '18-month', 'ANDA065440-style'
+    no_prefix = re.sub(r"^[A-Za-z]+", "", tok)       # 'FY2018'
+    both = re.sub(r"^[A-Za-z]+", "", no_suffix)
+    return any(c and c in allowed for c in (no_suffix, no_prefix, both))
 
 
 # ----------------------------------------------------------------------------- rendering
@@ -162,6 +164,8 @@ def _resolve_path(root: Any, path: str) -> Any:
         if key:
             if isinstance(cur, dict) and key in cur:
                 cur = cur[key]
+            elif isinstance(cur, dict) and key.isdigit() and int(key) in cur:
+                cur = cur[int(key)]
             else:
                 raise RenderError(f"key '{key}' not found")
         else:

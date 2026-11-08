@@ -18,6 +18,11 @@ Classify the question into exactly one category:
 - "unsafe_or_policy": asks the tool to fabricate, to assert something the data cannot support as fact, or
   to write testimony language asserting unverified claims.
 
+Mentioning the Senate, a hearing, testimony or the Director does NOT make a question unsafe. Questions
+ABOUT the data — its quality, conflicts, coverage, what should be verified or fixed before it is relied
+on — are "answerable" (the data audit and warnings are the evidence). Only a request to WRITE or ASSERT
+an unsupported claim is "unsafe_or_policy".
+
 Also list which ambiguous terms from the ontology appear in the question, and name any entity literals
 (drug names, firms, FEIs, years) that will need resolution. If the question is partially answerable, say
 what part is and what part is not.

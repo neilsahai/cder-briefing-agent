@@ -128,6 +128,30 @@ reviewed every phase; Claude wrote most of the code and all first drafts.
 - Pricing in `backend/app/llm/pricing.json` taken from Anthropic's pricing page on 2026-11-07, not
   from memory.
 
+### Nov 8 — Phase 6 (rehearsal: 20 off-script questions a panel might ask)
+Wrote `evals/cases/rehearsal.yaml` — questions I had not tuned for (longest-open shortage, sites in
+India, "is Pfizer responsible", share of injectables, status flips, average days to revision, "tell me
+about heparin", "what would you fix before the Senate"). First pass 17/20. Each miss was a real defect:
+1. **Integer dict keys crashed the placeholder index.** A grouped SQL result keyed by year (`{2024: 3}`)
+   hit `re.fullmatch` with an int. Two questions died with a TypeError instead of an answer. Fixed in
+   `path_index` and `_resolve_path`; unit test added.
+2. **A forecast question earned Tier 1.** "When will the amoxicillin shortage end?" — the answer was
+   right (refuses to predict, gives certified status) but carried a *Certified* label because every fact
+   it did state was certified. Added a deterministic cap: when the gate finds the primary ask is not in
+   the data, the tier is at most 3 Qualified. Documented under D13.
+3. **Renderer and grader disagreed on `ANDA065440-style`.** `token_allowed` stripped prefix and suffix
+   together, yielding `065440`, which is not a whole token in evidence. Now tries suffix-only first.
+   This was the first non-zero hallucinated-number reading; it was a tokenizer bug, not a hallucination,
+   and the grader is what found it.
+4. **Narrator ran out of output tokens on a long answer** (FY2024 variant of Q3) and every retry hit the
+   same wall because the retry message only talked about digits. Budget raised; a `max_tokens` stop now
+   produces a "write a shorter answer" retry; the withheld message says why.
+5. **Gate false positive on the word "Senate".** Haiku classified "which data quality problems would you
+   want fixed before this goes in front of the Senate?" as unsafe_or_policy once in two runs. Gate prompt
+   now states that mentioning testimony is not the trigger; asking to *write or assert* an unsupported
+   claim is. Re-ran 3/3 stable; all 10 adversarial refusals still hold.
+After fixes: regression 9/9 (221 claims, 0 flagged); rehearsal 19–20/20; hallucinated-number rate 0.0%.
+
 ## Things Neil overruled or redirected
 - **Stricter Tier 3 rule.** Original plan let a certified query with a differing alternate reading
   stay Tier 1 if the default reading was documented. Neil chose the stricter rule: any reading that

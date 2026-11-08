@@ -1,36 +1,37 @@
 {
  "summary": {
   "suite": "regression",
-  "generated_at": "2026-11-08T01:55:40.550597+00:00",
+  "generated_at": "2026-11-08T03:22:17.361478+00:00",
   "n_cases": 9,
   "n_trials": 9,
-  "case_pass_at_k": 0.889,
-  "case_pass_pow_k": 0.889,
-  "trial_pass_rate": 0.889,
+  "case_pass_at_k": 1.0,
+  "case_pass_pow_k": 1.0,
+  "trial_pass_rate": 1.0,
   "hallucinated_number_rate": 0.0,
-  "claims_total": 206,
-  "claims_flagged_final": 1,
-  "citation_precision_final": 0.9951,
-  "verifier_caught_first_pass_rate": 0.333,
+  "claims_total": 221,
+  "claims_flagged_final": 0,
+  "citation_precision_final": 1.0,
+  "verifier_caught_first_pass_rate": 0.111,
   "tier_distribution": {
-   "1": 6,
+   "1": 7,
    "2": 0,
-   "3": 3,
+   "3": 2,
    "4": 0
   },
-  "escalation_rate": 0.111,
+  "escalation_rate": 0.0,
   "sql_rate": 0.0,
-  "avg_latency_ms": 87952.1,
-  "avg_llm_calls": 6.6,
+  "avg_latency_ms": 68529.1,
+  "avg_llm_calls": 5.4,
   "avg_tool_calls": 1.7,
-  "avg_input_tokens": 51928.2,
-  "avg_output_tokens": 12375.6,
+  "avg_input_tokens": 34622.4,
+  "avg_output_tokens": 9040.1,
   "avg_rows_cited": 26.1,
-  "total_cost_usd": 2.5985,
+  "total_cost_usd": 1.8702,
+  "avg_cost_usd": 0.2078,
   "errors": 0,
   "cases": [
    {
-    "id": "reg_q2_default",
+    "id": "reg_q1_as_of_early_2025",
     "suite": "regression",
     "trials": 1,
     "pass_at_k": true,
@@ -72,7 +73,7 @@
     "errors": []
    },
    {
-    "id": "reg_q1_as_of_early_2025",
+    "id": "reg_q2_pinned_certified",
     "suite": "regression",
     "trials": 1,
     "pass_at_k": true,
@@ -86,7 +87,7 @@
     "errors": []
    },
    {
-    "id": "reg_q2_pinned_certified",
+    "id": "reg_q2_default",
     "suite": "regression",
     "trials": 1,
     "pass_at_k": true,
@@ -103,15 +104,13 @@
     "id": "reg_q2_as_of_dec_2023_resolved_then",
     "suite": "regression",
     "trials": 1,
-    "pass_at_k": false,
-    "pass_pow_k": false,
-    "pass_rate": 0.0,
+    "pass_at_k": true,
+    "pass_pow_k": true,
+    "pass_rate": 1.0,
     "tiers": [
      3
     ],
-    "failed_checks": [
-     "claims_flagged_max"
-    ],
+    "failed_checks": [],
     "failed_judges": [],
     "errors": []
    },
@@ -130,7 +129,7 @@
     "errors": []
    },
    {
-    "id": "reg_trap_amoxicillin_resolved",
+    "id": "reg_q3_since_fy2024",
     "suite": "regression",
     "trials": 1,
     "pass_at_k": true,
@@ -144,90 +143,64 @@
     "errors": []
    },
    {
-    "id": "reg_q3_since_fy2024",
+    "id": "reg_trap_amoxicillin_resolved",
     "suite": "regression",
     "trials": 1,
     "pass_at_k": true,
     "pass_pow_k": true,
     "pass_rate": 1.0,
     "tiers": [
-     3
+     1
     ],
     "failed_checks": [],
     "failed_judges": [],
     "errors": []
    }
-  ],
-  "avg_cost_usd": 0.2887
+  ]
  },
  "records": [
   {
-   "id": "reg_q2_default",
+   "id": "reg_q1_as_of_early_2025",
    "suite": "regression",
    "trial": 1,
-   "question": "For amoxicillin oral suspension, what is the real supply picture \u2014 how many approved applications, how many are actively marketed, and what is currently in shortage?",
-   "run_id": "d1d27bb3f650",
+   "question": "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?",
+   "run_id": "de593ec3b19c",
    "tier": 1,
    "tier_label": "Certified",
-   "gate": "in_scope_not_in_data",
+   "gate": "answerable",
    "passed": true,
    "code_ok": true,
    "judge_ok": true,
    "checks": [
     {
-     "check": "tier_in",
-     "pass": true,
-     "detail": "tier=1 expected [1, 3]: 1 ambiguous term(s) resolved by analyst pins: approved; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; interpretations disclosed; verifier passe"
-    },
-    {
-     "check": "evidence:cq_supply_picture.applications.approved_full==4",
+     "check": "evidence:cq_quality_shortages_oai_sites.fiscal_years==[2023, 2024]",
      "pass": true,
      "detail": "ok"
     },
     {
-     "check": "evidence:cq_supply_picture.applications.actively_marketed==3",
+     "check": "evidence:cq_quality_shortages_oai_sites.n_sites_with_oai==2",
      "pass": true,
      "detail": "ok"
     },
     {
-     "check": "evidence:cq_supply_picture.currently_in_shortage_count==1",
-     "pass": true,
-     "detail": "ok"
-    },
-    {
-     "check": "markdown_contains:DS-2023-0142",
+     "check": "markdown_contains:Pfizer Manufacturing LLC",
      "pass": true,
      "detail": ""
     },
     {
-     "check": "markdown_contains:Current",
+     "check": "markdown_contains:ICU Medical Inc",
      "pass": true,
      "detail": ""
     },
     {
-     "check": "markdown_contains:Resolved",
+     "check": "markdown_not_contains:Baxter Healthcare Corporation received",
      "pass": true,
      "detail": ""
     },
     {
-     "check": "markdown_contains:dosage",
+     "check": "markdown_not_contains:Fresenius Kabi USA LLC received",
      "pass": true,
      "detail": ""
-    },
-    {
-     "check": "warning:DQ01_status_conflict",
-     "pass": true,
-     "detail": "have ['DQ01_status_conflict', 'DQ03_ingredient_mismatch', 'DQ08_stale_current', 'DQ12_missing_dosage_form']"
-    },
-    {
-     "check": "warning:DQ12_missing_dosage_form",
-     "pass": true,
-     "detail": "have ['DQ01_status_conflict', 'DQ03_ingredient_mismatch', 'DQ08_stale_current', 'DQ12_missing_dosage_form']"
-    },
-    {
-     "check": "claims_flagged_max",
-     "pass": true,
-     "detail": "0 flagged: "
     },
     {
      "check": "verified_numbers_only",
@@ -240,52 +213,29 @@
      "detail": ""
     }
    ],
-   "judges": [
-    {
-     "dimension": "faithfulness",
-     "pass": true,
-     "score": 0.9,
-     "rationale": "Every figure and claim in the answer traces to E1 or SYS. The counts match: 6 total applications, 4 approved (full), 2 tentative, 3 marketed as Prescription, and the alternate count of 6. The shortage details match: DS-2023-0142 is Current with a Resolved-then-Current timeline, and DS-2022-0089 is Discontinued. The answer also states the dosage-form limitation, the 18-month staleness warning and the pinned \"full\" reading. One wording flaw: \"4 are approved under the full reading, 2 are Tentative Approval, and 1 is approved but Discontinued\" could be read as 7 applications against the stated total of 6. The Discontinued Teva application is actually one of the 4 full approvals, and the answer never says so. This is a clarity problem, not an invented value, and the Teva record and marketing status are stated correctly.",
-     "quotes": [],
-     "model": "claude-sonnet-5-5",
-     "tokens": 9167
-    },
-    {
-     "dimension": "status_semantics",
-     "pass": true,
-     "score": 0.96,
-     "rationale": "The answer uses Current, Resolved and Discontinued as the evidence records them. It also discloses the status conflict in DS-2023-0142's history.\n\n- **Current:** DS-2023-0142's latest status is Current, and the answer says so. It never calls that record resolved or over. It also flags that the record is stale and the status should be confirmed.\n- **Resolved then Current:** The answer states \"DS-2023-0142 was Resolved in the revision dated 2023-11-15. It was then Current in the revision dated 2024-01-10.\" It repeats the conflict as a caveat.\n- **Discontinued:** DS-2022-0089 is reported as \"latest status Discontinued\". The answer says \"It is not counted as Current and is not Resolved\". Its definition of Discontinued matches the evidence: \"supply will not recover from this source\".\n- **Resolved vs Discontinued:** The \"Interpretation applied\" section keeps them separate: \"Resolved means supply recovered, and Discontinued means supply will not recover from that source\".\n- **Marketing status:** The Teva application's \"marketing status Discontinued\" is a separate field from shortage status. The answer labels it correctly and does not mix the two.\n\nI found no conflation.",
-     "quotes": [
-      "DS-2023-0142 was Resolved in the revision dated 2023-11-15. It was then Current in the revision dated 2024-01-10 [E1].",
-      "It is not counted as Current and is not Resolved [E1].",
-      "Resolved means supply recovered, and Discontinued means supply will not recover from that source [SYS]."
-     ],
-     "model": "claude-sonnet-5-5",
-     "tokens": 9002
-    }
-   ],
-   "claims_total": 27,
+   "judges": [],
+   "claims_total": 26,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
-   "escalated": true,
+   "escalated": false,
    "used_sql": false,
-   "certified_match": "q2_amoxicillin_oral_suspension_supply",
-   "llm_calls": 5,
+   "certified_match": "q1_quality_shortages_oai_sites",
+   "llm_calls": 4,
    "tool_calls": 1,
-   "input_tokens": 27829,
-   "output_tokens": 7675,
-   "cost_usd": 0.186508,
-   "latency_ms": 72493,
-   "rows_cited": 9,
-   "headline": "As of 2025-10-23, amoxicillin has 4 approved applications and 3 actively marketed, counted across all dosage forms, and 1 oral suspension shortage record with status Current."
+   "input_tokens": 25624,
+   "output_tokens": 8937,
+   "cost_usd": 0.189527,
+   "latency_ms": 63442,
+   "rows_cited": 17,
+   "headline": "As of 2025-03-01, 6 drugs are in Current shortage for a cGMP quality reason, and 2 of their linked manufacturing sites had an OAI inspection in FY2023 to FY2024."
   },
   {
    "id": "reg_q1_pinned_certified",
    "suite": "regression",
    "trial": 1,
    "question": "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?",
-   "run_id": "869a294121af",
+   "run_id": "d4358c2fedc9",
    "tier": 1,
    "tier_label": "Certified",
    "gate": "answerable",
@@ -320,28 +270,28 @@
     }
    ],
    "judges": [],
-   "claims_total": 26,
+   "claims_total": 23,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
    "escalated": false,
    "used_sql": false,
    "certified_match": "q1_quality_shortages_oai_sites",
-   "llm_calls": 6,
+   "llm_calls": 5,
    "tool_calls": 1,
-   "input_tokens": 50744,
-   "output_tokens": 12270,
-   "cost_usd": 0.276027,
-   "latency_ms": 79179,
+   "input_tokens": 34881,
+   "output_tokens": 9478,
+   "cost_usd": 0.209037,
+   "latency_ms": 64398,
    "rows_cited": 17,
-   "headline": "As of 2025-10-23, 6 drugs are in Current shortage for cGMP quality reasons, and 4 linked manufacturing sites received an OAI classification in FY2024 to FY2025."
+   "headline": "As of 2025-10-23, 6 drugs are in Current shortage for Quality: cGMP Issue, and 4 of their linked manufacturing sites had an OAI in FY2024 to FY2025."
   },
   {
    "id": "reg_q1_default",
    "suite": "regression",
    "trial": 1,
    "question": "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?",
-   "run_id": "8a7f39126068",
+   "run_id": "8e5f5a47eee1",
    "tier": 1,
    "tier_label": "Certified",
    "gate": "answerable",
@@ -352,7 +302,7 @@
     {
      "check": "tier_in",
      "pass": true,
-     "detail": "tier=1 expected [1, 3]: 4 ambiguous term(s) resolved by analyst pins: quality problems (strict vs broad), last two fiscal years (completed vs include_current), quality problems, last two fiscal years; part of the question ca"
+     "detail": "tier=1 expected [1, 3]: 2 ambiguous term(s) resolved by analyst pins: quality problems, last two fiscal years; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; interpreta"
     },
     {
      "check": "gate_category_in",
@@ -430,114 +380,43 @@
      "dimension": "faithfulness",
      "pass": true,
      "score": 0.96,
-     "rationale": "",
+     "rationale": "I checked each claim against E1 and SYS and found no unsupported statements. The counts match: 6 distinct drugs, 6 records, 4 OAI sites. The drug names match the drug list. For each of the four OAI sites, the FEI, operator, city, drug, inspection end date, classification date, fiscal year, row IDs and project area all match the evidence. The alternate readings are reported correctly: broad gives 15 drugs and 21 records, include_current gives sites 3001234567 and 3009123789, and the classification_date basis gives the same four sites. The Meropenem and Hospira site notes match, as do the three stale-record IDs and revision dates. The as-of date, the \"early 2025\" snapshot discrepancy and the status-Current definition are quoted accurately. The cannot-answer items follow SYS. The statement that the sponsor name may suggest a country but that is inference, not data, is in the E1 warnings. The answer adds no values that the evidence lacks.",
      "quotes": [],
      "model": "claude-sonnet-5-5",
-     "tokens": 11106
+     "tokens": 10897
     },
     {
      "dimension": "ambiguity_surfaced",
      "pass": true,
      "score": 0.9,
-     "rationale": "The answer has an \"Interpretation applied\" section. It names each ambiguous term, says which reading it used, and gives the alternate result where the evidence supports one. Every figure I checked matches E1.\n\n- Quality problems: pinned as strict. The answer says \"The broad reading gives 15 drugs across 21 records\". E1 reports 15 drugs and 21 records.\n- Last two fiscal years: pinned as completed, FY2024 to FY2025. The answer says including the current year gives sites 3001234567 and 3009123789. This matches E1.\n- Fiscal year basis: pinned as inspection_end_date. The answer says the classification-date alternate gives the same four sites. This matches E1, where `differs` is false.\n- How many drugs: the answer says it counts distinct generic names and that \"The record count is 6, the same as the drug count\". That shows the record-count alternate gives the same result.\n- Currently: the answer states the as-of date of 2025-10-23 and that this is the default. It does not show a result for another date, but the as-of date is a parameter, not a competing reading.\n- Manufacturing site: the answer says it uses the facility operator with the sponsor also shown, and that the sponsor matches the operator for all four OAI sites.\n- OAI project area: the answer says OAI is counted in any project area and shows the project area per row.\n\nTwo small gaps:\n- \"In shortage\" (current only versus current or discontinued) is listed as ambiguous in the ontology. The answer applies the Current reading without naming it as an ambiguity.\n- The presentation-level count is not shown. The record-count equivalence covers most of that gap.\n\nNeither gap is a silent choice on a material term.",
+     "rationale": "The answer has a dedicated \"Interpretation applied\" section. It names each ambiguous term and states the reading it used. It also gives the alternate result for the three pinned terms, which only needed to be stated. Every alternate figure matches evidence E1.\n\n- **Quality problems:** \"pinned, strict ... Quality: cGMP Issue only. The alternate, broad, gives 15 distinct drugs and 21 records, which differs.\" This matches E1.\n- **Last two fiscal years:** it gives \"completed ... FY2024 to FY2025\". The alternate \"covers FY2025 to FY2026. It gives OAI sites 3001234567 and 3009123789, which differs.\" This matches E1.\n- **Fiscal year basis:** the alternate, classification_date, \"is the same set as the chosen basis\". This matches E1 (differs=false).\n- **Other terms:** it also covers \"Currently\" (as-of default), \"How many drugs\" (distinct generic_name, with the record count equal to the drug count) and \"Manufacturing site\" (facility operator, with sponsor shown).\n\nMinor weaknesses:\n- The gate lists \"in shortage\" as ambiguous (current_only versus current_or_discontinued). The answer never names it or gives that alternate. It only says status Current.\n- The \"currently\" and \"manufacturing site\" alternates are not run. The \"currently\" alternate would be a user-specified date, so this matters little.\n- \"OAI\" is not named as ambiguous. The project area is disclosed per site, but the answer does not say that any project area counted.\n- The text \"strict (strict)\" is a cosmetic glitch.\n\nNothing is overstated. The reading was not chosen silently.",
      "quotes": [],
      "model": "claude-sonnet-5-5",
-     "tokens": 11105
+     "tokens": 10896
     }
    ],
-   "claims_total": 24,
+   "claims_total": 27,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
    "escalated": false,
    "used_sql": false,
    "certified_match": "q1_quality_shortages_oai_sites",
-   "llm_calls": 6,
+   "llm_calls": 5,
    "tool_calls": 1,
-   "input_tokens": 52689,
-   "output_tokens": 13639,
-   "cost_usd": 0.286744,
-   "latency_ms": 102055,
+   "input_tokens": 34729,
+   "output_tokens": 10055,
+   "cost_usd": 0.21833,
+   "latency_ms": 84181,
    "rows_cited": 17,
-   "headline": "As of 2025-10-23, 6 drugs are in Current shortage for Quality: cGMP Issue, and 4 of their linked manufacturing sites had an OAI classification in FY2024 to FY2025."
-  },
-  {
-   "id": "reg_q1_as_of_early_2025",
-   "suite": "regression",
-   "trial": 1,
-   "question": "How many drugs are currently in shortage because of quality problems, and which of their manufacturing sites received an OAI classification in the last two fiscal years?",
-   "run_id": "97a7d483998b",
-   "tier": 1,
-   "tier_label": "Certified",
-   "gate": "answerable",
-   "passed": true,
-   "code_ok": true,
-   "judge_ok": true,
-   "checks": [
-    {
-     "check": "evidence:cq_quality_shortages_oai_sites.fiscal_years==[2023, 2024]",
-     "pass": true,
-     "detail": "ok"
-    },
-    {
-     "check": "evidence:cq_quality_shortages_oai_sites.n_sites_with_oai==2",
-     "pass": true,
-     "detail": "ok"
-    },
-    {
-     "check": "markdown_contains:Pfizer Manufacturing LLC",
-     "pass": true,
-     "detail": ""
-    },
-    {
-     "check": "markdown_contains:ICU Medical Inc",
-     "pass": true,
-     "detail": ""
-    },
-    {
-     "check": "markdown_not_contains:Baxter Healthcare Corporation received",
-     "pass": true,
-     "detail": ""
-    },
-    {
-     "check": "markdown_not_contains:Fresenius Kabi USA LLC received",
-     "pass": true,
-     "detail": ""
-    },
-    {
-     "check": "verified_numbers_only",
-     "pass": true,
-     "detail": "unverified: []"
-    },
-    {
-     "check": "citations_resolve",
-     "pass": true,
-     "detail": ""
-    }
-   ],
-   "judges": [],
-   "claims_total": 21,
-   "claims_flagged_final": 0,
-   "claims_flagged_first_pass": 1,
-   "unverified_numbers": [],
-   "escalated": false,
-   "used_sql": false,
-   "certified_match": "q1_quality_shortages_oai_sites",
-   "llm_calls": 8,
-   "tool_calls": 1,
-   "input_tokens": 77069,
-   "output_tokens": 19611,
-   "cost_usd": 0.443742,
-   "latency_ms": 130039,
-   "rows_cited": 17,
-   "headline": "As of 2025-03-01, 6 drugs have a Current quality shortage, and 2 of their linked sites had an OAI inspection in FY2023 and 2024."
+   "headline": "As of 2025-10-23, 6 drugs are in Current shortage for a Quality: cGMP Issue, and 4 of their manufacturing sites received an OAI classification in FY2024 to FY2025."
   },
   {
    "id": "reg_q2_pinned_certified",
    "suite": "regression",
    "trial": 1,
    "question": "For amoxicillin oral suspension, what is the real supply picture \u2014 how many approved applications, how many are actively marketed, and what is currently in shortage?",
-   "run_id": "f024d2a1fae4",
+   "run_id": "7e37d8f25a3e",
    "tier": 1,
    "tier_label": "Certified",
    "gate": "answerable",
@@ -548,7 +427,7 @@
     {
      "check": "tier_in",
      "pass": true,
-     "detail": "tier=1 expected [1]: 2 ambiguous term(s) resolved by analyst pins: approved (full vs include_tentative), approved; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; int"
+     "detail": "tier=1 expected [1]: 1 ambiguous term(s) resolved by analyst pins: approved; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; interpretations disclosed; verifier passe"
     },
     {
      "check": "claims_flagged_max",
@@ -567,7 +446,7 @@
     }
    ],
    "judges": [],
-   "claims_total": 23,
+   "claims_total": 27,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
@@ -576,24 +455,144 @@
    "certified_match": "q2_amoxicillin_oral_suspension_supply",
    "llm_calls": 6,
    "tool_calls": 1,
-   "input_tokens": 41608,
-   "output_tokens": 9016,
-   "cost_usd": 0.209282,
-   "latency_ms": 59765,
+   "input_tokens": 41326,
+   "output_tokens": 8438,
+   "cost_usd": 0.201614,
+   "latency_ms": 54504,
    "rows_cited": 9,
-   "headline": "As of 2025-10-23, amoxicillin has 4 approved (full) applications across all dosage forms, 3 marketed as Prescription, and 1 oral suspension shortage record currently listed as Current."
+   "headline": "As of 2025-10-23, amoxicillin has 4 fully approved applications across all dosage forms, 3 actively marketed, and 1 oral suspension shortage record currently listed as Current."
+  },
+  {
+   "id": "reg_q2_default",
+   "suite": "regression",
+   "trial": 1,
+   "question": "For amoxicillin oral suspension, what is the real supply picture \u2014 how many approved applications, how many are actively marketed, and what is currently in shortage?",
+   "run_id": "5af6c433f0b8",
+   "tier": 1,
+   "tier_label": "Certified",
+   "gate": "answerable",
+   "passed": true,
+   "code_ok": true,
+   "judge_ok": true,
+   "checks": [
+    {
+     "check": "tier_in",
+     "pass": true,
+     "detail": "tier=1 expected [1, 3]: 2 ambiguous term(s) resolved by analyst pins: approved (full vs include_tentative), approved; part of the question cannot be answered from this data (disclosed); all evidence from certified tools; int"
+    },
+    {
+     "check": "evidence:cq_supply_picture.applications.approved_full==4",
+     "pass": true,
+     "detail": "ok"
+    },
+    {
+     "check": "evidence:cq_supply_picture.applications.actively_marketed==3",
+     "pass": true,
+     "detail": "ok"
+    },
+    {
+     "check": "evidence:cq_supply_picture.currently_in_shortage_count==1",
+     "pass": true,
+     "detail": "ok"
+    },
+    {
+     "check": "markdown_contains:DS-2023-0142",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "check": "markdown_contains:Current",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "check": "markdown_contains:Resolved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "check": "markdown_contains:dosage",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "check": "warning:DQ01_status_conflict",
+     "pass": true,
+     "detail": "have ['DQ01_status_conflict', 'DQ03_ingredient_mismatch', 'DQ08_stale_current', 'DQ12_missing_dosage_form']"
+    },
+    {
+     "check": "warning:DQ12_missing_dosage_form",
+     "pass": true,
+     "detail": "have ['DQ01_status_conflict', 'DQ03_ingredient_mismatch', 'DQ08_stale_current', 'DQ12_missing_dosage_form']"
+    },
+    {
+     "check": "claims_flagged_max",
+     "pass": true,
+     "detail": "0 flagged: "
+    },
+    {
+     "check": "verified_numbers_only",
+     "pass": true,
+     "detail": "unverified: []"
+    },
+    {
+     "check": "citations_resolve",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "judges": [
+    {
+     "dimension": "faithfulness",
+     "pass": true,
+     "score": 0.95,
+     "rationale": "",
+     "quotes": [],
+     "model": "claude-sonnet-5-5",
+     "tokens": 9442
+    },
+    {
+     "dimension": "status_semantics",
+     "pass": true,
+     "score": 0.96,
+     "rationale": "The answer uses the status words as the evidence records them. It reports DS-2023-0142 as \"latest status of Current\". It does not call that record resolved or over. It discloses the conflict in the record history: \"It was marked Resolved on 2023-11-15 (drug_shortages#L3). It was then marked Current on 2024-01-10 (drug_shortages#L2)\". It also repeats this in the caveats as \"conflicting status records, Resolved and then Current\". The 400mg/5mL record stays Discontinued. The answer says \"It is not Resolved and is not counted as currently in shortage\", and it quotes the Discontinued definition from the evidence (\"Supply will NOT recover from this source\"). The application-level \"Discontinued\" marketing status is labeled as marketing status, not shortage status, so the two are not confused. The answer also flags the stale Current record and says it cannot confirm that the shortage continues. I found no conflation. The only flaws are a stray typo (\"Only only\") and that the Discontinued record's ID, DS-2022-0089, is not named. Neither affects status semantics.",
+     "quotes": [
+      "1 oral suspension shortage record with a latest status of Current: DS-2023-0142",
+      "It was marked Resolved on 2023-11-15 (drug_shortages#L3). It was then marked Current on 2024-01-10 (drug_shortages#L2)",
+      "It is not Resolved and is not counted as currently in shortage [SYS].",
+      "DS-2023-0142 has conflicting status records, Resolved and then Current."
+     ],
+     "model": "claude-sonnet-5-5",
+     "tokens": 9255
+    }
+   ],
+   "claims_total": 29,
+   "claims_flagged_final": 0,
+   "claims_flagged_first_pass": 0,
+   "unverified_numbers": [],
+   "escalated": false,
+   "used_sql": false,
+   "certified_match": "q2_amoxicillin_oral_suspension_supply",
+   "llm_calls": 5,
+   "tool_calls": 1,
+   "input_tokens": 27949,
+   "output_tokens": 8597,
+   "cost_usd": 0.181567,
+   "latency_ms": 71743,
+   "rows_cited": 9,
+   "headline": "As of 2025-10-23, the snapshot records 4 fully approved amoxicillin applications in any dosage form, 3 of them marketed, and 1 oral suspension shortage with a latest status of Current."
   },
   {
    "id": "reg_q2_as_of_dec_2023_resolved_then",
    "suite": "regression",
    "trial": 1,
    "question": "As of December 1, 2023, what was the shortage status of amoxicillin oral suspension?",
-   "run_id": "aa587e15aaf3",
+   "run_id": "260a444fa797",
    "tier": 3,
    "tier_label": "Qualified",
    "gate": "answerable",
-   "passed": false,
-   "code_ok": false,
+   "passed": true,
+   "code_ok": true,
    "judge_ok": true,
    "checks": [
     {
@@ -613,8 +612,8 @@
     },
     {
      "check": "claims_flagged_max",
-     "pass": false,
-     "detail": "1 flagged: Under the current_only reading, by-status counts were 1 Resolved and 1 Discontin"
+     "pass": true,
+     "detail": "0 flagged: "
     },
     {
      "check": "verified_numbers_only",
@@ -631,40 +630,40 @@
     {
      "dimension": "status_semantics",
      "pass": true,
-     "score": 0.95,
-     "rationale": "The answer uses the status words as the evidence records them. It reports DS-2023-0142 as Resolved and DS-2022-0089 as Discontinued as of 2023-12-01, which matches E4 and E3. It keeps the two statuses separate. It quotes the FDA definitions and states \"The two are kept separate.\" It never calls a Discontinued record Resolved.\n\nIt discloses the status conflict. It says DS-2023-0142 \"was revised to Current on 2024-01-10, after the as-of date.\" It also reports the high-severity DQ01 conflict warning and says \"The earlier record is disclosed, not ignored.\" It does not call the latest Current status resolved or over. It says the Resolved status was \"superseded\" and that, with no date cutoff, \"its latest status is Current.\"\n\nThe headline sentence does not mention the later reversal, but the Answer and Detail sections do. That is a minor presentation weakness, not a conflation.",
+     "score": 0.9,
+     "rationale": "The answer uses the status words as the evidence records them. It keeps Resolved and Discontinued separate and never treats Discontinued as Resolved. It reports DS-2023-0142 as Resolved only as of 2023-12-01, which matches the revision dated 2023-11-15. It also says that record's latest status is Current (revised 2024-01-10), and it flags the DQ01 conflict. The Resolved and Discontinued definitions match the SYS semantics. The one weakness is that the opening summary says \"the Oral Suspension 250mg/5mL record was Resolved\" without mentioning the later Current revision. That disclosure appears only further down, in Detail, Interpretation and Caveats. The as-of framing is explicit throughout, so I don't count this as conflation.",
      "quotes": [
-      "The Oral Suspension 250mg/5mL shortage was Resolved, and the Oral Suspension 400mg/5mL shortage was Discontinued.",
-      "Later revision: this shortage was revised to Current on 2024-01-10, after the as-of date.",
-      "The two are kept separate.",
-      "It has a Resolved record (2023-11-15) and a Current record (2024-01-10). The earlier record is disclosed, not ignored."
+      "the Oral Suspension 250mg/5mL record was Resolved and the Oral Suspension 400mg/5mL record was Discontinued, with none Current",
+      "Discontinued means the manufacturer has stopped or will stop producing the product, and supply will not recover from that source.",
+      "After the as-of date, Amoxicillin Oral Suspension 250mg/5mL (DS-2023-0142) was revised to Current on 2024-01-10",
+      "The tool reports a high-severity status conflict (DQ01) for DS-2023-0142. It lists Resolved (revision 2023-11-15) and Current (revision 2024-01-10)"
      ],
      "model": "claude-sonnet-5-5",
-     "tokens": 8277
+     "tokens": 8201
     }
    ],
-   "claims_total": 21,
-   "claims_flagged_final": 1,
-   "claims_flagged_first_pass": 2,
+   "claims_total": 19,
+   "claims_flagged_final": 0,
+   "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
    "escalated": false,
    "used_sql": false,
    "certified_match": null,
-   "llm_calls": 8,
+   "llm_calls": 6,
    "tool_calls": 4,
-   "input_tokens": 47625,
-   "output_tokens": 11181,
-   "cost_usd": 0.284523,
-   "latency_ms": 82797,
+   "input_tokens": 25493,
+   "output_tokens": 6508,
+   "cost_usd": 0.157322,
+   "latency_ms": 54197,
    "rows_cited": 3,
-   "headline": "As of 2023-12-01, the Oral Suspension 250mg/5mL amoxicillin shortage was Resolved and the Oral Suspension 400mg/5mL shortage was Discontinued; neither was Current."
+   "headline": "As of 2023-12-01, amoxicillin oral suspension had 2 shortage records: the Oral Suspension 250mg/5mL record was Resolved and the Oral Suspension 400mg/5mL record was Discontinued, with none Current."
   },
   {
    "id": "reg_q3_default",
    "suite": "regression",
    "trial": 1,
    "question": "Which foreign manufacturing establishments supplying drugs currently in shortage have not been inspected since FY2021?",
-   "run_id": "f3cb32b9b891",
+   "run_id": "748024d611d3",
    "tier": 1,
    "tier_label": "Certified",
    "gate": "answerable",
@@ -752,32 +751,27 @@
     {
      "dimension": "faithfulness",
      "pass": true,
-     "score": 0.96,
-     "rationale": "Every factual claim in the answer matches the evidence. The four foreign stale sites match E1 on FEI, firm, city, country, last inspection date, FY, classification, drug and row ID. The sponsors equal the firm names. The two never-inspected FEIs are shown with country UNKNOWN, and Aurobindo Hyderabad (FY2024) is correctly excluded. The 13 of 57 linked and 44 unlinked coverage figures match. The alternate reading for \"not inspected since\" returned the same four FEIs, with differs=false. The FEI prefix anomaly, stale-Current and Amoxicillin-Clavulanate mislink caveats are all in E1's warnings. The statement that the mislink does not affect the four listed sites is a mild inference, but it is consistent with the evidence because their drugs differ.",
-     "quotes": [
-      "4 foreign manufacturing sites linked to drugs with Current shortage status had a last inspection in FY2021 or earlier [E1]",
-      "only 13 of 57 Current shortage records link to a manufacturing site [E1]",
-      "The alternate, last inspection FY strictly before the target, returned the same foreign sites, and the evidence marks the difference as no [E1].",
-      "This affects the excluded site's drug, not the four listed sites [E1]."
-     ],
+     "score": 0.95,
+     "rationale": "I found no unsupported claim. Each site detail matches E1: FEI, firm, city, country, last inspection date and FY, classification, drug, sponsor and row ID. The never-inspected sites are reported separately as country UNKNOWN. The coverage figures (13 of 57 linked, 44 unlinked) match E1. The \"<= vs <\" alternate (differs: no) matches E1's alternate_readings. The caveats on the FEI prefix anomaly, the Amoxicillin-Clavulanate mislink and the stale records all match E1's warnings. The four named stale shortage IDs appear in the DQ08 list. The answer hedges the sponsor-name inference correctly. The statements about alternates not computed, and the \"floor, not census\" framing, come from SYS planner_finish. The one minor stretch is that the named stale IDs are not explicitly tied to the linked sites. They are listed only as stale records for those drugs, so this is not a material overstatement.",
+     "quotes": [],
      "model": "claude-sonnet-5-5",
-     "tokens": 10641
+     "tokens": 11260
     },
     {
      "dimension": "no_inferred_country",
      "pass": true,
-     "score": 0.96,
-     "rationale": "The answer never asserts a country for the two UNKNOWN sites. It says the sites are \"never-inspected sites with country UNKNOWN\" and \"Inferring from sponsor name was not used\". It also says \"Sponsor names may suggest a country, but that is inference, not data\". The only country mentioned for those sites is the generic caveat that sponsor names may suggest one, and that is labeled as inference. The headline calls them \"2 more sites have never been inspected and have unknown country\". The countries India and China appear only for the four sites whose inspection records supply a country. Nothing in the text treats the unknown-country sites as foreign.",
+     "score": 0.95,
+     "rationale": "The answer never asserts a country for the two UNKNOWN-country FEIs (3007891234 and 4001567890). It labels them \"country UNKNOWN\" and says \"Country not in data; inference from sponsor name only.\" The caveats add that the sponsor names \"may suggest a country, but that is inference, not data.\" The answer does not say the sponsor names suggest China or any other country. It also says \"they cannot be called foreign\" and \"Sponsor-name inference was not used.\" The sponsor names (Zhejiang Huahai, Hainan Poly) are listed, but no country is stated for them. The country-bearing sites in the answer all come from evidence rows with known countries.",
      "quotes": [
-      "Shown separately, not merged: never-inspected sites with country UNKNOWN [E1].",
-      "Sponsor names may suggest a country, but that is inference, not data [E1].",
-      "Inferring from sponsor name was not used [SYS]."
+      "so their country is UNKNOWN and they cannot be called foreign",
+      "Country not in data; inference from sponsor name only.",
+      "Their sponsor names may suggest a country, but that is inference, not data"
      ],
      "model": "claude-sonnet-5-5",
-     "tokens": 9859
+     "tokens": 10458
     }
    ],
-   "claims_total": 22,
+   "claims_total": 23,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 0,
    "unverified_numbers": [],
@@ -786,21 +780,72 @@
    "certified_match": "q3_foreign_sites_not_inspected_since_fy2021",
    "llm_calls": 5,
    "tool_calls": 1,
-   "input_tokens": 43548,
-   "output_tokens": 12810,
-   "cost_usd": 0.262362,
-   "latency_ms": 91996,
+   "input_tokens": 34816,
+   "output_tokens": 9412,
+   "cost_usd": 0.211858,
+   "latency_ms": 72357,
    "rows_cited": 80,
-   "headline": "As of 2025-10-23, 4 foreign sites tied to Current shortages were last inspected in FY2021 or earlier, and 2 more sites have never been inspected and have unknown country."
+   "headline": "As of 2025-10-23, 4 foreign sites linked to drugs in Current shortage were last inspected in FY2021 or earlier, and 2 more have no inspection record and unknown country."
+  },
+  {
+   "id": "reg_q3_since_fy2024",
+   "suite": "regression",
+   "trial": 1,
+   "question": "Which foreign manufacturing establishments supplying drugs currently in shortage have not been inspected since FY2024?",
+   "run_id": "6a20522466e8",
+   "tier": 3,
+   "tier_label": "Qualified",
+   "gate": "answerable",
+   "passed": true,
+   "code_ok": true,
+   "judge_ok": true,
+   "checks": [
+    {
+     "check": "markdown_contains:3010234567",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "check": "claims_flagged_max",
+     "pass": true,
+     "detail": "0 flagged: "
+    },
+    {
+     "check": "verified_numbers_only",
+     "pass": true,
+     "detail": "unverified: []"
+    },
+    {
+     "check": "citations_resolve",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "judges": [],
+   "claims_total": 27,
+   "claims_flagged_final": 0,
+   "claims_flagged_first_pass": 0,
+   "unverified_numbers": [],
+   "escalated": false,
+   "used_sql": false,
+   "certified_match": null,
+   "llm_calls": 5,
+   "tool_calls": 2,
+   "input_tokens": 44032,
+   "output_tokens": 9906,
+   "cost_usd": 0.241149,
+   "latency_ms": 67605,
+   "rows_cited": 80,
+   "headline": "As of 2025-10-23, 5 foreign sites linked to Current shortages had a last inspection in FY2024 or earlier, or 4 if FY2024 counts as inspected, plus 2 sites with unknown country and no inspection record."
   },
   {
    "id": "reg_trap_amoxicillin_resolved",
    "suite": "regression",
    "trial": 1,
    "question": "Is the amoxicillin shortage resolved?",
-   "run_id": "9cb9a11f7d0d",
-   "tier": 3,
-   "tier_label": "Qualified",
+   "run_id": "1ba958440947",
+   "tier": 1,
+   "tier_label": "Certified",
    "gate": "answerable",
    "passed": true,
    "code_ok": true,
@@ -852,95 +897,41 @@
      "dimension": "status_semantics",
      "pass": true,
      "score": 0.95,
-     "rationale": "The answer uses the status words as the evidence records them. It says DS-2023-0142 is Current, \"not Resolved\", and DS-2022-0089 is Discontinued. It never equates Discontinued with Resolved: \"Discontinued means the manufacturer has stopped or will stop producing the product, and supply will not recover from this source.\" It discloses the status conflict, Resolved on 2023-11-15 and then Current on 2024-01-10, and flags it as high severity, matching the DQ01 warning. It also notes the record is stale. The row IDs and dates match E2 and E3. One minor point: the summary phrase \"the latest amoxicillin shortage record, DS-2023-0142, is Current\" is slightly loose. The Current record has the most recent revision date, so it is accurate. Nothing in the answer says \"resolved\" or \"over\" for a Current record.",
+     "rationale": "The answer keeps the status words as the evidence records them. It opens with \"has a latest status of Current, not Resolved.\" DS-2022-0089 is labeled Discontinued, and the answer states Discontinued means supply will NOT recover, separate from Resolved. It never calls Discontinued Resolved and never calls a Current record resolved or over. It discloses the Resolved\u2192Current conflict for DS-2023-0142 with dates and row IDs, and it flags the stale-Current warning. The text \"the later Current revision supersedes it\" is a fair description of the latest-revision rule. The headline says \"the one current Amoxicillin shortage,\" which matches E3. The answer does not say the Discontinued item is \"no longer a shortage\" or similar. A minor point is that the answer does not say outright that no Amoxicillin record is currently Resolved, but that is not a conflation.",
      "quotes": [
-      "the latest revision of shortage DS-2023-0142 (Oral Suspension 250mg/5mL) is Current.",
-      "Discontinued means the manufacturer has stopped or will stop producing the product, and supply will not recover from this source.",
-      "DS-2023-0142 has conflicting status records, Resolved (revision 2023-11-15) and Current (revision 2024-01-10)."
+      "has a latest status of Current, not Resolved.",
+      "An earlier Resolved record exists for it, and the later Current revision supersedes it.",
+      "Discontinued means: Manufacturer has stopped or will stop producing the product. Supply will NOT recover from this source.",
+      "The two Amoxicillin Oral Suspension 250mg/5mL records conflict (Resolved, then Current)."
      ],
      "model": "claude-sonnet-5-5",
-     "tokens": 7469
+     "tokens": 7249
     },
     {
      "dimension": "faithfulness",
      "pass": true,
-     "score": 0.95,
-     "rationale": "Every factual claim in the answer traces to the evidence. DS-2023-0142 was Resolved on 2023-11-15 (L3) and revised to Current on 2024-01-10 (L2). DS-2022-0089 is Discontinued, last revised 2023-01-20 (L4), with no other status in its history. Reason categories, status counts (Current 1, Discontinued 1), the as-of date and its default rule all match E2, E3 and SYS. The status semantics, the stale-record warning (more than 18 months old) and the status-conflict warning match the evidence. The scope notes also match: Amoxicillin-Clavulanate is excluded, and the planner declared an oral-suspension alternate. The point that the alternate returns the same two records is a reasonable inference, since both records are oral suspension. The caveat on Amoxicillin-Clavulanate's application defect and the statement that other presentations have no records both come from SYS. I found no invented values and no overstatement.",
-     "quotes": [
-      "The latest revision of shortage DS-2023-0142 (Oral Suspension 250mg/5mL) is Current.",
-      "Both records returned are oral suspension presentations, so that alternate would return the same two records.",
-      "Presentations of amoxicillin other than the two oral suspension records have no shortage records in this data."
-     ],
+     "score": 0.93,
+     "rationale": "",
+     "quotes": [],
      "model": "claude-sonnet-5-5",
-     "tokens": 8110
+     "tokens": 7915
     }
    ],
-   "claims_total": 19,
-   "claims_flagged_final": 0,
-   "claims_flagged_first_pass": 0,
-   "unverified_numbers": [],
-   "escalated": false,
-   "used_sql": false,
-   "certified_match": null,
-   "llm_calls": 6,
-   "tool_calls": 3,
-   "input_tokens": 23292,
-   "output_tokens": 7248,
-   "cost_usd": 0.162849,
-   "latency_ms": 64147,
-   "rows_cited": 3,
-   "headline": "No. As of 2025-10-23, the latest amoxicillin shortage record, DS-2023-0142, is Current, not Resolved, and the other amoxicillin record is Discontinued."
-  },
-  {
-   "id": "reg_q3_since_fy2024",
-   "suite": "regression",
-   "trial": 1,
-   "question": "Which foreign manufacturing establishments supplying drugs currently in shortage have not been inspected since FY2024?",
-   "run_id": "b4abb92f6fd3",
-   "tier": 3,
-   "tier_label": "Qualified",
-   "gate": "answerable",
-   "passed": true,
-   "code_ok": true,
-   "judge_ok": true,
-   "checks": [
-    {
-     "check": "markdown_contains:3010234567",
-     "pass": true,
-     "detail": ""
-    },
-    {
-     "check": "claims_flagged_max",
-     "pass": true,
-     "detail": "0 flagged: "
-    },
-    {
-     "check": "verified_numbers_only",
-     "pass": true,
-     "detail": "unverified: []"
-    },
-    {
-     "check": "citations_resolve",
-     "pass": true,
-     "detail": ""
-    }
-   ],
-   "judges": [],
-   "claims_total": 23,
+   "claims_total": 20,
    "claims_flagged_final": 0,
    "claims_flagged_first_pass": 1,
    "unverified_numbers": [],
    "escalated": false,
    "used_sql": false,
    "certified_match": null,
-   "llm_calls": 9,
-   "tool_calls": 2,
-   "input_tokens": 102950,
-   "output_tokens": 17930,
-   "cost_usd": 0.486509,
-   "latency_ms": 109098,
-   "rows_cited": 80,
-   "headline": "As of 2025-10-23, 5 foreign sites linked to Current shortages have a last inspection in FY2024 or earlier, or 4 if FY2024 itself is excluded, and only 13 of 57 Current records link to a site."
+   "llm_calls": 8,
+   "tool_calls": 3,
+   "input_tokens": 42752,
+   "output_tokens": 10030,
+   "cost_usd": 0.259781,
+   "latency_ms": 84335,
+   "rows_cited": 3,
+   "headline": "No: as of 2025-10-23, the one current Amoxicillin shortage, DS-2023-0142, has a latest status of Current, not Resolved."
   }
  ]
 }
