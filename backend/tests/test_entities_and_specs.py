@@ -22,8 +22,11 @@ def test_resolve_failed_inspection_maps_to_oai_with_caveat():
 
 def test_resolve_unknown_does_not_invent():
     r = call_tool("resolve_entity", {"text": "Xyzzyomycin", "kind": "generic_name"})
-    assert r.value["resolved"] == []
-    assert r.warnings[0].code == "ENTITY_NOT_FOUND"
+    assert r.value["resolved"] == []  # fuzzy hits are candidates, never resolutions
+    assert r.value["method"] == "fuzzy_candidates_only"
+    assert r.warnings[0].code == "INTERP_FUZZY_ENTITY" and r.warnings[0].severity.value == "high"
+    r = call_tool("resolve_entity", {"text": "qqqqqqqqq", "kind": "generic_name"})
+    assert r.value["resolved"] == [] and r.warnings[0].code == "ENTITY_NOT_FOUND"
 
 
 def test_resolve_presentation_family():

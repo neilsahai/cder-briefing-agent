@@ -72,9 +72,11 @@ def resolve_entity(p: ResolveIn) -> ToolResult:
         warnings.append(Warning(code="INTERP_AMBIGUOUS_ENTITY", severity=Severity.medium,
                                 message=f"'{p.text}' matches {len(contains)} {p.kind} values: {contains}. Pick explicitly or report all."))
     elif fuzzy:
-        resolved, method = fuzzy, "fuzzy"
-        warnings.append(Warning(code="INTERP_FUZZY_ENTITY", severity=Severity.medium,
-                                message=f"'{p.text}' did not match exactly; closest {p.kind} values: {fuzzy}. Confirm before using."))
+        # Fuzzy hits are NEVER a resolution — only candidates. The planner must ask or pick explicitly.
+        resolved, method = [], "fuzzy_candidates_only"
+        warnings.append(Warning(code="INTERP_FUZZY_ENTITY", severity=Severity.high,
+                                message=f"'{p.text}' does not match any {p.kind} value. Closest candidates: {fuzzy}. "
+                                        f"Do NOT use a candidate without confirming it with the user."))
     else:
         warnings.append(Warning(code="ENTITY_NOT_FOUND", severity=Severity.high,
                                 message=f"'{p.text}' does not match any {p.kind} value in the dataset. Do not invent one."))
