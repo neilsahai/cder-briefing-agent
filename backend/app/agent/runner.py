@@ -224,7 +224,7 @@ def run(question: str, *, as_of: str | None = None, sink: Callable[[TraceStep], 
 
     def _verify(text: str) -> tuple[dict[str, Any], list[Claim]]:
         ver_user = f"RENDERED ANSWER:\n{text}\n\n# EVIDENCE REGISTRY\n{registry.for_prompt()}"
-        v, vcall, _ = structured(prov, "verifier", system=prompts.VERIFIER_SYSTEM, messages=[{"role": "user", "content": ver_user}], tool=VERIFY_TOOL, max_tokens=4000)
+        v, vcall, _ = structured(prov, "verifier", system=prompts.VERIFIER_SYSTEM, messages=[{"role": "user", "content": ver_user}], tool=VERIFY_TOOL, max_tokens=8000)
         cl = [Claim(**c) for c in v.get("claims", [])]
         bad = [c for c in cl if c.verdict in ("unsupported", "misattributed")]
         tracer.step("verify", f"Verifier: {v.get('overall')} — {len(cl)} claims, {len(bad)} flagged", llm=vcall, output=v,

@@ -49,5 +49,34 @@ reviewed every phase; Claude wrote most of the code and all first drafts.
    `warnings_util.consolidate` so repeated codes collapse to one line with the union of rows —
    nothing is dropped, it is grouped.
 
+### Nov 7 — Phase 2 first live runs (Claude Code, Anthropic API)
+- Q1/Q2/Q3 run end to end through gate → planner → narrator → verifier. Q3 landed Tier 1 Certified
+  on its first clean run with 0 flagged claims. The planner escalated itself to Opus on Q1 because two
+  interpretations diverged (a deterministic rule, visible in the trace) and ran the certified query
+  under four interpretation combinations unprompted.
+- API realities discovered live: this SDK generation has no `temperature`; Sonnet/Opus 5.5 reject
+  forced `tool_choice` while Haiku accepts it (added a structured-output helper that falls back to
+  auto + validation + one retry); Haiku invented a gate category outside the enum
+  (`partially_answerable`) — now validated and coerced with the raw value kept in the trace.
+
+## Where Claude was wrong and something caught it (continued)
+4. **Verifier catch #1 (Q1):** narrator wrote "FEI 3007891234 has *never been inspected*". Evidence only
+   supports "has *no inspection record in this dataset*". Opus verifier flagged it as unsupported
+   overstatement. This is exactly the Senate-grade distinction the brief describes.
+5. **Verifier catch #2 (Q2):** narrator added "the mislink does not change the amoxicillin counts above" —
+   but ANDA078201 (the mislinked application) IS one of the 4 approved / 3 marketed. Verifier flagged it
+   as an unsupported scope-limiting claim that played down a high-severity warning. Added a one-pass
+   revision loop (evaluator-optimizer): narrator rewrites flagged claims, verifier re-checks. On re-run
+   Q2 went flagged → revised → pass.
+6. **Renderer caught the renderer.** Narration kept failing on `status_timelines["DS-2023-0142"]` — the
+   model was right to use a bracketed key; my placeholder grammar didn't support it. Fixed the grammar.
+   Then the pure "no digits" rule rejected `DS-2023-0142` and `18 months` that the narrator had correctly
+   copied from warning text. Replaced with a verified-literal rule: a digit-bearing token is allowed
+   only if it appears as a whole token somewhere in the evidence (values, warnings, interpretations,
+   row ids). Same guarantee — no number that is not in evidence can reach the reader — fewer false
+   rejections. One of the new tests then rejected `DS-2023-0200` in a Q1 answer, which exposed that
+   the Q1 certified query wasn't returning the shortage records themselves; fixed the data, kept the
+   renderer strict.
+
 ## Things Neil overruled or redirected
 - (to be filled as they happen)

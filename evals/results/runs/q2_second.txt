@@ -1,0 +1,71 @@
+· 01 gate       Answerability: answerable  [claude-haiku-5-5 250+798tok 4534ms]
+· 02 plan       Interpretations declared  [claude-sonnet-5-5 123+612tok 3575ms]
+· 03 escalation Planner model: Sonnet
+· 04 tool_call  resolve_entity → E1
+· 05 tool_call  resolve_entity → E2
+! 06 tool_call  cq_supply_picture → E3  [claude-sonnet-5-5 1296+88tok 965ms]
+! 07 tool_call  cq_supply_picture → E4
+· 08 plan       Planner finished  [claude-sonnet-5-5 5768+764tok 5440ms]
+· 09 narrate    Narration draft 1  [claude-sonnet-5-5 7391+1862tok 10413ms]
+✗ 10 render     Render failed
+· 11 narrate    Narration draft 2  [claude-sonnet-5-5 7496+1906tok 10334ms]
+· 12 render     Rendered 46 placeholders; no literal digits
+✗ 13 verify     Verifier: fail — 27 claims, 1 flagged  [claude-opus-5-5 6745+4000tok 30610ms]
+· 14 narrate    Narration revised after verifier (1 claim(s))  [claude-sonnet-5-5 9408+2422tok 13475ms]
+· 15 verify     Verifier: pass — 27 claims, 0 flagged  [claude-opus-5-5 6820+3300tok 26017ms]
+· 16 tier       Tier 3 — Qualified
+· 17 final      Answer assembled
+
+====================================================================================================
+TIER 3 — Qualified: 1 interpretation(s) give materially different answers; shown side by side; part of the question cannot be answered from this data (disclosed)
+====================================================================================================
+
+> As of 2025-10-23, Amoxicillin has 4 fully approved applications, 3 actively marketed, and 1 Current oral suspension shortage, DS-2023-0142, which is stale.
+
+**Answer**
+
+As of 2025-10-23, Amoxicillin has 4 fully approved applications (excluding Tentative Approval), of which 3 are actively marketed (marketing status Prescription). One oral suspension shortage record, DS-2023-0142, is Current. [E3]
+
+The application counts cover all Amoxicillin dosage forms, not only oral suspension. [E3]
+
+**Detail**
+
+- Total Amoxicillin applications: 6. Of these, 4 are fully approved and 2 are Tentative Approval. [E3]
+- If tentative approvals are included, the approved count is 6. Tentative applications are ANDA082345 (Hikma Pharmaceuticals LLC) and ANDA095678 (Cipla USA Inc). [E3, E4]
+- Actively marketed (Prescription): ANDA065355 (Sandoz Inc), ANDA078201 (Aurobindo Pharma Limited) and ANDA091234 (Lupin Limited). [E3]
+- Approved but Discontinued: 1 application, ANDA065491 (Teva Pharmaceuticals USA Inc). [E3]
+- Current shortage: DS-2023-0142, Amoxicillin Oral Suspension 250mg/5mL, NDC 65162-0175-00. Status is Current. It was first posted 2023-08-01 and last revised 2024-01-10. The reason category is Manufacturing Delay. It links to ANDA065355 (Sandoz Inc, Prescription). [E3]
+- Status history of DS-2023-0142: Resolved on 2023-11-15, then Current on 2024-01-10. [E3]
+- DS-2022-0089, Oral Suspension 400mg/5mL, has latest status Discontinued as of 2023-01-20. This means the manufacturer has stopped or will stop producing it and supply will not recover from that source. It is not Resolved and is not counted as Current. [E3]
+
+**Interpretation applied**
+
+- Approved: the reading used is full approval, giving 4. The alternate includes tentative approvals, giving 6. The results differ. [E3, E4]
+- Actively marketed: marketing status Prescription, giving 3. No alternate was applied. [E3]
+- In shortage / currently: latest revision per shortage ID with status Current, as of 2025-10-23, giving 1. Discontinued records are excluded. [E3]
+- Amoxicillin: the generic name "Amoxicillin" was used. Amoxicillin-Clavulanate is a substring match and was not included. [E1]
+- Oral suspension: matched any presentation beginning "Oral Suspension". [E2]
+
+**Caveats**
+
+- Applications have no dosage-form field, so the application counts may overstate oral suspension applications. [E3]
+- DS-2023-0142 has conflicting history: it was Resolved, then reverted to Current. The latest revision, Current, is used. [E3]
+- The Current record was last revised 2024-01-10, and the data flags it as stale against the as-of date 2025-10-23. The status should be confirmed before it is quoted. [E3]
+- Amoxicillin-Clavulanate shortage records link to ANDA078201, whose active ingredient is Amoxicillin. This is a possible mislink, and application-level facts for those shortages are unreliable. [E3]
+- The Current Amoxicillin shortage shown, DS-2023-0142, links to ANDA065355, not ANDA078201, and Amoxicillin-Clavulanate was not included in the generic name used. [E1, E3]
+
+**Cannot be answered from this data**
+
+- The number of approved or marketed applications specifically for oral suspension cannot be determined, because applications carry no dosage form. [E3]
+- Whether the shortage is ongoing today cannot be confirmed from this data, because the record is stale. [E3]
+
+--- VERIFIER: pass | 27 claims, 0 flagged
+
+--- WARNINGS attached to evidence
+  [high] DQ12_missing_dosage_form: The question asks about 'Oral Suspension' but applications.csv has no dosage-form column. These application counts cover ALL Amoxicillin products (any dosage fo
+  [high] DQ03_ingredient_mismatch: 7 shortage record(s) for 'Amoxicillin-Clavulanate' link to ANDA078201, whose active ingredient is 'Amoxicillin'. Possible mislink; application-level facts for t
+  [high] DQ01_status_conflict: Shortage DS-2023-0142 has conflicting status records: Resolved (rev 2023-11-15); Current (rev 2024-01-10). Latest revision is 'Current' and is used; the earlier
+  [medium] DQ08_stale_current: Shortage DS-2023-0142 (Amoxicillin) is recorded as Current but was last revised 2024-01-10, more than 18 months before the as-of date 2025-10-23. Confirm status
+
+--- TRACE: 9 LLM calls, 4 tool calls, 45297+15752 tokens, 104551 ms, cost=None, rows cited=9, models=['claude-haiku-5-5', 'claude-opus-5-5', 'claude-sonnet-5-5']
+wrote ../evals/results/runs/q2_second.json

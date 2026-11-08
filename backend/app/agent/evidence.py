@@ -77,7 +77,11 @@ class EvidenceRegistry(BaseModel):
         """Every digit-bearing token that appears as a whole token in any evidence value (dates, ids, strengths, counts)."""
         toks: set[str] = set()
         for e in self.items:
-            for tok in NUMBER_TOKEN.findall(json.dumps(e.result.value, default=str)):
+            blob = json.dumps(e.result.value, default=str)
+            blob += " " + " ".join(w.message for w in e.result.warnings)
+            blob += " " + " ".join(f"{i.chosen} {i.note or ''} {' '.join(i.alternatives)}" for i in e.result.interpretations)
+            blob += " " + " ".join(r.id for r in e.result.rows)
+            for tok in NUMBER_TOKEN.findall(blob):
                 toks.add(tok.strip(".,;:)(-\""))
         return toks
 

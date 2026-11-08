@@ -1,0 +1,77 @@
+· 01 gate       Answerability: answerable  [claude-haiku-5-5 239+467tok 2442ms]
+· 02 plan       Interpretations declared  [claude-sonnet-5-5 112+661tok 4080ms]
+· 03 escalation Planner model: Sonnet
+! 04 tool_call  cq_foreign_sites_not_inspected → E1  [claude-sonnet-5-5 820+121tok 1030ms]
+! 05 tool_call  cq_foreign_sites_not_inspected → E2
+· 06 plan       Planner finished  [claude-sonnet-5-5 8391+976tok 6721ms]
+· 07 narrate    Narration draft 1  [claude-sonnet-5-5 10120+3557tok 19872ms]
+✗ 08 render     Render failed
+· 09 narrate    Narration draft 2  [claude-sonnet-5-5 10239+3426tok 18693ms]
+· 10 render     Rendered 75 placeholders; no literal digits
+! 11 verify     Verifier: pass_with_notes — 20 claims, 0 flagged  [claude-opus-5-5 9666+4000tok 30933ms]
+· 12 tier       Tier 1 — Certified
+· 13 final      Answer assembled
+
+====================================================================================================
+TIER 1 — Certified: part of the question cannot be answered from this data (disclosed); all evidence from certified tools; interpretations disclosed; verifier passed
+====================================================================================================
+
+> As of 2025-10-23, 4 foreign sites tied to Current shortages have no inspection after FY2021, and 2 more sites were never inspected and have unknown country.
+
+## Answer
+
+As of 2025-10-23, 4 foreign manufacturing sites linked to drugs with Current shortage status had their last inspection in FY2021 or earlier. [E1] This is a partial list. Only 13 of 57 Current shortage records could be linked to a manufacturing site. [E1]
+
+## Detail
+
+Foreign sites with last inspection in FY2021 or earlier:
+
+- FEI 3025111222, Aurobindo Pharma Unit IV, Visakhapatnam, India. Last inspection ended 2018-04-03 (FY2018), classification VAI. Drug in shortage: Vancomycin HCl. Source row inspections#L17. [E1]
+- FEI 3026333444, Zhejiang Tianyu Pharmaceutical, Taizhou, China. Last inspection ended 2020-03-20 (FY2020), classification NAI. Drug in shortage: Piperacillin-Tazobactam. Source row inspections#L18. [E1]
+- FEI 3027555666, Macleods Pharmaceuticals Ltd, Mumbai, India. Last inspection ended 2017-04-11 (FY2017), classification NAI. Drug in shortage: Ceftriaxone Sodium. Source row inspections#L19. [E1]
+- FEI 4005777888, Shanxi Zhendong Taisheng Pharma, Changzhi, China. Last inspection ended 2019-07-22 (FY2019), classification NAI. Drug in shortage: Ampicillin-Sulbactam. Source row inspections#L20. [E1]
+
+Country unknown, never inspected (not labelled foreign):
+
+- FEI 3007891234, sponsor Zhejiang Huahai Pharmaceutical. Drug in shortage: Meropenem. Country is UNKNOWN. [E1]
+- FEI 4001567890, sponsor Hainan Poly Pharm Co Ltd. Drug in shortage: Cefepime HCl. Country is UNKNOWN. [E1]
+
+Excluded because inspected more recently: FEI 3010234567, Aurobindo Pharma Limited, India, last inspection ended 2023-11-07 (FY2024), linked to Amoxicillin-Clavulanate. [E1]
+
+## Interpretation applied
+
+- **Not inspected since FY2021:** The reading used is last inspection in FY2021 or earlier. The alternate is last inspection strictly before FY2021. Both readings return the same 4 foreign sites and the same 2 never-inspected sites. [E1, E2]
+- **Foreign:** The reading used is an inspection-record country other than United States. Sites with no inspection record are reported as UNKNOWN country and not counted as foreign. Inferring from sponsor name was not used. [E1]
+- **Currently in shortage:** Current status only, using the latest revision of each shortage record, as of 2025-10-23. [E1]
+- **Manufacturing establishment:** The facility identified by FEI on the application, not the sponsor. Both the inspected firm name and sponsor name are shown. [E1]
+
+## Caveats
+
+- Coverage is partial. 44 of 57 Current shortage records reference an application that is not in the data, so their manufacturing sites cannot be identified. This list is not a full list of foreign sites supplying drugs in shortage. [E1]
+- Two sites have no inspection record, so their country and inspection history are unknown. The sponsor names may suggest foreign firms, but that is inference, not data. [E1]
+- FEI 4005777888 and FEI 4001567890 have an FEI prefix anomaly. Verify them against FDA's FEI portal before citing. [E1]
+- Many Current shortage records have not been revised in a long time. Status is reported as recorded and should be confirmed before quoting. [E1]
+- One Amoxicillin shortage has an earlier Resolved record and a later Current record. The later Current record is used. [E1]
+- The Amoxicillin-Clavulanate shortage records link to an application whose active ingredient is Amoxicillin, which is a possible mislink. The site tied to it, FEI 3010234567, is already excluded as inspected more recently. [E1]
+
+## Cannot be answered from this data
+
+- The foreign status of FEI 3007891234 and FEI 4001567890. [E1]
+- Whether these sites cause the shortages, or are the sole suppliers of the affected drugs. [E1]
+- Sites behind the 44 Current shortage records that do not link to an application. [E1]
+
+--- VERIFIER: pass_with_notes | 20 claims, 0 flagged
+
+--- WARNINGS attached to evidence
+  [high] DQ01_status_conflict: Shortage DS-2023-0142 has conflicting status records: Resolved (rev 2023-11-15); Current (rev 2024-01-10). Latest revision is 'Current' and is used; the earlier
+  [high] DQ03_ingredient_mismatch: 7 shortage record(s) for 'Amoxicillin-Clavulanate' link to ANDA078201, whose active ingredient is 'Amoxicillin'. Possible mislink; application-level facts for t
+  [high] COVERAGE: Manufacturing site is knowable for 13 of 57 input shortage records; 44 reference an application not present in applications.csv.
+  [medium] DQ02_orphan_application: 129 of 150 shortage rows reference an application number not present in applications.csv; manufacturing site cannot be determined for these.
+  [medium] DQ08_stale_current: 34 'Current' record(s) in this evidence were last revised more than 18 months before the as-of date; status is reported as recorded — confirm before quoting: DS
+  [medium] DQ06_fei_no_inspection: FEI 4001567890 (Aurobindo Pharma Limited, Cipla USA Inc, Dr. Reddy's Laboratories Ltd, Hainan Poly Pharm Co Ltd, Sandoz Inc) has no inspection record; country a
+  [medium] DQ05_fei_prefix_anomaly: 19 applications rows have an FEI beginning with '4' while 109 begin with '3'. Verify these FEIs against FDA's FEI portal before citing.
+  [medium] COUNTRY_UNKNOWN: 2 FEI(s) have no inspection record at all: ['3007891234', '4001567890']. They cannot be classified as foreign or domestic from this data, and 'not inspected sin
+  [medium] FEI_VERIFY: FEI format check: 4005777888 prefix anomaly; 4001567890 prefix anomaly. Verify against FDA's FEI portal before citing.
+
+--- TRACE: 7 LLM calls, 2 tool calls, 39587+13208 tokens, 82973 ms, cost=None, rows cited=80, models=['claude-haiku-5-5', 'claude-opus-5-5', 'claude-sonnet-5-5']
+wrote ../evals/results/runs/q3_first.json

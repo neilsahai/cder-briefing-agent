@@ -102,8 +102,8 @@ Also check:
 - No sentence equates Resolved with Discontinued or treats 'not current' as 'resolved'.
 - No country is asserted for an FEI whose evidence says UNKNOWN.
 
-Be strict. A claim that is 'probably fine' but not traceable is unsupported. Respond ONLY with the JSON
-tool call."""
+Be strict. A claim that is 'probably fine' but not traceable is unsupported. Keep each claim's text and note short
+(one line each). Respond ONLY with the JSON tool call."""
 
 
 def gate_system() -> str:
