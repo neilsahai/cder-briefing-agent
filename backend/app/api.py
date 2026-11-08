@@ -289,11 +289,11 @@ def briefing_docx(bid: str):
 @app.get("/api/evals/latest")
 def evals_latest():
     out = {}
-    for suite in ("regression", "capability"):
+    for suite in ("regression", "capability", "rehearsal"):
         p = REPO_ROOT / "evals" / "results" / f"latest_{suite}.json"
         if p.exists():
             d = json.loads(p.read_text())
-            out[suite] = {"summary": d["summary"], "records": [{k: r.get(k) for k in ("id", "passed", "tier", "latency_ms", "claims_total", "claims_flagged_final",
+            out[suite] = {"summary": d["summary"], "records": [{k: r.get(k) for k in ("id", "trial", "error", "passed", "tier", "latency_ms", "claims_total", "claims_flagged_final",
                                                                                     "claims_flagged_first_pass", "unverified_numbers", "used_sql", "escalated", "checks", "judges", "headline", "run_id")} for r in d["records"]]}
     sc = REPO_ROOT / "evals" / "results" / "SCORECARD.md"
     out["scorecard_md"] = sc.read_text() if sc.exists() else ""

@@ -116,7 +116,8 @@ export function TracePanel({ steps, live, totals }: { steps: TraceStep[]; live: 
   )
 }
 
-export function TierPill({ tier }: { tier: number }) {
+export function TierPill({ tier }: { tier: number | null | undefined }) {
   const names: Record<number, string> = { 1: 'Certified', 2: 'Derived', 3: 'Qualified', 4: 'Not answerable' }
+  if (tier == null) return <span className="tier-pill t4">—</span>
   return <span className={`tier-pill t${tier}`}>Tier {tier} · {names[tier]}</span>
 }

@@ -114,23 +114,24 @@ export function DataHealthPage() {
   )
 }
 
-type EvalRecord = { id: string; passed: boolean; tier: number; latency_ms: number; claims_total: number; claims_flagged_final: number; claims_flagged_first_pass: number | null; unverified_numbers: string[]; used_sql: boolean; escalated: boolean; checks: { check: string; pass: boolean; detail: string }[]; judges: { dimension: string; pass: boolean; rationale: string }[]; headline: string; run_id: string }
+type EvalRecord = { id: string; trial?: number; error?: string | null; passed: boolean; tier: number | null; latency_ms: number; claims_total: number; claims_flagged_final: number; claims_flagged_first_pass: number | null; unverified_numbers: string[]; used_sql: boolean; escalated: boolean; checks?: { check: string; pass: boolean; detail: string }[]; judges?: { dimension: string; pass: boolean; rationale: string }[]; headline: string | null; run_id: string | null }
 type EvalSuite = { summary: Record<string, unknown> & { tier_distribution: Record<string, number> }; records: EvalRecord[] }
 
 export function EvalsPage() {
-  const [d, setD] = useState<{ regression?: EvalSuite; capability?: EvalSuite } | null>(null)
+  const [d, setD] = useState<{ regression?: EvalSuite; capability?: EvalSuite; rehearsal?: EvalSuite } | null>(null)
   useEffect(() => { j<typeof d>('/api/evals/latest').then(setD) }, [])
   if (!d) return <div className="page muted">Loading…</div>
   const pct = (v: unknown) => (typeof v === 'number' ? `${Math.round(v * 100)}%` : '—')
   return (
     <div className="page">
       <h1 className="page-title">Evaluation results</h1>
-      <p className="page-sub">Two suites. Regression holds the three required queries under default and alternate readings and must stay near 100%. Capability holds off-script and adversarial questions and is meant to start low and climb. Code graders check numbers and citations; one model judge per dimension scores what code cannot see.</p>
-      {(['regression', 'capability'] as const).map((suite) => { const s = d[suite]; if (!s) return null; const sm = s.summary; return (
+      <p className="page-sub">Three suites. Regression holds the three required queries under default and alternate readings and must stay near 100%. Capability holds off-script and adversarial questions and is meant to start low and climb. Rehearsal holds twenty panel-style questions written after the build. Code graders check numbers and citations; one model judge per dimension scores what code cannot see.</p>
+      {(['regression', 'capability', 'rehearsal'] as const).map((suite) => { const s = d[suite]; if (!s) return null; const sm = s.summary; const k = Number(sm.n_trials ?? 0) / Math.max(1, Number(sm.n_cases ?? 1)); return (
         <section key={suite} style={{ marginBottom: 34 }}>
-          <h2 style={{ fontSize: 17 }}>{suite} — {String(sm.n_cases)} cases</h2>
+          <h2 style={{ fontSize: 17 }}>{suite} — {String(sm.n_cases)} cases{k > 1 ? ` × ${k} trials` : ''}</h2>
           <div className="stat-row">
-            <div className="stat"><b>{pct(sm.case_pass_pow_k)}</b><span>cases passing (pass^k)</span></div>
+            <div className="stat"><b>{pct(sm.case_pass_pow_k)}</b><span>{k > 1 ? `cases passing every trial (pass^${k})` : 'cases passing'}</span></div>
+            {k > 1 && <div className="stat"><b>{pct(sm.case_pass_at_k)}</b><span>cases passing any trial (pass@{k})</span></div>}
             <div className="stat"><b>{pct(sm.hallucinated_number_rate)}</b><span>answers with a number not in evidence</span></div>
             <div className="stat"><b>{String(sm.claims_total)} / {String(sm.claims_flagged_final)}</b><span>claims verified / flagged after revision</span></div>
             <div className="stat"><b>{pct(sm.verifier_caught_first_pass_rate)}</b><span>runs where the verifier caught something</span></div>
@@ -138,12 +139,14 @@ export function EvalsPage() {
             <div className="stat"><b>{fmtMs(Number(sm.avg_latency_ms))}</b><span>avg latency · {fmtTok(Math.round(Number(sm.avg_input_tokens)))} tok in</span></div>
           </div>
           <table className="tbl"><thead><tr><th>Case</th><th>Result</th><th>Tier</th><th>Claims</th><th>Verifier caught</th><th>Judges</th><th>Latency</th><th></th></tr></thead>
-            <tbody>{s.records.sort((a, b) => a.id.localeCompare(b.id)).map((r) => (
-              <tr key={r.id}><td><code>{r.id}</code>{!r.passed && <div className="small muted">{r.checks.filter((c) => !c.pass).map((c) => c.check).join(', ')}</div>}</td>
+            <tbody>{[...s.records].sort((a, b) => a.id.localeCompare(b.id) || (a.trial ?? 0) - (b.trial ?? 0)).map((r) => (
+              <tr key={`${r.id}-${r.trial ?? 0}`}><td><code>{r.id}</code>{k > 1 && <span className="small muted"> t{r.trial}</span>}
+                {r.error && <div className="small notready">crashed: {r.error.slice(0, 80)}</div>}
+                {!r.passed && !r.error && <div className="small muted">{(r.checks ?? []).filter((c) => !c.pass).map((c) => c.check).join(', ')}</div>}</td>
                 <td>{r.passed ? <span className="ready">pass</span> : <span className="notready">fail</span>}</td><td><TierPill tier={r.tier} /></td>
                 <td className="small">{r.claims_total} / {r.claims_flagged_final} flagged</td>
                 <td className="small">{r.claims_flagged_first_pass ? `${r.claims_flagged_first_pass} fixed in revision` : '—'}</td>
-                <td className="small">{r.judges.map((jd) => <span key={jd.dimension} className={jd.pass ? 'ready' : 'notready'} style={{ marginRight: 8 }}>{jd.dimension}</span>)}</td>
+                <td className="small">{(r.judges ?? []).map((jd) => <span key={jd.dimension} className={jd.pass ? 'ready' : 'notready'} style={{ marginRight: 8 }}>{jd.dimension}</span>)}</td>
                 <td className="small">{fmtMs(r.latency_ms)}</td><td>{r.run_id && <Link className="small" to={`/?run=${r.run_id}`}>open</Link>}</td></tr>))}</tbody></table>
         </section>) })}
     </div>
