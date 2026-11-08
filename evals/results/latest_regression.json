@@ -26,7 +26,7 @@
   "avg_input_tokens": 51928.2,
   "avg_output_tokens": 12375.6,
   "avg_rows_cited": 26.1,
-  "total_cost_usd": null,
+  "total_cost_usd": 2.5985,
   "errors": 0,
   "cases": [
    {
@@ -157,7 +157,8 @@
     "failed_judges": [],
     "errors": []
    }
-  ]
+  ],
+  "avg_cost_usd": 0.2887
  },
  "records": [
   {
@@ -274,7 +275,7 @@
    "tool_calls": 1,
    "input_tokens": 27829,
    "output_tokens": 7675,
-   "cost_usd": null,
+   "cost_usd": 0.186508,
    "latency_ms": 72493,
    "rows_cited": 9,
    "headline": "As of 2025-10-23, amoxicillin has 4 approved applications and 3 actively marketed, counted across all dosage forms, and 1 oral suspension shortage record with status Current."
@@ -330,7 +331,7 @@
    "tool_calls": 1,
    "input_tokens": 50744,
    "output_tokens": 12270,
-   "cost_usd": null,
+   "cost_usd": 0.276027,
    "latency_ms": 79179,
    "rows_cited": 17,
    "headline": "As of 2025-10-23, 6 drugs are in Current shortage for cGMP quality reasons, and 4 linked manufacturing sites received an OAI classification in FY2024 to FY2025."
@@ -455,7 +456,7 @@
    "tool_calls": 1,
    "input_tokens": 52689,
    "output_tokens": 13639,
-   "cost_usd": null,
+   "cost_usd": 0.286744,
    "latency_ms": 102055,
    "rows_cited": 17,
    "headline": "As of 2025-10-23, 6 drugs are in Current shortage for Quality: cGMP Issue, and 4 of their linked manufacturing sites had an OAI classification in FY2024 to FY2025."
@@ -526,7 +527,7 @@
    "tool_calls": 1,
    "input_tokens": 77069,
    "output_tokens": 19611,
-   "cost_usd": null,
+   "cost_usd": 0.443742,
    "latency_ms": 130039,
    "rows_cited": 17,
    "headline": "As of 2025-03-01, 6 drugs have a Current quality shortage, and 2 of their linked sites had an OAI inspection in FY2023 and 2024."
@@ -577,7 +578,7 @@
    "tool_calls": 1,
    "input_tokens": 41608,
    "output_tokens": 9016,
-   "cost_usd": null,
+   "cost_usd": 0.209282,
    "latency_ms": 59765,
    "rows_cited": 9,
    "headline": "As of 2025-10-23, amoxicillin has 4 approved (full) applications across all dosage forms, 3 marketed as Prescription, and 1 oral suspension shortage record currently listed as Current."
@@ -653,7 +654,7 @@
    "tool_calls": 4,
    "input_tokens": 47625,
    "output_tokens": 11181,
-   "cost_usd": null,
+   "cost_usd": 0.284523,
    "latency_ms": 82797,
    "rows_cited": 3,
    "headline": "As of 2023-12-01, the Oral Suspension 250mg/5mL amoxicillin shortage was Resolved and the Oral Suspension 400mg/5mL shortage was Discontinued; neither was Current."
@@ -787,7 +788,7 @@
    "tool_calls": 1,
    "input_tokens": 43548,
    "output_tokens": 12810,
-   "cost_usd": null,
+   "cost_usd": 0.262362,
    "latency_ms": 91996,
    "rows_cited": 80,
    "headline": "As of 2025-10-23, 4 foreign sites tied to Current shortages were last inspected in FY2021 or earlier, and 2 more sites have never been inspected and have unknown country."
@@ -885,7 +886,7 @@
    "tool_calls": 3,
    "input_tokens": 23292,
    "output_tokens": 7248,
-   "cost_usd": null,
+   "cost_usd": 0.162849,
    "latency_ms": 64147,
    "rows_cited": 3,
    "headline": "No. As of 2025-10-23, the latest amoxicillin shortage record, DS-2023-0142, is Current, not Resolved, and the other amoxicillin record is Discontinued."
@@ -936,7 +937,7 @@
    "tool_calls": 2,
    "input_tokens": 102950,
    "output_tokens": 17930,
-   "cost_usd": null,
+   "cost_usd": 0.486509,
    "latency_ms": 109098,
    "rows_cited": 80,
    "headline": "As of 2025-10-23, 5 foreign sites linked to Current shortages have a last inspection in FY2024 or earlier, or 4 if FY2024 itself is excluded, and only 13 of 57 Current records link to a site."

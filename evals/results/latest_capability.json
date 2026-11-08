@@ -26,7 +26,7 @@
   "avg_input_tokens": 33264.8,
   "avg_output_tokens": 7612.7,
   "avg_rows_cited": 16.7,
-  "total_cost_usd": null,
+  "total_cost_usd": 4.9013,
   "errors": 0,
   "cases": [
    {
@@ -367,7 +367,8 @@
     "failed_judges": [],
     "errors": []
    }
-  ]
+  ],
+  "avg_cost_usd": 0.2042
  },
  "records": [
   {
@@ -431,7 +432,7 @@
    "tool_calls": 2,
    "input_tokens": 35924,
    "output_tokens": 7239,
-   "cost_usd": null,
+   "cost_usd": 0.184855,
    "latency_ms": 63839,
    "rows_cited": 15,
    "headline": "As of 2025-10-23, 15 shortage records have status Current with reason category API Shortage."
@@ -504,7 +505,7 @@
    "tool_calls": 3,
    "input_tokens": 29438,
    "output_tokens": 9107,
-   "cost_usd": null,
+   "cost_usd": 0.242004,
    "latency_ms": 88132,
    "rows_cited": 3,
    "headline": "As of 2025-10-23, one shortage record, DS-2023-0205 for Methotrexate Sodium, is linked to Hospira, and its status is Current."
@@ -584,7 +585,7 @@
    "tool_calls": 1,
    "input_tokens": 47946,
    "output_tokens": 13937,
-   "cost_usd": null,
+   "cost_usd": 0.335039,
    "latency_ms": 116546,
    "rows_cited": 20,
    "headline": "As of 2025-10-23, the OAI inspections in FY2025 are listed by inspection end date, and the Sandoz Princeton inspection is added if classification date is used instead."
@@ -654,7 +655,7 @@
    "tool_calls": 2,
    "input_tokens": 35356,
    "output_tokens": 8256,
-   "cost_usd": null,
+   "cost_usd": 0.228506,
    "latency_ms": 75521,
    "rows_cited": 28,
    "headline": "As of 2025-10-23, 7 antibiotic generic names have Current shortage records in oral suspension or solution form, which is a proxy for pediatric use and not a pediatric determination."
@@ -724,7 +725,7 @@
    "tool_calls": 0,
    "input_tokens": 30969,
    "output_tokens": 8344,
-   "cost_usd": null,
+   "cost_usd": 0.236453,
    "latency_ms": 78525,
    "rows_cited": 26,
    "headline": "As of 2025-10-23, Hikma Pharmaceuticals LLC holds the most tentative approvals, with 4."
@@ -808,7 +809,7 @@
    "tool_calls": 1,
    "input_tokens": 10089,
    "output_tokens": 3348,
-   "cost_usd": null,
+   "cost_usd": 0.075362,
    "latency_ms": 37673,
    "rows_cited": 0,
    "headline": "Resolved means supply recovered and the market is covered, while Discontinued means the manufacturer has stopped or will stop making the product and supply will not recover from that source, as of 2025-10-23."
@@ -869,7 +870,7 @@
    "tool_calls": 3,
    "input_tokens": 105237,
    "output_tokens": 14863,
-   "cost_usd": null,
+   "cost_usd": 0.573986,
    "latency_ms": 124731,
    "rows_cited": 57,
    "headline": "As of 2025-10-23, 43 of 57 Current shortage records have an injectable presentation."
@@ -934,7 +935,7 @@
    "tool_calls": 1,
    "input_tokens": 8332,
    "output_tokens": 3692,
-   "cost_usd": null,
+   "cost_usd": 0.079035,
    "latency_ms": 35584,
    "rows_cited": 0,
    "headline": "OAI means Official Action Indicated: the facility is in an unacceptable state of compliance and regulatory action may follow, per the glossary as of 2025-10-23."
@@ -1000,7 +1001,7 @@
    "tool_calls": 3,
    "input_tokens": 172623,
    "output_tokens": 21873,
-   "cost_usd": null,
+   "cost_usd": 0.742922,
    "latency_ms": 168072,
    "rows_cited": 80,
    "headline": "As of 2025-10-23, five drugs with a Current shortage record are linked to a manufacturing site with an OAI on record: Ampicillin-Sulbactam, Amoxicillin, Piperacillin-Tazobactam, Vancomycin HCl and Cefepime HCl."
@@ -1061,7 +1062,7 @@
    "tool_calls": 0,
    "input_tokens": 75888,
    "output_tokens": 21145,
-   "cost_usd": null,
+   "cost_usd": 0.512788,
    "latency_ms": 155771,
    "rows_cited": 0,
    "headline": "As of 2025-10-23, 13 manufacturing sites are linked to more than three distinct sponsor names across all applications, and 6 when only Prescription applications are counted."
@@ -1140,7 +1141,7 @@
    "tool_calls": 1,
    "input_tokens": 25586,
    "output_tokens": 5530,
-   "cost_usd": null,
+   "cost_usd": 0.150461,
    "latency_ms": 53149,
    "rows_cited": 57,
    "headline": "As of 2025-10-23, 28 drugs, counted by distinct generic name, have a Current shortage, spread across 57 shortage records."
@@ -1211,7 +1212,7 @@
    "tool_calls": 4,
    "input_tokens": 18694,
    "output_tokens": 7646,
-   "cost_usd": null,
+   "cost_usd": 0.157722,
    "latency_ms": 59283,
    "rows_cited": 2,
    "headline": "On 2024-01-15, the amoxicillin Oral Suspension 250mg/5mL shortage, DS-2023-0142, had the status Current."
@@ -1272,7 +1273,7 @@
    "tool_calls": 2,
    "input_tokens": 37169,
    "output_tokens": 8469,
-   "cost_usd": null,
+   "cost_usd": 0.203962,
    "latency_ms": 66178,
    "rows_cited": 21,
    "headline": "As of 2025-10-23, strict quality shortages cover 6 drugs, and adding Manufacturing Delay raises that to 15 drugs."
@@ -1332,7 +1333,7 @@
    "tool_calls": 1,
    "input_tokens": 8107,
    "output_tokens": 2965,
-   "cost_usd": null,
+   "cost_usd": 0.064707,
    "latency_ms": 26873,
    "rows_cited": 0,
    "headline": "Xyzzyomycin was not found as a generic name in the data, so its shortage status as of 2025-10-23 cannot be determined."
@@ -1393,7 +1394,7 @@
    "tool_calls": 0,
    "input_tokens": 222,
    "output_tokens": 507,
-   "cost_usd": null,
+   "cost_usd": 0.000309,
    "latency_ms": 6509,
    "rows_cited": 0,
    "headline": "Not answerable from this data."
@@ -1476,7 +1477,7 @@
    "tool_calls": 1,
    "input_tokens": 18483,
    "output_tokens": 7046,
-   "cost_usd": null,
+   "cost_usd": 0.1594,
    "latency_ms": 71413,
    "rows_cited": 0,
    "headline": "As of 2025-10-23, the dataset has no inspection record for the requested FEI, so no inspection history can be given."
@@ -1537,7 +1538,7 @@
    "tool_calls": 0,
    "input_tokens": 229,
    "output_tokens": 530,
-   "cost_usd": null,
+   "cost_usd": 0.000322,
    "latency_ms": 6430,
    "rows_cited": 0,
    "headline": "Not answerable from this data."
@@ -1608,7 +1609,7 @@
    "tool_calls": 0,
    "input_tokens": 236,
    "output_tokens": 354,
-   "cost_usd": null,
+   "cost_usd": 0.000234,
    "latency_ms": 9997,
    "rows_cited": 0,
    "headline": "Not answerable from this data."
@@ -1659,7 +1660,7 @@
    "tool_calls": 0,
    "input_tokens": 223,
    "output_tokens": 406,
-   "cost_usd": null,
+   "cost_usd": 0.000259,
    "latency_ms": 2257,
    "rows_cited": 0,
    "headline": "Not answerable from this data."
@@ -1710,7 +1711,7 @@
    "tool_calls": 0,
    "input_tokens": 225,
    "output_tokens": 245,
-   "cost_usd": null,
+   "cost_usd": 0.000179,
    "latency_ms": 1279,
    "rows_cited": 0,
    "headline": "Not answerable from this data."
@@ -1783,7 +1784,7 @@
    "tool_calls": 3,
    "input_tokens": 26170,
    "output_tokens": 6580,
-   "cost_usd": null,
+   "cost_usd": 0.199625,
    "latency_ms": 72078,
    "rows_cited": 2,
    "headline": "The data cannot say why the Pfizer McPherson site received an OAI; it shows only that one OAI was classified on 2024-05-15 for Drug Quality Assurance."
@@ -1857,7 +1858,7 @@
    "tool_calls": 1,
    "input_tokens": 23341,
    "output_tokens": 7926,
-   "cost_usd": null,
+   "cost_usd": 0.173342,
    "latency_ms": 70041,
    "rows_cited": 80,
    "headline": "As of 2025-10-23, no never-inspected site can be confirmed as foreign, because country is known only from inspections; 2 linked sites have never been inspected and their country is unknown."
@@ -1921,7 +1922,7 @@
    "tool_calls": 4,
    "input_tokens": 48145,
    "output_tokens": 12205,
-   "cost_usd": null,
+   "cost_usd": 0.329963,
    "latency_ms": 89592,
    "rows_cited": 9,
    "headline": "The data cannot say how many pediatric patients were affected by the amoxicillin shortage; as of 2025-10-23, the Amoxicillin oral suspension proxy shows 1 record with Current status and one with Discontinued status."
@@ -1982,7 +1983,7 @@
    "tool_calls": 1,
    "input_tokens": 39722,
    "output_tokens": 10492,
-   "cost_usd": null,
+   "cost_usd": 0.249836,
    "latency_ms": 84762,
    "rows_cited": 0,
    "headline": "The audit of the snapshot as of 2025-10-23 produced 87 findings, and the data cannot by itself give a reliability verdict for testimony."

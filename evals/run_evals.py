@@ -120,6 +120,7 @@ def summarize(records: list[dict], suite: str) -> dict:
         "avg_latency_ms": avg("latency_ms"), "avg_llm_calls": avg("llm_calls"), "avg_tool_calls": avg("tool_calls"),
         "avg_input_tokens": avg("input_tokens"), "avg_output_tokens": avg("output_tokens"), "avg_rows_cited": avg("rows_cited"),
         "total_cost_usd": round(sum(r["cost_usd"] for r in ok if r.get("cost_usd") is not None), 4) if ok and all(r.get("cost_usd") is not None for r in ok) else None,
+        "avg_cost_usd": (round(sum(r["cost_usd"] for r in ok) / n, 4) if ok and all(r.get("cost_usd") is not None for r in ok) else None),
         "errors": sum(1 for r in records if r.get("error")),
         "cases": cases,
     }
@@ -142,7 +143,7 @@ def write_scorecard(summaries: dict[str, dict]) -> None:
                   f"| Avg latency / LLM calls / tool calls | {s['avg_latency_ms']} ms / {s['avg_llm_calls']} / {s['avg_tool_calls']} |",
                   f"| Avg tokens in / out | {s['avg_input_tokens']} / {s['avg_output_tokens']} |",
                   f"| Avg rows cited per answer | {s['avg_rows_cited']} |",
-                  f"| Total cost (USD, from pricing.json) | {s['total_cost_usd'] if s['total_cost_usd'] is not None else 'n/a — pricing table not configured'} |",
+                  f"| Cost (USD, Anthropic list prices) | total ${s['total_cost_usd']} · avg ${s.get('avg_cost_usd')} per question |" if s["total_cost_usd"] is not None else "| Cost | n/a — pricing table not configured |",
                   f"| Errors | {s['errors']} |", "",
                   "| Case | Pass | Tiers | Failed checks | Failed judges |", "|---|---|---|---|---|"]
         for c in s["cases"]:
