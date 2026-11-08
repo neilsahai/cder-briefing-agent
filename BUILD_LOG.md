@@ -152,6 +152,29 @@ about heparin", "what would you fix before the Senate"). First pass 17/20. Each 
    claim is. Re-ran 3/3 stable; all 10 adversarial refusals still hold.
 After fixes: regression 9/9 (221 claims, 0 flagged); rehearsal 19–20/20; hallucinated-number rate 0.0%.
 
+### Nov 8 — Phase 6b (3-trial runs; two more design gaps)
+- Ran capability and regression at `--trials 3`. The first 3-trial capability run: pass@3 100%, pass^3 79%.
+  Failures clustered on one case (`cap_how_many_shortages`, 0/3): the narrator kept saying the
+  "Current or Discontinued" alternate "was not computed". Root cause was structural, not prompt: the
+  primitive `current_shortages` tool never computed it (only certified queries computed alternates), and
+  even after it did, the number lived on the Interpretation object, not in the evidence value — so the
+  narrator *could not* write it through a placeholder. Fixed in two places: tools compute the alternate,
+  and `call_tool` exposes `alternate_readings` as an addressable path on every result. 3/3 after.
+- That fix over-corrected: the new alternate `differs` on every count, demoting required query 3 to
+  Tier 3 on all three trials. Added a `demotes` flag: alternates whose default is a *definition* in
+  DECISIONS.md (D4 Discontinued ≠ in shortage, D6 record/presentation counts "also reported") are
+  disclosed but do not demote; judgment-call readings (D3, D5, D9) still do. Regression back to 9/9.
+- Registry: a live SQLite cursor returned from under the lock was invalidated by another thread
+  (`IndexError: tuple index out of range`). Rows are now materialized inside the lock; 16-thread stress
+  test clean.
+- `sql_query` results now carry `as_of`, so "as of 2025-10-23" on a Tier 2 answer is a supported claim.
+- Planner once emitted interpretations as bare strings → `AttributeError`; shapes are normalized.
+- Final build, 3 trials: regression 25/27 trials (pass@3 100%, pass^3 89%); capability 66/72
+  (pass@3 100%, pass^3 79%); rehearsal 20/20; 0 hallucinated numbers in 119 trials. Every failed trial
+  is a verifier demotion to Tier 3 or a judge-dimension disagreement — never a wrong number.
+- Two full runs were cut short by the API credit balance; aborted result files are kept, renamed
+  `*_ABORTED_no_credits.json`, and never used for the scorecard.
+
 ## Things Neil overruled or redirected
 - **Stricter Tier 3 rule.** Original plan let a certified query with a differing alternate reading
   stay Tier 1 if the default reading was documented. Neil chose the stricter rule: any reading that
